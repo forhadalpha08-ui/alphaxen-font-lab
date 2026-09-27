@@ -52,7 +52,7 @@ const BrandMark: React.FC<BrandMarkProps> = ({ mode = 'default', suffix, classNa
           ALPHAXEN
         </span>
         <span className={`${compact ? 'text-[7px]' : 'text-[8px]'} uppercase tracking-[0.35em] font-black text-white/40 mt-1`}>
-          {suffix || 'TYPE FOUNDRY'}
+          {suffix || 'FONT LAB'}
         </span>
       </div>
     </div>
@@ -63,7 +63,7 @@ const BrandMark: React.FC<BrandMarkProps> = ({ mode = 'default', suffix, classNa
   }
 
   return (
-    <Link to="/" title="Alphaxen Type Foundry" className="inline-flex items-center cursor-pointer">
+    <Link to="/" title="Alphaxen Font Lab" className="inline-flex items-center cursor-pointer">
       {content}
     </Link>
   );

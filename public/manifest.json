@@ -1,7 +1,7 @@
 {
-  "name": "Alphaxen Type Foundry - Digital Typography & Font Marketplace",
-  "short_name": "Alphaxen Fonts",
-  "description": "Premier digital type foundry and font marketplace. Discover precision-engineered variable fonts, editorial serifs, specular metallic chrome typefaces, live specimen testing, and perpetual commercial licensing.",
+  "name": "Alphaxen Font Lab - Digital Typography & Font Marketplace",
+  "short_name": "Alphaxen Font Lab",
+  "description": "Premier digital typography laboratory and font marketplace. Discover precision-engineered variable fonts, editorial serifs, specular metallic chrome typefaces, live specimen testing, and perpetual commercial licensing.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
