@@ -54,6 +54,17 @@ export interface FontItem {
   watermarkImage?: string;
 }
 
+export const getAssetUrl = (path: string): string => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:') || path.startsWith('blob:')) {
+    return path;
+  }
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  const cleanBase = base.endsWith('/') ? base : `${base}/`;
+  return `${cleanBase}${cleanPath}`;
+};
+
 export const FONT_CATALOG: FontItem[] = [
   {
     id: 'abdullah-martel',
@@ -91,8 +102,8 @@ export const FONT_CATALOG: FontItem[] = [
     reviewsCount: 128,
     downloads: 14200,
     releaseYear: 2026,
-    specimenImage: '/specimens/abdullah-martel-specimen.png',
-    watermarkImage: '/specimens/abdullah-martel-watermark.png'
+    specimenImage: getAssetUrl('/specimens/abdullah-martel-specimen.png'),
+    watermarkImage: getAssetUrl('/specimens/abdullah-martel-watermark.png')
   },
   {
     id: 'abdullah-metallic-chrome',
@@ -129,8 +140,8 @@ export const FONT_CATALOG: FontItem[] = [
     reviewsCount: 94,
     downloads: 11600,
     releaseYear: 2026,
-    specimenImage: '/specimens/abdullah-metallic-chrome-specimen.png',
-    watermarkImage: '/specimens/abdullah-metallic-chrome-watermark.png'
+    specimenImage: getAssetUrl('/specimens/abdullah-metallic-chrome-specimen.png'),
+    watermarkImage: getAssetUrl('/specimens/abdullah-metallic-chrome-watermark.png')
   },
   {
     id: 'abdullah-molten-chrome',
@@ -167,8 +178,8 @@ export const FONT_CATALOG: FontItem[] = [
     reviewsCount: 82,
     downloads: 9400,
     releaseYear: 2026,
-    specimenImage: '/specimens/abdullah-molten-chrome-specimen.png',
-    watermarkImage: '/specimens/abdullah-molten-chrome-watermark.png'
+    specimenImage: getAssetUrl('/specimens/abdullah-molten-chrome-specimen.png'),
+    watermarkImage: getAssetUrl('/specimens/abdullah-molten-chrome-watermark.png')
   },
   {
     id: 'abdullah-moon-chrome',
@@ -205,8 +216,8 @@ export const FONT_CATALOG: FontItem[] = [
     reviewsCount: 76,
     downloads: 9800,
     releaseYear: 2026,
-    specimenImage: '/specimens/abdullah-moon-chrome-specimen.png',
-    watermarkImage: '/specimens/abdullah-moon-chrome-watermark.png'
+    specimenImage: getAssetUrl('/specimens/abdullah-moon-chrome-specimen.png'),
+    watermarkImage: getAssetUrl('/specimens/abdullah-moon-chrome-watermark.png')
   },
   {
     id: 'abdullah-stone-chrome',
@@ -243,8 +254,8 @@ export const FONT_CATALOG: FontItem[] = [
     reviewsCount: 54,
     downloads: 7900,
     releaseYear: 2026,
-    specimenImage: '/specimens/abdullah-stone-chrome-specimen.png',
-    watermarkImage: '/specimens/abdullah-stone-chrome-watermark.png'
+    specimenImage: getAssetUrl('/specimens/abdullah-stone-chrome-specimen.png'),
+    watermarkImage: getAssetUrl('/specimens/abdullah-stone-chrome-watermark.png')
   },
   {
     id: 'abdullah-stone-moon',
@@ -281,8 +292,8 @@ export const FONT_CATALOG: FontItem[] = [
     reviewsCount: 62,
     downloads: 8400,
     releaseYear: 2026,
-    specimenImage: '/specimens/abdullah-stone-moon-specimen.png',
-    watermarkImage: '/specimens/abdullah-stone-moon-watermark.png'
+    specimenImage: getAssetUrl('/specimens/abdullah-stone-moon-specimen.png'),
+    watermarkImage: getAssetUrl('/specimens/abdullah-stone-moon-watermark.png')
   }
 ];
 

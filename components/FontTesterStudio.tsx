@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FONT_CATALOG, FontItem } from '../services/fontData';
+import { FONT_CATALOG, FontItem, getAssetUrl } from '../services/fontData';
 import {
   Type, Copy, Check, RotateCcw,
   ShieldCheck, ArrowRight, Sparkles, Download, Layers, Eye
@@ -71,7 +71,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
     let isCancelled = false;
     setLoadingGlyphs(true);
 
-    fetch(`/fonts_data/${selectedFont.id}.json`)
+    fetch(getAssetUrl(`/fonts_data/${selectedFont.id}.json`))
       .then(res => {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
@@ -126,7 +126,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
     if (type === 'zip') {
       const cleanName = selectedFont.name.replace(/\s+/g, '');
       fileName = `${cleanName}-Font-Family.zip`;
-      downloadUrl = `/fonts/${fontFolder}/${encodeURIComponent(fileName)}`;
+      downloadUrl = getAssetUrl(`/fonts/${fontFolder}/${encodeURIComponent(fileName)}`);
     } else {
       const ext = formatMode.toLowerCase();
       const weightLabel = vectorWeight === 700 ? 'Bold' : vectorWeight === 600 ? 'SemiBold' : 'Regular';
@@ -137,7 +137,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
       } else {
         fileName = `${cleanName}-${weightLabel}.${ext}`;
       }
-      downloadUrl = `/fonts/${fontFolder}/${encodeURIComponent(fileName)}`;
+      downloadUrl = getAssetUrl(`/fonts/${fontFolder}/${encodeURIComponent(fileName)}`);
     }
 
     const a = document.createElement('a');
