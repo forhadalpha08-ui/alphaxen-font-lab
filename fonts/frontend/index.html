@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FontStudio Pro — Image to Vector Font Foundry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Dynamic Font Face Style Container -->
+  <style id="dynamic-font-styles"></style>
+
+  <!-- Navigation Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="brand-logo">
+        <span class="logo-gem">✦</span>
+        <span class="logo-title">ABDULLAH <span class="accent-text">FONTSTUDIO PRO</span></span>
+      </div>
+      <span class="version-badge">v2.0 VECTOR ENGINE</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#upload-section" class="nav-btn active">1. Source Image</a>
+      <a href="#review-section" class="nav-btn">2. Glyph Review</a>
+      <a href="#metadata-section" class="nav-btn">3. Typography & Weights</a>
+      <a href="#preview-section" class="nav-btn">4. Live Preview</a>
+      <a href="#export-section" class="nav-btn export-pill">5. Export OTF & TTF</a>
+    </nav>
+  </header>
+
+  <main class="app-container">
+
+    <!-- HERO NOTIFICATION / STATS BAR -->
+    <section class="status-banner">
+      <div class="status-item">
+        <span class="status-dot"></span>
+        <span id="system-status">System Ready — Select or upload a reference sheet to begin vector reconstruction</span>
+      </div>
+      <div class="stats-group">
+        <div class="stat-badge"><span class="stat-label">Active Glyphs:</span> <strong id="stat-active-count">0</strong></div>
+        <div class="stat-badge"><span class="stat-label">Detected Polarity:</span> <strong id="stat-polarity">Dark (Inverted)</strong></div>
+        <div class="stat-badge"><span class="stat-label">Family:</span> <strong id="stat-family-name">Abdullah Cowboy</strong></div>
+      </div>
+    </section>
+
+    <!-- STEP 1: SOURCE IMAGE & SAMPLE GALLERY -->
+    <section id="upload-section" class="studio-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="step-num">01</span>
+          <div>
+            <h2>Source Image & Reference Selection</h2>
+            <p class="subtitle">Upload a typography artwork sheet or choose from high-resolution preloaded specimens</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="upload-grid">
+        <!-- Upload Box -->
+        <div class="upload-zone" id="drop-zone">
+          <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" class="file-hidden">
+          <div class="upload-content">
+            <div class="upload-icon">⇪</div>
+            <h3>Drag & Drop Reference Image</h3>
+            <p>Supports ultra-high-resolution PNG, JPG, or WEBP font artwork</p>
+            <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">Browse Files</button>
+          </div>
+        </div>
+
+        <!-- Sample Reference Gallery -->
+        <div class="sample-gallery-container">
+          <div class="gallery-title">
+            <span>⚡ Quick-Load Built-in Specimens</span>
+            <span class="gallery-sub">1-Click instant analysis</span>
+          </div>
+          <div class="sample-grid" id="sample-grid">
+            <div class="loading-samples">Scanning workspace reference images...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: GLYPH DETECTION & REVIEW STUDIO -->
+    <section id="review-section" class="studio-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="step-num">02</span>
+          <div>
+            <h2>Intelligent Glyph Detection & Review Studio</h2>
+            <p class="subtitle">Vectorize contours, inspect detected characters, eliminate particles, and tune boundaries</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btn-clean-noise">
+            <span>🧹 Purge Particles & Dust</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-auto-map">
+            <span>🔤 Auto-Map A–Z Preset</span>
+          </button>
+          <button class="btn btn-primary" id="btn-proceed-generate">
+            <span>⚡ Generate Vector Fonts</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Detection Controls Bar -->
+      <div class="detection-toolbar">
+        <div class="toolbar-item">
+          <label>Background Polarity:</label>
+          <select id="ctrl-polarity" class="form-select">
+            <option value="auto">Auto-Detect</option>
+            <option value="dark">Dark Canvas / Bright Text</option>
+            <option value="light">Light Paper / Dark Text</option>
+          </select>
+        </div>
+
+        <div class="toolbar-item">
+          <label>Particle Cutoff: <span class="val-tag" id="val-noise">50px</span></label>
+          <input type="range" id="ctrl-noise" min="10" max="250" value="50" class="form-range">
+        </div>
+
+        <div class="toolbar-item">
+          <label>Min Glyph Area: <span class="val-tag" id="val-area">80px</span></label>
+          <input type="range" id="ctrl-min-area" min="20" max="500" value="80" class="form-range">
+        </div>
+
+        <div class="toolbar-item">
+          <label>Vector Smoothness: <span class="val-tag" id="val-smooth">0.9</span></label>
+          <input type="range" id="ctrl-smoothness" min="0.3" max="2.5" step="0.1" value="0.9" class="form-range">
+        </div>
+
+        <button class="btn btn-outline btn-sm" id="btn-redetect">Apply Filters</button>
+      </div>
+
+      <!-- Studio Main Workspace: Interactive Canvas & Glyph Grid -->
+      <div class="review-split-view">
+        <!-- Canvas Viewer -->
+        <div class="canvas-panel">
+          <div class="panel-header">
+            <span>Reference Sheet Inspection</span>
+            <div class="canvas-tools">
+              <label><input type="checkbox" id="chk-show-boxes" checked> Bounding Boxes</label>
+              <label><input type="checkbox" id="chk-show-labels" checked> Labels</label>
+            </div>
+          </div>
+          <div class="canvas-scroll-wrapper" id="canvas-wrapper">
+            <canvas id="reference-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Detected Glyphs Review Board -->
+        <div class="glyph-board-panel">
+          <div class="board-filters">
+            <div class="filter-tabs">
+              <button class="tab-btn active" data-filter="all">All (<span id="count-all">0</span>)</button>
+              <button class="tab-btn" data-filter="letters">Letters (<span id="count-letters">0</span>)</button>
+              <button class="tab-btn" data-filter="numbers">Numbers (<span id="count-numbers">0</span>)</button>
+              <button class="tab-btn" data-filter="symbols">Symbols (<span id="count-symbols">0</span>)</button>
+              <button class="tab-btn" data-filter="excluded">Excluded (<span id="count-excluded">0</span>)</button>
+            </div>
+            <input type="text" id="glyph-search" placeholder="Search character..." class="search-input">
+          </div>
+
+          <!-- Glyph Cards Grid -->
+          <div class="glyph-cards-grid" id="glyph-grid">
+            <div class="empty-state">No image loaded yet. Select a sample above or upload your typography sheet.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: FONT METADATA & MULTI-WEIGHT CONFIGURATION -->
+    <section id="metadata-section" class="studio-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="step-num">03</span>
+          <div>
+            <h2>Font Metadata & Multi-Weight Configuration</h2>
+            <p class="subtitle">Real geometric stroke expansion and official OpenType metadata parameters</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metadata-form-grid">
+        <div class="form-group">
+          <label for="meta-family">Font Family Name</label>
+          <input type="text" id="meta-family" value="Abdullah Cowboy" class="form-input">
+          <span class="field-hint">Family name registered inside Windows and Adobe apps</span>
+        </div>
+
+        <div class="form-group">
+          <label for="meta-designer">Designer / Foundry</label>
+          <input type="text" id="meta-designer" value="Abdullah Font Foundry" class="form-input">
+          <span class="field-hint">Designer credit in OS/2 and Name tables</span>
+        </div>
+
+        <div class="form-group">
+          <label for="meta-version">Version</label>
+          <input type="text" id="meta-version" value="Version 1.000" class="form-input">
+          <span class="field-hint">Release build version</span>
+        </div>
+
+        <div class="form-group">
+          <label for="meta-copyright">Copyright & Rights</label>
+          <input type="text" id="meta-copyright" value="Copyright (c) 2026 Abdullah. All rights reserved." class="form-input">
+          <span class="field-hint">Embedded OpenType copyright notice</span>
+        </div>
+      </div>
+
+      <!-- Real Weight Dilation Parameters -->
+      <div class="weights-dilation-box">
+        <div class="weights-box-header">
+          <h3>⚡ Real Typography Weight Multiplier (Polygon Stroke Expansion)</h3>
+          <p>Unlike fake bolding (which smears outlines), our engine dilates vector contours outward and counter spaces inward using Pyclipper geometry.</p>
+        </div>
+
+        <div class="weights-config-row">
+          <div class="weight-config-card">
+            <div class="weight-card-top">
+              <span class="weight-badge regular">Regular (400)</span>
+              <span class="weight-math">Baseline Geometry</span>
+            </div>
+            <p>Direct vector outline traced from reference artwork at 1000 Units Per Em.</p>
+            <div class="weight-offset-pill">Offset: <strong>0.0 font units</strong></div>
+          </div>
+
+          <div class="weight-config-card">
+            <div class="weight-card-top">
+              <span class="weight-badge semibold">Semi-Bold (600)</span>
+              <span class="weight-math">+14.0 Font Units</span>
+            </div>
+            <p>Proportionally heavier stems, reinforced serifs, and expanded advance widths.</p>
+            <div class="slider-row">
+              <label>Expansion Delta: <span id="val-semi-offset">14px</span></label>
+              <input type="range" id="ctrl-semi-offset" min="6" max="22" step="1" value="14" class="form-range">
+            </div>
+          </div>
+
+          <div class="weight-config-card">
+            <div class="weight-card-top">
+              <span class="weight-badge bold">Bold (700)</span>
+              <span class="weight-math">+28.0 Font Units</span>
+            </div>
+            <p>Substantial display weight with maximum impact, preserved counters, and optical compensation.</p>
+            <div class="slider-row">
+              <label>Expansion Delta: <span id="val-bold-offset">28px</span></label>
+              <input type="range" id="ctrl-bold-offset" min="18" max="42" step="1" value="28" class="form-range">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: LIVE INTERACTIVE PREVIEW STUDIO -->
+    <section id="preview-section" class="studio-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="step-num">04</span>
+          <div>
+            <h2>Live Interactive Preview Studio</h2>
+            <p class="subtitle">Type custom text and test real font rendering across Regular, Semi-Bold, and Bold weights</p>
+          </div>
+        </div>
+
+        <!-- Weight Switcher Bar -->
+        <div class="weight-switcher" id="weight-switcher">
+          <button class="weight-btn active" data-weight="regular">Regular</button>
+          <button class="weight-btn" data-weight="semibold">Semi-Bold</button>
+          <button class="weight-btn" data-weight="bold">Bold</button>
+          <button class="weight-btn compare-btn" data-weight="compare">All 3 Weights (Compare)</button>
+        </div>
+      </div>
+
+      <!-- Quick Pangram Selector -->
+      <div class="pangram-bar">
+        <span class="pangram-title">Quick Samples:</span>
+        <button class="pangram-pill" data-text="THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG">Pangram</button>
+        <button class="pangram-pill" data-text="ABDULLAH 2026 LUXURY TYPEFACE">Abdullah 2026</button>
+        <button class="pangram-pill" data-text="ABCDEFGHIJKLMNOPQRSTUVWXYZ">Alphabet A–Z</button>
+        <button class="pangram-pill" data-text="0123456789">Numbers 0–9</button>
+        <button class="pangram-pill" data-text="! ? @ # $ % & * ( ) - _ + = : ;">Symbols</button>
+      </div>
+
+      <!-- Preview Text Display Area -->
+      <div class="preview-stage-container">
+        <!-- Single Weight View -->
+        <div id="single-weight-view" class="preview-text-box">
+          <textarea id="live-type-tester" spellcheck="false">ABDULLAH COWBOY STYLE FONT
+THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+0123456789 !?@#$%&*()</textarea>
+        </div>
+
+        <!-- 3-Way Side-by-Side Comparison Mode -->
+        <div id="compare-weight-view" class="compare-container hidden">
+          <div class="compare-column">
+            <div class="compare-header"><span class="badge-pill">Regular (400)</span></div>
+            <div class="compare-text-box font-regular" id="compare-text-regular">ABDULLAH 2026</div>
+          </div>
+          <div class="compare-column">
+            <div class="compare-header"><span class="badge-pill">Semi-Bold (600)</span></div>
+            <div class="compare-text-box font-semibold" id="compare-text-semibold">ABDULLAH 2026</div>
+          </div>
+          <div class="compare-column">
+            <div class="compare-header"><span class="badge-pill">Bold (700)</span></div>
+            <div class="compare-text-box font-bold" id="compare-text-bold">ABDULLAH 2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Formatting Controls -->
+      <div class="preview-controls-bar">
+        <div class="ctrl-group">
+          <label>Font Size: <span id="val-font-size">52px</span></label>
+          <input type="range" id="ctrl-font-size" min="18" max="120" value="52" class="form-range">
+        </div>
+        <div class="ctrl-group">
+          <label>Letter Spacing: <span id="val-letter-spacing">2px</span></label>
+          <input type="range" id="ctrl-letter-spacing" min="-4" max="25" value="2" class="form-range">
+        </div>
+        <div class="ctrl-group">
+          <label>Line Height: <span id="val-line-height">1.2</span></label>
+          <input type="range" id="ctrl-line-height" min="0.8" max="2.2" step="0.1" value="1.2" class="form-range">
+        </div>
+        <div class="ctrl-group">
+          <label>Alignment:</label>
+          <div class="btn-toggle-group">
+            <button class="btn-toggle active" data-align="left">Left</button>
+            <button class="btn-toggle" data-align="center">Center</button>
+            <button class="btn-toggle" data-align="right">Right</button>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <label>Color Theme:</label>
+          <div class="btn-toggle-group">
+            <button class="btn-toggle active" data-theme="gold">Gold</button>
+            <button class="btn-toggle" data-theme="chrome">Chrome</button>
+            <button class="btn-toggle" data-theme="white">White</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Specimen Waterfall -->
+      <div class="specimen-waterfall">
+        <div class="waterfall-title">Typographic Specimen Waterfall</div>
+        <div class="waterfall-row size-72"><span class="size-label">72px</span><p class="waterfall-sample">ABDULLAH COWBOY</p></div>
+        <div class="waterfall-row size-48"><span class="size-label">48px</span><p class="waterfall-sample">THE QUICK BROWN FOX JUMPS OVER</p></div>
+        <div class="waterfall-row size-36"><span class="size-label">36px</span><p class="waterfall-sample">Pack my box with five dozen liquor jugs 1234567890</p></div>
+        <div class="waterfall-row size-24"><span class="size-label">24px</span><p class="waterfall-sample">Gothic chrome typography reconstructed with genuine OpenType & TrueType vector outlines.</p></div>
+      </div>
+    </section>
+
+    <!-- STEP 5: DEDICATED EXPORT SUITE -->
+    <section id="export-section" class="studio-card export-card">
+      <div class="card-header">
+        <div class="card-title-group">
+          <span class="step-num">05</span>
+          <div>
+            <h2>Dedicated Export Suite (.OTF & .TTF)</h2>
+            <p class="subtitle">Download individual weights or grab the complete multi-weight package</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download Grid for All 6 Required Files -->
+      <div class="export-suite-grid">
+
+        <!-- Regular Weight -->
+        <div class="export-file-card">
+          <div class="export-file-header">
+            <div class="weight-title">REGULAR</div>
+            <div class="weight-sub">Weight Class: 400</div>
+          </div>
+          <div class="export-format-actions">
+            <a id="btn-dl-regular-otf" href="#" class="btn btn-export disabled">
+              <span class="btn-icon">⬇</span>
+              <span>Download Regular OTF</span>
+            </a>
+            <a id="btn-dl-regular-ttf" href="#" class="btn btn-export disabled">
+              <span class="btn-icon">⬇</span>
+              <span>Download Regular TTF</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Semi-Bold Weight -->
+        <div class="export-file-card">
+          <div class="export-file-header">
+            <div class="weight-title">SEMI-BOLD</div>
+            <div class="weight-sub">Weight Class: 600</div>
+          </div>
+          <div class="export-format-actions">
+            <a id="btn-dl-semibold-otf" href="#" class="btn btn-export disabled">
+              <span class="btn-icon">⬇</span>
+              <span>Download Semi-Bold OTF</span>
+            </a>
+            <a id="btn-dl-semibold-ttf" href="#" class="btn btn-export disabled">
+              <span class="btn-icon">⬇</span>
+              <span>Download Semi-Bold TTF</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Bold Weight -->
+        <div class="export-file-card">
+          <div class="export-file-header">
+            <div class="weight-title">BOLD</div>
+            <div class="weight-sub">Weight Class: 700</div>
+          </div>
+          <div class="export-format-actions">
+            <a id="btn-dl-bold-otf" href="#" class="btn btn-export disabled">
+              <span class="btn-icon">⬇</span>
+              <span>Download Bold OTF</span>
+            </a>
+            <a id="btn-dl-bold-ttf" href="#" class="btn btn-export disabled">
+              <span class="btn-icon">⬇</span>
+              <span>Download Bold TTF</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master Bundle Download -->
+      <div class="master-download-box">
+        <div class="master-info">
+          <h3>📦 Complete Font Family Suite (.ZIP)</h3>
+          <p>Contains all 6 font files (Regular, Semi-Bold, Bold in both .OTF and .TTF), designer documentation, and installation manual.</p>
+        </div>
+        <a id="btn-dl-all-zip" href="#" class="btn btn-primary btn-large disabled">
+          <span>Download Complete Suite (.ZIP)</span>
+        </a>
+      </div>
+
+      <!-- Installation Guide -->
+      <div class="install-guide">
+        <div class="guide-title">How to Install and Use in Design Software:</div>
+        <div class="guide-steps">
+          <div class="guide-step">
+            <strong>Windows 10 / 11:</strong> Right-click downloaded <code>.otf</code> or <code>.ttf</code> and select <em>"Install"</em> or <em>"Install for all users"</em>.
+          </div>
+          <div class="guide-step">
+            <strong>macOS:</strong> Double-click the font file and click <em>"Install Font"</em> in Font Book.
+          </div>
+          <div class="guide-step">
+            <strong>Photoshop / Illustrator / Figma:</strong> Restart the application after installing; the font family will appear in your font picker with all 3 weights.
+          </div>
+          <div class="guide-step">
+            <strong>Microsoft Word:</strong> Choose the font family from the ribbon font dropdown.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Abdullah FontStudio Pro &copy; 2026. High-Precision Vector Typography Reconstructor.</p>
+  </footer>
+
+  <!-- Modal for Vector Glyph Inspection -->
+  <div id="glyph-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-glyph-title">Glyph Inspection</h3>
+        <button class="btn-close" onclick="closeGlyphModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-glyph-comparison">
+          <div class="glyph-preview-box">
+            <span class="box-label">Raw Raster Artwork</span>
+            <img id="modal-raster-img" src="" alt="Raster Artwork">
+          </div>
+          <div class="glyph-preview-box">
+            <span class="box-label">Cleaned Vector Outline</span>
+            <svg id="modal-vector-svg" viewBox="0 0 1000 1000" class="vector-svg-display">
+              <path id="modal-svg-path" d="" fill="#ffc72c"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="modal-controls">
+          <div class="form-group">
+            <label>Assigned Character:</label>
+            <input type="text" id="modal-char-input" maxlength="2" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Left Side Bearing (LSB):</label>
+            <input type="number" id="modal-lsb-input" value="40" class="form-input">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeGlyphModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveGlyphModal()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

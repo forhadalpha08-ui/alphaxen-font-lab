@@ -1,0 +1,23 @@
+{
+  "name": "backend-worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": " wrangler dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260819.1",
+    "@types/crypto-js": "^4.2.2",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.124.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}

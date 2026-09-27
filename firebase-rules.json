@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "system": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "customers": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "applications": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "resellers": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "webhookSettings": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "resellerWebhooks": {
+      ".read": true,
+      ".write": "auth != null"
+    }
+  }
+}

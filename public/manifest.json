@@ -1,0 +1,99 @@
+{
+  "name": "Alphaxen Type Foundry - Digital Typography & Font Marketplace",
+  "short_name": "Alphaxen Fonts",
+  "description": "Premier digital type foundry and font marketplace. Discover precision-engineered variable fonts, editorial serifs, specular metallic chrome typefaces, live specimen testing, and perpetual commercial licensing.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "theme_color": "#070a13",
+  "background_color": "#070a13",
+  "lang": "en-US",
+  "categories": [
+    "design",
+    "graphics",
+    "productivity",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Font Catalog & Shop",
+      "short_name": "Fonts",
+      "description": "Browse and license authentic variable typefaces",
+      "url": "/#/shop",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Buyer Vault & Licenses",
+      "short_name": "Vault",
+      "description": "Access purchased font assets, Webfont CDN codes, and commercial keys",
+      "url": "/#/buyer",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Type Foundry Creator Studio",
+      "short_name": "Creator Studio",
+      "description": "Publish font families, issue enterprise keys, and track 85% royalties",
+      "url": "/#/seller",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Install Alphaxen App",
+      "short_name": "Install",
+      "description": "Install native desktop and mobile typography workstation",
+      "url": "/#/install",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

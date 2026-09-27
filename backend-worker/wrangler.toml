@@ -1,0 +1,10 @@
+name = "hamza-backend"
+main = "src/index.ts"
+compatibility_date = "2026-08-19"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+FIREBASE_DB_URL = "https://zenix-auth-b04c1-default-rtdb.firebaseio.com"
+VITE_DB_SECRET = "znx_secret_5bce8548926d4fc4997f6712c22f6e46"
+
+FIREBASE_DB_SECRET = "LWiDWKRAidn9Ghx0rUojilCAAC8NLXzmxM9dqARh"

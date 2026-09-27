@@ -1,0 +1,1346 @@
+/* =========================================================
+   TRUE AUTHENTIC ALPHAXEN FONT FAMILIES (TTF / OTF)
+   ========================================================= */
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel Color';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel Color';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/Abdullah%20Martel.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel Color';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel Color';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Martel';
+  src: url('/fonts/Abdullah%20Martel/AbdullahMartel.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome Color';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome Color';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/Abdullah%20Metallic%20Chrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome Color';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome Color';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Metallic Chrome';
+  src: url('/fonts/Abdullah%20Metallic%20Chrome/AbdullahMetallicChrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome Color';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome Color';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/Abdullah%20Molten%20Chrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome Color';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome Color';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Molten Chrome';
+  src: url('/fonts/Abdullah%20Molten%20Chrome/AbdullahMoltenChrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome Color';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome Color';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/Abdullah%20Moon%20Chrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome Color';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome Color';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Moon Chrome';
+  src: url('/fonts/Abdullah%20Moon%20Chrome/AbdullahMoonChrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome Color';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome Color';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/Abdullah%20Stone%20Chrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome Color';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome Color';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Chrome';
+  src: url('/fonts/Abdullah%20Stone%20Chrome/AbdullahStoneChrome.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon Color';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon Color';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/Abdullah%20Stone%20Moon.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon Color';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Color.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon Color';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Color.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Vector.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon-Vector.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abdullah Stone Moon';
+  src: url('/fonts/Abdullah%20Stone%20Moon/AbdullahStoneMoon.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
