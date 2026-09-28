@@ -757,6 +757,15 @@ EULA COMMERCIAL RIGHTS:
                           <img
                             src={font.specimenImage}
                             alt={`${font.name} Master Specimen Artwork`}
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              const currentSrc = target.getAttribute('src') || '';
+                              if (currentSrc.startsWith('./')) {
+                                target.src = currentSrc.replace('./', '/');
+                              } else if (currentSrc.startsWith('/')) {
+                                target.src = currentSrc.slice(1);
+                              }
+                            }}
                             className="w-full h-48 sm:h-52 object-cover object-center group-hover/img:scale-105 transition-transform duration-500 select-none block"
                             loading="lazy"
                           />
@@ -764,6 +773,15 @@ EULA COMMERCIAL RIGHTS:
                             <img
                               src={font.watermarkImage}
                               alt="Foundry Emblem"
+                              onError={(e) => {
+                                const target = e.currentTarget;
+                                const currentSrc = target.getAttribute('src') || '';
+                                if (currentSrc.startsWith('./')) {
+                                  target.src = currentSrc.replace('./', '/');
+                                } else if (currentSrc.startsWith('/')) {
+                                  target.src = currentSrc.slice(1);
+                                }
+                              }}
                               className="absolute top-3 right-3 w-9 h-9 object-contain opacity-95 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                             />
                           )}
@@ -1025,12 +1043,30 @@ EULA COMMERCIAL RIGHTS:
                     <img
                       src={inspectFont.specimenImage}
                       alt={`${inspectFont.name} Specimen`}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        const currentSrc = target.getAttribute('src') || '';
+                        if (currentSrc.startsWith('./')) {
+                          target.src = currentSrc.replace('./', '/');
+                        } else if (currentSrc.startsWith('/')) {
+                          target.src = currentSrc.slice(1);
+                        }
+                      }}
                       className="w-full h-56 object-cover object-center pointer-events-none select-none"
                     />
                     {inspectFont.watermarkImage && (
                       <img
                         src={inspectFont.watermarkImage}
                         alt="Watermark"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          const currentSrc = target.getAttribute('src') || '';
+                          if (currentSrc.startsWith('./')) {
+                            target.src = currentSrc.replace('./', '/');
+                          } else if (currentSrc.startsWith('/')) {
+                            target.src = currentSrc.slice(1);
+                          }
+                        }}
                         className="absolute top-4 right-4 w-9 h-9 object-contain opacity-90 drop-shadow-lg pointer-events-none"
                       />
                     )}

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getAssetUrl } from '../services/fontData';
 
 type BrandMarkProps = {
   mode?: 'default' | 'compact' | 'large';
@@ -11,6 +12,19 @@ type BrandMarkProps = {
 const BrandMark: React.FC<BrandMarkProps> = ({ mode = 'default', suffix, className = '', disableLink = false }) => {
   const compact = mode === 'compact';
   const large = mode === 'large';
+  const [imgSrc, setImgSrc] = useState<string>(() => getAssetUrl('ax.png'));
+
+  useEffect(() => {
+    setImgSrc(getAssetUrl('ax.png'));
+  }, []);
+
+  const handleImgError = () => {
+    if (imgSrc.startsWith('./')) {
+      setImgSrc('/ax.png');
+    } else if (imgSrc.startsWith('/')) {
+      setImgSrc('ax.png');
+    }
+  };
 
   const normalizedSuffix = suffix?.trim().toUpperCase();
   const showCustomBadge = Boolean(normalizedSuffix && normalizedSuffix !== 'FONT LAB' && normalizedSuffix !== 'DEFAULT');
@@ -18,8 +32,9 @@ const BrandMark: React.FC<BrandMarkProps> = ({ mode = 'default', suffix, classNa
   const content = (
     <div className={`inline-flex items-center gap-3 sm:gap-4 select-none group ${className}`.trim()}>
       <img
-        src="/ax.png"
+        src={imgSrc}
         alt="Alphaxen Font Lab"
+        onError={handleImgError}
         className={`w-auto object-contain transition-all duration-300 group-hover:brightness-110 group-hover:scale-[1.03] ${
           compact
             ? 'h-[34px] sm:h-[40px]'

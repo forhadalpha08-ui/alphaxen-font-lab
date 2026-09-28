@@ -442,6 +442,15 @@ export const BuyerPortal: React.FC = () => {
                           <img
                             src={font.specimenImage}
                             alt={font.name}
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              const currentSrc = target.getAttribute('src') || '';
+                              if (currentSrc.startsWith('./')) {
+                                target.src = currentSrc.replace('./', '/');
+                              } else if (currentSrc.startsWith('/')) {
+                                target.src = currentSrc.slice(1);
+                              }
+                            }}
                             className="w-full h-40 object-cover object-center group-hover/img:scale-105 transition-transform duration-500 select-none block"
                           />
                           <div className="absolute bottom-2 left-2.5 px-2.5 py-0.5 rounded-full bg-black/90 text-[8.5px] font-mono font-bold text-purple-300 uppercase tracking-wider border border-white/20 flex items-center gap-1 shadow-lg">

@@ -13,6 +13,7 @@ import {
   Maximize2, Box, Palette, Award
 } from 'lucide-react';
 import { InstallAppModal } from './InstallAppModal';
+import { getAssetUrl } from '../services/fontData';
 
 export type ScreenId = 'welcome' | 'home' | 'chat' | 'tasks' | 'overview' | 'explore' | 'files' | 'profile';
 
@@ -453,7 +454,19 @@ export const MobileDemoShowcase: React.FC = () => {
                 <div className="flex-1 p-6 flex flex-col items-center justify-between text-center animate-fade-in relative z-20">
                   <div className="pt-6">
                     <div className="w-20 h-20 mx-auto neu-btn-primary rounded-3xl flex items-center justify-center mb-6 shadow-2xl shadow-purple-500/40 relative overflow-hidden p-2">
-                      <img src="/ax.png" alt="Alphaxen" className="w-full h-full object-contain" />
+                      <img
+                        src={getAssetUrl('ax.png')}
+                        alt="Alphaxen"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (target.src.includes('./ax.png')) {
+                            target.src = '/ax.png';
+                          } else if (target.src.endsWith('/ax.png')) {
+                            target.src = 'ax.png';
+                          }
+                        }}
+                        className="w-full h-full object-contain"
+                      />
                       <div className="absolute -inset-1 rounded-3xl border border-white/40 animate-ping opacity-30 pointer-events-none" />
                     </div>
                     <h1 className="text-2xl font-black text-white tracking-tight uppercase font-grotesk">ALPHAXEN PRIME</h1>

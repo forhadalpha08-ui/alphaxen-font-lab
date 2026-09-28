@@ -588,6 +588,15 @@ export const Landing: React.FC = () => {
                       <img
                         src={font.specimenImage}
                         alt={`${font.name} Specimen`}
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          const currentSrc = target.getAttribute('src') || '';
+                          if (currentSrc.startsWith('./')) {
+                            target.src = currentSrc.replace('./', '/');
+                          } else if (currentSrc.startsWith('/')) {
+                            target.src = currentSrc.slice(1);
+                          }
+                        }}
                         className="w-full h-36 object-cover object-center group-hover/img:scale-105 transition-transform duration-500 pointer-events-none select-none"
                         loading="lazy"
                       />
@@ -595,6 +604,15 @@ export const Landing: React.FC = () => {
                         <img
                           src={font.watermarkImage}
                           alt="Watermark"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            const currentSrc = target.getAttribute('src') || '';
+                            if (currentSrc.startsWith('./')) {
+                              target.src = currentSrc.replace('./', '/');
+                            } else if (currentSrc.startsWith('/')) {
+                              target.src = currentSrc.slice(1);
+                            }
+                          }}
                           className="absolute top-2.5 right-2.5 w-6 h-6 object-contain opacity-80 pointer-events-none drop-shadow-md"
                         />
                       )}
