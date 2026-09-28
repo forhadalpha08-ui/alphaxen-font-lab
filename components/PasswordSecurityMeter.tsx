@@ -64,12 +64,12 @@ export const PasswordSecurityMeter: React.FC<PasswordSecurityMeterProps> = ({
             key={idx}
             className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-[10px] font-mono uppercase transition-all ${
               req.valid
-                ? 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-bold shadow-[0_0_12px_rgba(52,211,153,0.15)]'
-                : 'bg-[#050814] border border-white/10 text-slate-400'
+                ? 'bg-purple-500/15 border border-purple-500/40 text-purple-300 font-bold shadow-[0_0_12px_rgba(139,92,246,0.2)]'
+                : 'bg-[#0b0e17] border border-white/10 text-slate-400'
             }`}
           >
             {req.valid ? (
-              <Check size={12} className="text-emerald-400 stroke-[3]" />
+              <Check size={12} className="text-purple-400 stroke-[3]" />
             ) : (
               <span className="w-1.5 h-1.5 rounded-full bg-slate-500 mx-0.5" />
             )}
@@ -88,9 +88,9 @@ export const PasswordSecurityMeter: React.FC<PasswordSecurityMeterProps> = ({
               const generated = generateSecurePassword(8);
               onSelectGenerated(generated);
             }}
-            className="neu-btn px-3 py-1 rounded-xl text-[9px] font-black uppercase tracking-wider text-cyan-300 hover:text-white flex items-center gap-1 cursor-pointer transition-all hover:scale-105"
+            className="neu-btn px-3 py-1 rounded-xl text-[9px] font-black uppercase tracking-wider text-purple-300 hover:text-white flex items-center gap-1 cursor-pointer transition-all hover:scale-105"
           >
-            <Sparkles size={11} className="text-cyan-400" />
+            <Sparkles size={11} className="text-purple-400" />
             <span>AUTO-GENERATE</span>
           </button>
         </div>

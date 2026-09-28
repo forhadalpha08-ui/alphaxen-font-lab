@@ -50,7 +50,7 @@ export const InstallApp: React.FC = () => {
     window.location.href = window.location.origin ? window.location.origin + "/#/" : "https://alphaxen.com/#/";
   </script>
 </head>
-<body style="background:#070a13;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+<body style="background:#0b0e17;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
   <div style="text-align:center;">
     <h2>Launching Alphaxen Type Foundry...</h2>
     <p>Opening your typography workstation in standalone window.</p>
@@ -80,10 +80,10 @@ export const InstallApp: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 selection:bg-cyan-500/30 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 selection:bg-purple-500/30 font-sans overflow-x-hidden">
       
       {/* Top Sticky Header */}
-      <header className="sticky top-0 z-50 w-full bg-[#070a13]/98 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+      <header className="sticky top-0 z-50 w-full bg-transparent max-md:border-transparent max-md:shadow-none md:bg-[#0b0e17]/98 md:backdrop-blur-xl md:border-b md:border-white/10 md:shadow-2xl">
         <div className="max-w-7xl mx-auto px-6 sm:px-12 py-3.5 flex justify-between items-center">
           <BrandMark suffix="APP DOWNLOAD & INSTALL" />
           
@@ -94,7 +94,7 @@ export const InstallApp: React.FC = () => {
             <Link to="/shop" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white">
               FONT CATALOG
             </Link>
-            <Link to="/buyer" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-indigo-300 hover:text-white">
+            <Link to="/buyer" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-300 hover:text-white">
               BUYER VAULT
             </Link>
             <Link to="/seller" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-300 hover:text-white">
@@ -109,16 +109,16 @@ export const InstallApp: React.FC = () => {
         
         {/* Hero Banner */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <Link to="/" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400 hover:text-white transition-colors mb-2">
+          <Link to="/" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-purple-400 hover:text-white transition-colors mb-2">
             <ArrowLeft size={14} /> BACK TO HOME MARKETPLACE
           </Link>
-          <div className="inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-[#131b2e] border border-cyan-500/40 text-[10px] font-black uppercase tracking-[0.25em] text-cyan-300 shadow-md">
-            <Download size={13} className="text-cyan-400" />
+          <div className="inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-[#141414] border border-purple-500/40 text-[10px] font-black uppercase tracking-[0.25em] text-purple-300 shadow-md">
+            <Download size={13} className="text-purple-400" />
             <span>UNIVERSAL PROGRESSIVE WEB APPLICATION (PWA)</span>
           </div>
           <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white font-grotesk leading-tight">
             INSTALL ALPHAXEN <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-sky-400">
               ON ANY DEVICE.
             </span>
           </h1>
@@ -128,11 +128,11 @@ export const InstallApp: React.FC = () => {
         </div>
 
         {/* Primary 1-Click Action Bar */}
-        <div className="bg-[#0c101d] border border-white/20 p-6 sm:p-8 rounded-[2.5rem] shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="bg-[#0a0a0a] border border-white/20 p-6 sm:p-8 rounded-[2.5rem] shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(52,211,153,1)]" />
-              <span className="text-xs font-black uppercase tracking-wider text-emerald-300">
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse shadow-[0_0_10px_rgba(139,92,246,1)]" />
+              <span className="text-xs font-black uppercase tracking-wider text-purple-300">
                 {isInstalled ? 'ALPHAXEN INSTALLED & READY' : '1-CLICK NATIVE PWA INSTALLATION'}
               </span>
             </div>
@@ -152,7 +152,7 @@ export const InstallApp: React.FC = () => {
 
             <button
               onClick={handleDownloadStandaloneLauncher}
-              className="neu-btn h-14 px-6 rounded-2xl font-black uppercase tracking-[0.15em] text-[10px] text-cyan-300 hover:text-white flex items-center gap-2 cursor-pointer transition-all border border-cyan-500/40"
+              className="neu-btn h-14 px-6 rounded-2xl font-black uppercase tracking-[0.15em] text-[10px] text-purple-300 hover:text-white flex items-center gap-2 cursor-pointer transition-all border border-purple-500/40"
               title="Download standalone launcher file"
             >
               <HardDrive size={15} />
@@ -163,7 +163,7 @@ export const InstallApp: React.FC = () => {
 
         {/* Platform Selection Tabs */}
         <div className="space-y-6">
-          <div className="flex items-center justify-center gap-2 p-1.5 bg-[#050814] border border-white/20 rounded-2xl overflow-x-auto custom-scrollbar">
+          <div className="flex items-center justify-center gap-2 p-1.5 bg-[#0b0e17] border border-white/20 rounded-2xl overflow-x-auto custom-scrollbar">
             {platforms.map((p) => (
               <button
                 key={p.id}
@@ -177,7 +177,7 @@ export const InstallApp: React.FC = () => {
                 {p.icon}
                 <span>{p.label}</span>
                 {detectedPlatform === p.id && (
-                  <span className="px-2 py-0.5 rounded-full text-[8px] font-black uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                  <span className="px-2 py-0.5 rounded-full text-[8px] font-black uppercase bg-purple-500/20 text-purple-300 border border-purple-500/30">
                     DETECTED
                   </span>
                 )}
@@ -186,14 +186,14 @@ export const InstallApp: React.FC = () => {
           </div>
 
           {/* Platform Specific Step-by-Step Installation Cards */}
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 rounded-[2.5rem] shadow-2xl space-y-8">
+          <div className="bg-[#0a0a0a] border border-white/20 p-8 sm:p-12 rounded-[2.5rem] shadow-2xl space-y-8">
             
             {/* WINDOWS TAB */}
             {activeTab === 'windows' && (
               <div className="space-y-8 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                       <Monitor size={24} />
                     </div>
                     <div>
@@ -207,24 +207,24 @@ export const InstallApp: React.FC = () => {
                   </div>
                   <button
                     onClick={handleNativeInstall}
-                    className="neu-btn-cyan px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white cursor-pointer hover:scale-105"
+                    className="neu-btn-primary px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white cursor-pointer hover:scale-105"
                   >
                     TRIGGER INSTALL
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       1
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">OPEN IN EDGE OR CHROME</h4>
                     <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                      Navigate to <code className="text-cyan-300 bg-black/40 px-1.5 py-0.5 rounded">alphaxen.com</code> in any Chromium browser on your PC.
+                      Navigate to <code className="text-purple-300 bg-black/40 px-1.5 py-0.5 rounded">alphaxen.com</code> in any Chromium browser on your PC.
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
                     <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       2
                     </div>
@@ -234,8 +234,8 @@ export const InstallApp: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       3
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">PIN TO TASKBAR / START</h4>
@@ -267,17 +267,17 @@ export const InstallApp: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       1
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">IN SAFARI: FILE MENU</h4>
                     <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                      In the top Mac menu bar, click <strong className="text-white">File</strong> and select <strong className="text-cyan-300">"Add to Dock..."</strong>.
+                      In the top Mac menu bar, click <strong className="text-white">File</strong> and select <strong className="text-purple-300">"Add to Dock..."</strong>.
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
                     <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       2
                     </div>
@@ -287,8 +287,8 @@ export const InstallApp: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       3
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">DOCK & STAGE MANAGER</h4>
@@ -304,7 +304,7 @@ export const InstallApp: React.FC = () => {
             {activeTab === 'ios' && (
               <div className="space-y-8 animate-fade-in">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                     <Apple size={24} />
                   </div>
                   <div>
@@ -318,20 +318,20 @@ export const InstallApp: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       1
                     </div>
                     <h4 className="text-sm font-black uppercase text-white flex items-center gap-2">
-                      <Share size={16} className="text-cyan-400" />
+                      <Share size={16} className="text-purple-400" />
                       <span>TAP SHARE BUTTON</span>
                     </h4>
                     <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                      Open <code className="text-cyan-300 bg-black/40 px-1.5 py-0.5 rounded">alphaxen.com</code> in Safari, then tap the <strong className="text-white">Share</strong> icon at the bottom of the screen.
+                      Open <code className="text-purple-300 bg-black/40 px-1.5 py-0.5 rounded">alphaxen.com</code> in Safari, then tap the <strong className="text-white">Share</strong> icon at the bottom of the screen.
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
                     <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       2
                     </div>
@@ -344,12 +344,12 @@ export const InstallApp: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       3
                     </div>
                     <h4 className="text-sm font-black uppercase text-white flex items-center gap-2">
-                      <CheckCircle2 size={16} className="text-emerald-400" />
+                      <CheckCircle2 size={16} className="text-purple-400" />
                       <span>TAP ADD</span>
                     </h4>
                     <p className="text-xs text-slate-300 leading-relaxed font-medium">
@@ -365,7 +365,7 @@ export const InstallApp: React.FC = () => {
               <div className="space-y-8 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                       <Smartphone size={24} />
                     </div>
                     <div>
@@ -386,17 +386,17 @@ export const InstallApp: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       1
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">TAP INSTALL PROMPT</h4>
                     <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                      Tap the <strong className="text-cyan-300">"Install App"</strong> button above, or check the install banner at the bottom of Chrome.
+                      Tap the <strong className="text-purple-300">"Install App"</strong> button above, or check the install banner at the bottom of Chrome.
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
                     <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       2
                     </div>
@@ -406,8 +406,8 @@ export const InstallApp: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       3
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">NATIVE WEBAPK READY</h4>
@@ -424,7 +424,7 @@ export const InstallApp: React.FC = () => {
               <div className="space-y-8 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                       <Globe size={24} />
                     </div>
                     <div>
@@ -439,8 +439,8 @@ export const InstallApp: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       1
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">OPEN IN CHROMIUM</h4>
@@ -449,7 +449,7 @@ export const InstallApp: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
                     <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       2
                     </div>
@@ -459,13 +459,13 @@ export const InstallApp: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-3">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono font-black flex items-center justify-center text-sm">
+                  <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-black flex items-center justify-center text-sm">
                       3
                     </div>
                     <h4 className="text-sm font-black uppercase text-white">APP LAUNCHER INTEGRATED</h4>
                     <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                      Creates an official <code className="text-emerald-300 font-mono text-[11px]">.desktop</code> entry in your GNOME / KDE / XFCE app drawer.
+                      Creates an official <code className="text-purple-300 font-mono text-[11px]">.desktop</code> entry in your GNOME / KDE / XFCE app drawer.
                     </p>
                   </div>
                 </div>
@@ -475,9 +475,9 @@ export const InstallApp: React.FC = () => {
         </div>
 
         {/* NATIVE APP CAPABILITIES MATRIX */}
-        <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 rounded-[2.5rem] shadow-2xl space-y-8">
+        <div className="bg-[#0a0a0a] border border-white/20 p-8 sm:p-12 rounded-[2.5rem] shadow-2xl space-y-8">
           <div>
-            <div className="inline-block px-4 py-1 rounded-full bg-[#131b2e] border border-cyan-500/30 text-cyan-300 text-[9px] font-black uppercase tracking-widest mb-2">
+            <div className="inline-block px-4 py-1 rounded-full bg-[#141414] border border-purple-500/30 text-purple-300 text-[9px] font-black uppercase tracking-widest mb-2">
               WHY INSTALL ALPHAXEN APP?
             </div>
             <h3 className="text-3xl font-black uppercase tracking-tight text-white font-grotesk">
@@ -486,8 +486,8 @@ export const InstallApp: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-2">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 flex items-center justify-center">
+            <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                 <Zap size={20} />
               </div>
               <h4 className="text-xs font-black uppercase tracking-wider text-white">0ms INSTANT LAUNCH</h4>
@@ -496,7 +496,7 @@ export const InstallApp: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-2">
+            <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-2">
               <div className="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                 <Cpu size={20} />
               </div>
@@ -506,8 +506,8 @@ export const InstallApp: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-2">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+            <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                 <HardDrive size={20} />
               </div>
               <h4 className="text-xs font-black uppercase tracking-wider text-white">OFFLINE VAULT CACHE</h4>
@@ -516,8 +516,8 @@ export const InstallApp: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-2">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+            <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30 flex items-center justify-center">
                 <ShieldCheck size={20} />
               </div>
               <h4 className="text-xs font-black uppercase tracking-wider text-white">SECURE DRM VAULT</h4>
@@ -531,7 +531,7 @@ export const InstallApp: React.FC = () => {
       </div>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/[0.08] bg-[#050814] pt-16 pb-28 sm:pb-16 px-6 sm:px-8 relative z-10 overflow-hidden">
+      <footer className="footer-vertex-gradient pt-16 pb-28 sm:pb-16 px-6 sm:px-12 relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <Link to="/">
             <BrandMark mode="default" />

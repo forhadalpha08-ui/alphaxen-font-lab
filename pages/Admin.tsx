@@ -564,8 +564,8 @@ export const Admin: React.FC = () => {
     const pendingCount = users.filter((u) => u.status === 'pending').length;
     const buyerCount = users.filter((u) => u.canBuy).length;
     const sellerCount = users.filter((u) => u.canSell).length;
-    const totalMarketplaceVolume = users.reduce((acc, u) => acc + u.totalSpent, 0);
-    const totalCreatorRoyalties = users.reduce((acc, u) => acc + u.totalEarnings, 0);
+    const totalMarketplaceVolume = Math.round(users.reduce((acc, u) => acc + (u.totalSpent || 0), 0));
+    const totalCreatorRoyalties = Math.round(users.reduce((acc, u) => acc + (u.totalEarnings || 0), 0));
 
     return {
       totalUsers,
@@ -582,9 +582,7 @@ export const Admin: React.FC = () => {
   // ==========================================
   if (!isAdminAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#070a13] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden selection:bg-cyan-500/30">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-indigo-600/20 via-purple-600/20 to-cyan-500/15 blur-[140px] -z-10 pointer-events-none" />
-
+      <div className="min-h-screen bg-[#0b0e17] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden selection:bg-purple-500/30">
         <div className="w-full max-w-md space-y-8 animate-slide-up relative z-10">
           <div className="text-center space-y-3">
             <div className="flex justify-center mb-2">
@@ -612,7 +610,7 @@ export const Admin: React.FC = () => {
                   <span className="text-[11px] font-normal text-slate-400">Strictly lowercase</span>
                 </label>
                 <div className="relative group">
-                  <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors" />
+                  <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-400 transition-colors" />
                   <input
                     type="email"
                     required
@@ -622,7 +620,7 @@ export const Admin: React.FC = () => {
                     value={adminLoginEmail}
                     onChange={(e) => setAdminLoginEmail(e.target.value.toLowerCase())}
                     placeholder="Enter admin email address"
-                    className="w-full liquid-glass-inset rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-cyan-500/60 focus:ring-2 focus:ring-cyan-500/20 transition-all lowercase"
+                    className="w-full liquid-glass-inset rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-purple-500/60 focus:ring-2 focus:ring-purple-500/20 transition-all lowercase"
                   />
                 </div>
               </div>
@@ -633,20 +631,20 @@ export const Admin: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowAdminPassword(!showAdminPassword)}
-                    className="text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1 cursor-pointer"
+                    className="text-[11px] font-semibold text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-1 cursor-pointer"
                   >
                     {showAdminPassword ? <EyeOff size={13} /> : <Eye size={13} />}
                     <span>{showAdminPassword ? 'Hide' : 'Show'}</span>
                   </button>
                 </label>
                 <div className="relative group">
-                  <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-400 transition-colors" />
+                  <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-400 transition-colors" />
                   <input
                     type={showAdminPassword ? 'text' : 'password'}
                     placeholder="Enter master password"
                     value={adminLoginPassword}
                     onChange={(e) => setAdminLoginPassword(e.target.value)}
-                    className="w-full liquid-glass-inset rounded-2xl pl-12 pr-12 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-indigo-500/60 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                    className="w-full liquid-glass-inset rounded-2xl pl-12 pr-12 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-purple-500/60 focus:ring-2 focus:ring-purple-500/20 transition-all"
                   />
                   <button
                     type="button"
@@ -687,7 +685,7 @@ export const Admin: React.FC = () => {
   // AUTHENTICATED ADMIN DASHBOARD
   // ==========================================
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 flex flex-col selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 flex flex-col selection:bg-purple-500/30">
       
       {/* Toast Notification */}
       {toast && (
@@ -696,8 +694,8 @@ export const Admin: React.FC = () => {
             toast.type === 'error'
               ? 'bg-rose-950/90 border-rose-500/40 text-rose-200'
               : toast.type === 'info'
-              ? 'bg-cyan-950/90 border-cyan-500/40 text-cyan-200'
-              : 'bg-emerald-950/90 border-emerald-500/40 text-emerald-200'
+              ? 'bg-purple-950/90 border-purple-500/40 text-purple-200'
+              : 'bg-purple-950/90 border-purple-500/40 text-purple-200'
           }`}
         >
           {toast.type === 'error' ? <AlertTriangle size={18} /> : <CheckCircle2 size={18} />}
@@ -706,12 +704,12 @@ export const Admin: React.FC = () => {
       )}
 
       {/* TOP NAVIGATION BAR */}
-      <header className="sticky top-0 z-40 bg-[#070a13]/85 backdrop-blur-2xl border-b border-white/10 px-4 sm:px-8 py-4">
+      <header className="sticky top-0 z-40 bg-[#0b0e17]/85 backdrop-blur-2xl border-b border-white/10 px-4 sm:px-8 py-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-4">
             <BrandMark mode="compact" suffix="COMMAND CONSOLE" />
-            <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[10px] font-black tracking-widest uppercase text-cyan-300">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-[10px] font-black tracking-widest uppercase text-purple-300">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
               SYSTEM ACTIVE
             </span>
           </div>
@@ -727,7 +725,7 @@ export const Admin: React.FC = () => {
 
             <Link
               to="/buyer"
-              className="neu-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-cyan-300 hover:text-white flex items-center gap-2"
+              className="neu-btn px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-purple-300 hover:text-white flex items-center gap-2"
             >
               <ShoppingBag size={14} />
               <span>Buyer Vault</span>
@@ -758,14 +756,14 @@ export const Admin: React.FC = () => {
         
         {/* TOP STATS CARDS */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="liquid-glass p-6 rounded-3xl space-y-2 border-indigo-500/20">
+          <div className="liquid-glass p-6 rounded-3xl space-y-2 border-purple-500/20">
             <div className="flex justify-between items-center text-slate-400 text-xs font-bold uppercase tracking-wider">
               <span>Total Accounts</span>
-              <Users size={16} className="text-indigo-400" />
+              <Users size={16} className="text-purple-400" />
             </div>
-            <div className="text-3xl font-black text-white font-grotesk">{stats.totalUsers}</div>
+            <div className="text-2xl sm:text-3xl font-black text-white font-grotesk whitespace-nowrap overflow-hidden text-ellipsis">{stats.totalUsers.toLocaleString()}</div>
             <div className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
-              <span className="text-cyan-400">{stats.buyerCount} Buyers</span> • <span className="text-purple-400">{stats.sellerCount} Sellers</span>
+              <span className="text-purple-400">{stats.buyerCount} Buyers</span> • <span className="text-purple-400">{stats.sellerCount} Sellers</span>
             </div>
           </div>
 
@@ -774,18 +772,18 @@ export const Admin: React.FC = () => {
               <span>Pending Approvals</span>
               <Clock size={16} className="text-purple-400" />
             </div>
-            <div className="text-3xl font-black text-purple-300 font-grotesk">{stats.pendingCount}</div>
+            <div className="text-2xl sm:text-3xl font-black text-purple-300 font-grotesk whitespace-nowrap overflow-hidden text-ellipsis">{stats.pendingCount.toLocaleString()}</div>
             <div className="text-[11px] font-semibold text-purple-400/90">
               {stats.pendingCount > 0 ? 'Action required in queue' : 'All users verified'}
             </div>
           </div>
 
-          <div className="liquid-glass p-6 rounded-3xl space-y-2 border-cyan-500/20">
+          <div className="liquid-glass p-6 rounded-3xl space-y-2 border-purple-500/20">
             <div className="flex justify-between items-center text-slate-400 text-xs font-bold uppercase tracking-wider">
               <span>Marketplace Volume</span>
-              <DollarSign size={16} className="text-cyan-400" />
+              <DollarSign size={16} className="text-purple-400" />
             </div>
-            <div className="text-3xl font-black text-cyan-300 font-grotesk">${stats.totalMarketplaceVolume.toLocaleString()}</div>
+            <div className="text-2xl sm:text-3xl font-black text-purple-300 font-grotesk whitespace-nowrap overflow-hidden text-ellipsis">${stats.totalMarketplaceVolume.toLocaleString()}</div>
             <div className="text-[11px] font-semibold text-slate-400">Total lifetime font sales</div>
           </div>
 
@@ -794,7 +792,7 @@ export const Admin: React.FC = () => {
               <span>Creator Royalties (85%)</span>
               <Sparkles size={16} className="text-purple-400" />
             </div>
-            <div className="text-3xl font-black text-purple-300 font-grotesk">${stats.totalCreatorRoyalties.toLocaleString()}</div>
+            <div className="text-2xl sm:text-3xl font-black text-purple-300 font-grotesk whitespace-nowrap overflow-hidden text-ellipsis">${stats.totalCreatorRoyalties.toLocaleString()}</div>
             <div className="text-[11px] font-semibold text-slate-400">Dispatched to designers</div>
           </div>
         </div>
@@ -874,7 +872,7 @@ export const Admin: React.FC = () => {
                   placeholder="Search by user name, studio, email address, or country..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full liquid-glass-inset rounded-2xl pl-12 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-cyan-500/60"
+                  className="w-full liquid-glass-inset rounded-2xl pl-12 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-purple-500/60"
                 />
                 {searchQuery && (
                   <button
@@ -956,7 +954,7 @@ export const Admin: React.FC = () => {
                               <div className="flex items-center gap-2">
                                 <span className="font-bold text-white text-sm">{user.name}</span>
                                 {user.verifiedBadge && (
-                                  <ShieldCheck size={14} className="text-cyan-400" title="Verified Account" />
+                                  <ShieldCheck size={14} className="text-purple-400" title="Verified Account" />
                                 )}
                               </div>
                               <div className="text-slate-400 text-xs font-mono lowercase">{user.email}</div>
@@ -978,7 +976,7 @@ export const Admin: React.FC = () => {
                                   Foundry Seller
                                 </span>
                               ) : (
-                                <span className="px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 font-black text-[10px] uppercase tracking-wider border border-cyan-500/30">
+                                <span className="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 font-black text-[10px] uppercase tracking-wider border border-purple-500/30">
                                   Type Buyer
                                 </span>
                               )}
@@ -990,7 +988,7 @@ export const Admin: React.FC = () => {
                                 onClick={() => handleToggleAccess(user.id, 'buyer')}
                                 className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
                                   user.canBuy
-                                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30'
+                                    ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40 hover:bg-purple-500/30'
                                     : 'bg-slate-800 text-slate-500 hover:text-slate-300'
                                 }`}
                                 title="Toggle Buyer Access"
@@ -1016,8 +1014,8 @@ export const Admin: React.FC = () => {
                         {/* Status Badge */}
                         <td className="py-4 px-6">
                           {user.status === 'active' && (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-black text-[10px] uppercase tracking-wider">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 font-black text-[10px] uppercase tracking-wider">
+                              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
                               Approved
                             </span>
                           )}
@@ -1054,7 +1052,7 @@ export const Admin: React.FC = () => {
                             {/* Contact Buyer/Seller */}
                             <button
                               onClick={() => handleOpenContact(user)}
-                              className="neu-btn p-2.5 rounded-xl text-cyan-300 hover:text-white hover:border-cyan-500/50 transition-all cursor-pointer"
+                              className="neu-btn p-2.5 rounded-xl text-purple-300 hover:text-white hover:border-purple-500/50 transition-all cursor-pointer"
                               title={`Contact ${user.name}`}
                             >
                               <Mail size={15} />
@@ -1073,7 +1071,7 @@ export const Admin: React.FC = () => {
                             ) : user.status === 'suspended' ? (
                               <button
                                 onClick={() => handleApproveUser(user.id)}
-                                className="neu-btn px-3 py-2 rounded-xl text-[11px] font-bold text-emerald-400 hover:text-white flex items-center gap-1 cursor-pointer"
+                                className="neu-btn px-3 py-2 rounded-xl text-[11px] font-bold text-purple-400 hover:text-white flex items-center gap-1 cursor-pointer"
                                 title="Re-activate Account"
                               >
                                 <CheckCircle2 size={14} />
@@ -1148,7 +1146,7 @@ export const Admin: React.FC = () => {
 
             {users.filter((u) => u.status === 'pending').length === 0 ? (
               <div className="liquid-glass p-16 rounded-3xl text-center space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-xl">
+                <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center mx-auto shadow-xl">
                   <CheckCircle2 size={32} />
                 </div>
                 <h3 className="text-xl font-black text-white font-grotesk">Queue is Clear</h3>
@@ -1164,12 +1162,12 @@ export const Admin: React.FC = () => {
                     <div key={user.id} className="liquid-glass p-6 rounded-3xl space-y-4 border-purple-500/30 shadow-2xl relative">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-black flex items-center justify-center font-grotesk text-base shadow-lg">
+                          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 text-white font-black flex items-center justify-center font-grotesk text-base shadow-lg">
                             {user.name.charAt(0)}
                           </div>
                           <div>
                             <h3 className="font-black text-white text-base font-grotesk">{user.name}</h3>
-                            <p className="text-xs font-mono text-cyan-300 lowercase">{user.email}</p>
+                            <p className="text-xs font-mono text-purple-300 lowercase">{user.email}</p>
                             <p className="text-[11px] text-slate-400">{user.organization || 'Independent'} • {user.country || 'Global'}</p>
                           </div>
                         </div>
@@ -1250,7 +1248,7 @@ export const Admin: React.FC = () => {
 
                     <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
                       font.status === 'approved'
-                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                        ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
                         : font.status === 'rejected'
                         ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
                         : 'bg-purple-500/20 text-purple-300 border-purple-500/40'
@@ -1266,7 +1264,7 @@ export const Admin: React.FC = () => {
                     </div>
                     <div className="liquid-glass-inset p-2.5 rounded-xl">
                       <div className="text-[10px] text-slate-400 uppercase font-black">Commercial</div>
-                      <div className="text-sm font-black text-cyan-300">${font.commercialPrice}</div>
+                      <div className="text-sm font-black text-purple-300">${font.commercialPrice}</div>
                     </div>
                     <div className="liquid-glass-inset p-2.5 rounded-xl">
                       <div className="text-[10px] text-slate-400 uppercase font-black">Royalty (85%)</div>
@@ -1332,7 +1330,7 @@ export const Admin: React.FC = () => {
             <div className="liquid-glass p-6 rounded-3xl flex justify-between items-center">
               <div>
                 <h2 className="text-xl font-black uppercase tracking-tight text-white font-grotesk flex items-center gap-2">
-                  <MessageSquare className="text-cyan-400" />
+                  <MessageSquare className="text-purple-400" />
                   <span>Admin Contact & Dispatch Log</span>
                 </h2>
                 <p className="text-xs text-slate-300 font-medium">
@@ -1357,10 +1355,10 @@ export const Admin: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${
                           msg.type === 'approval'
-                            ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                            ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
                             : msg.type === 'warning'
                             ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                            : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                            : 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
                         }`}>
                           {msg.type}
                         </span>
@@ -1370,7 +1368,7 @@ export const Admin: React.FC = () => {
                     </div>
 
                     <div className="text-xs text-slate-400">
-                      To: <strong className="text-slate-200">{msg.userName}</strong> (<span className="font-mono text-cyan-300 lowercase">{msg.userEmail}</span>) • From: {msg.sender}
+                      To: <strong className="text-slate-200">{msg.userName}</strong> (<span className="font-mono text-purple-300 lowercase">{msg.userEmail}</span>) • From: {msg.sender}
                     </div>
 
                     <div className="liquid-glass-inset p-4 rounded-2xl text-xs text-slate-200 whitespace-pre-line leading-relaxed font-mono">
@@ -1398,7 +1396,7 @@ export const Admin: React.FC = () => {
             </button>
 
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 py-1 px-3.5 rounded-full liquid-glass-sm text-[9px] font-black uppercase tracking-[0.2em] text-cyan-300">
+              <div className="inline-flex items-center gap-2 py-1 px-3.5 rounded-full liquid-glass-sm text-[9px] font-black uppercase tracking-[0.2em] text-purple-300">
                 <Send size={12} />
                 OFFICIAL ADMINISTRATIVE DISPATCH
               </div>
@@ -1406,7 +1404,7 @@ export const Admin: React.FC = () => {
                 Contact {contactingUser.name}
               </h3>
               <p className="text-slate-300 text-xs font-medium">
-                Recipient Email: <strong className="text-cyan-300 font-mono lowercase">{contactingUser.email}</strong> • Role: <span className="uppercase">{contactingUser.role}</span>
+                Recipient Email: <strong className="text-purple-300 font-mono lowercase">{contactingUser.email}</strong> • Role: <span className="uppercase">{contactingUser.role}</span>
               </p>
             </div>
 
@@ -1448,7 +1446,7 @@ export const Admin: React.FC = () => {
                   required
                   value={messageSubject}
                   onChange={(e) => setMessageSubject(e.target.value)}
-                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-sm text-white font-semibold focus:outline-none focus:border-cyan-500"
+                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-sm text-white font-semibold focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -1461,7 +1459,7 @@ export const Admin: React.FC = () => {
                   required
                   value={messageBody}
                   onChange={(e) => setMessageBody(e.target.value)}
-                  className="w-full liquid-glass-inset rounded-2xl p-4 text-xs text-white font-mono focus:outline-none focus:border-cyan-500 leading-relaxed"
+                  className="w-full liquid-glass-inset rounded-2xl p-4 text-xs text-white font-mono focus:outline-none focus:border-purple-500 leading-relaxed"
                 />
               </div>
 
@@ -1532,7 +1530,7 @@ export const Admin: React.FC = () => {
                     required
                     value={editingUser.name}
                     onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500"
+                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500"
                   />
                 </div>
 
@@ -1548,7 +1546,7 @@ export const Admin: React.FC = () => {
                     spellCheck={false}
                     value={editingUser.email}
                     onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value.toLowerCase() })}
-                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500 lowercase"
+                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500 lowercase"
                   />
                 </div>
               </div>
@@ -1563,7 +1561,7 @@ export const Admin: React.FC = () => {
                     value={editingUser.organization || ''}
                     onChange={(e) => setEditingUser({ ...editingUser, organization: e.target.value })}
                     placeholder="e.g. Acme Media Corp"
-                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500"
+                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500"
                   />
                 </div>
 
@@ -1574,7 +1572,7 @@ export const Admin: React.FC = () => {
                   <select
                     value={editingUser.status}
                     onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value as UserStatus })}
-                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500 bg-[#0d1222]"
+                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500 bg-[#0d1222]"
                   >
                     <option value="active">Active (Approved)</option>
                     <option value="pending">Pending Approval</option>
@@ -1594,7 +1592,7 @@ export const Admin: React.FC = () => {
                       type="checkbox"
                       checked={editingUser.canBuy}
                       onChange={(e) => setEditingUser({ ...editingUser, canBuy: e.target.checked })}
-                      className="rounded accent-cyan-500 w-4 h-4"
+                      className="rounded accent-purple-500 w-4 h-4"
                     />
                     <span>Allow Buyer Access (Vault)</span>
                   </label>
@@ -1620,7 +1618,7 @@ export const Admin: React.FC = () => {
                   value={editingUser.notes || ''}
                   onChange={(e) => setEditingUser({ ...editingUser, notes: e.target.value })}
                   placeholder="Notes on contracts, license scope, or verification history..."
-                  className="w-full liquid-glass-inset rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full liquid-glass-inset rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -1677,7 +1675,7 @@ export const Admin: React.FC = () => {
                   placeholder="e.g. Apex Type Foundry"
                   value={newUserName}
                   onChange={(e) => setNewUserName(e.target.value)}
-                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500"
+                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -1694,7 +1692,7 @@ export const Admin: React.FC = () => {
                   placeholder="designer@company.com"
                   value={newUserEmail}
                   onChange={(e) => setNewUserEmail(e.target.value.toLowerCase())}
-                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500 lowercase"
+                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500 lowercase"
                 />
               </div>
 
@@ -1706,7 +1704,7 @@ export const Admin: React.FC = () => {
                   <select
                     value={newUserRole}
                     onChange={(e) => setNewUserRole(e.target.value as UserRole)}
-                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500 bg-[#0d1222]"
+                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500 bg-[#0d1222]"
                   >
                     <option value="buyer">Type Buyer</option>
                     <option value="seller">Type Foundry (Seller)</option>
@@ -1721,7 +1719,7 @@ export const Admin: React.FC = () => {
                   <select
                     value={newUserStatus}
                     onChange={(e) => setNewUserStatus(e.target.value as UserStatus)}
-                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500 bg-[#0d1222]"
+                    className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500 bg-[#0d1222]"
                   >
                     <option value="active">Approved (Instant Access)</option>
                     <option value="pending">Pending Approval</option>
@@ -1738,7 +1736,7 @@ export const Admin: React.FC = () => {
                   placeholder="e.g. Apex Design Labs"
                   value={newUserOrg}
                   onChange={(e) => setNewUserOrg(e.target.value)}
-                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-cyan-500"
+                  className="w-full liquid-glass-inset rounded-2xl px-4 py-3 text-xs text-white font-semibold focus:outline-none focus:border-purple-500"
                 />
               </div>
 

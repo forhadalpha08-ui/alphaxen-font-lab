@@ -59,10 +59,8 @@ export const getAssetUrl = (path: string): string => {
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:') || path.startsWith('blob:')) {
     return path;
   }
-  const base = import.meta.env.BASE_URL || '/';
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-  const cleanBase = base.endsWith('/') ? base : `${base}/`;
-  return `${cleanBase}${cleanPath}`;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return cleanPath;
 };
 
 export const FONT_CATALOG: FontItem[] = [

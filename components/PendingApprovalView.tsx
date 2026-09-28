@@ -37,11 +37,8 @@ export const PendingApprovalView: React.FC<PendingApprovalViewProps> = ({ user, 
   };
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden font-sans selection:bg-purple-500/30">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden font-sans selection:bg-purple-500/30">
       
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-tr from-blue-600/15 via-purple-600/15 to-cyan-500/10 blur-[140px] -z-10 pointer-events-none" />
-
       <div className="w-full max-w-xl space-y-8 animate-slide-up relative z-10">
         
         {/* Header Branding */}
@@ -65,7 +62,7 @@ export const PendingApprovalView: React.FC<PendingApprovalViewProps> = ({ user, 
           <div className="flex items-center gap-4">
             <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg border ${
               approvedNow
-                ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
+                ? 'bg-purple-500/20 text-purple-400 border-purple-500/40'
                 : 'bg-purple-500/20 text-purple-300 border-purple-500/40'
             }`}>
               {approvedNow ? <CheckCircle2 size={28} /> : <Clock size={28} className="animate-spin" style={{ animationDuration: '6s' }} />}
@@ -76,7 +73,7 @@ export const PendingApprovalView: React.FC<PendingApprovalViewProps> = ({ user, 
                 APPLICATION STATUS
               </div>
               <div className={`text-xl font-black font-grotesk uppercase tracking-tight ${
-                approvedNow ? 'text-emerald-400' : 'text-purple-300'
+                approvedNow ? 'text-purple-400' : 'text-purple-300'
               }`}>
                 {approvedNow ? 'STATUS: ACTIVE (APPROVED)' : 'STATUS: PENDING ADMIN APPROVAL'}
               </div>
@@ -91,7 +88,7 @@ export const PendingApprovalView: React.FC<PendingApprovalViewProps> = ({ user, 
             </div>
             <div className="flex justify-between items-center pb-2 border-b border-white/10">
               <span className="text-slate-400">EMAIL:</span>
-              <span className="text-cyan-300 font-bold">{user.email}</span>
+              <span className="text-purple-300 font-bold">{user.email}</span>
             </div>
             <div className="flex justify-between items-center pb-2 border-b border-white/10">
               <span className="text-slate-400">TARGET ROLE:</span>
@@ -116,7 +113,7 @@ export const PendingApprovalView: React.FC<PendingApprovalViewProps> = ({ user, 
                     <RefreshCw size={16} className="animate-spin text-white" />
                   ) : (
                     <>
-                      <Sparkles size={16} className="text-cyan-300" />
+                      <Sparkles size={16} className="text-purple-300" />
                       <span>⚡ Grant Instant Admin Approval</span>
                     </>
                   )}
@@ -125,7 +122,7 @@ export const PendingApprovalView: React.FC<PendingApprovalViewProps> = ({ user, 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/admin"
-                    className="flex-1 neu-btn h-12 rounded-xl text-[10px] font-black uppercase tracking-wider text-cyan-300 hover:text-white flex items-center justify-center gap-2"
+                    className="flex-1 neu-btn h-12 rounded-xl text-[10px] font-black uppercase tracking-wider text-purple-300 hover:text-white flex items-center justify-center gap-2"
                   >
                     <Shield size={14} />
                     <span>Open Admin Console</span>
@@ -149,7 +146,7 @@ export const PendingApprovalView: React.FC<PendingApprovalViewProps> = ({ user, 
                     navigate('/buyer');
                   }
                 }}
-                className="w-full neu-btn-cyan h-14 rounded-2xl font-black uppercase tracking-[0.2em] text-xs text-white shadow-2xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="w-full neu-btn-primary h-14 rounded-2xl font-black uppercase tracking-[0.2em] text-xs text-white shadow-2xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>Enter {targetRole === 'seller' ? 'Seller Foundry Studio' : 'Buyer Vault'}</span>
                 <ArrowRight size={16} />

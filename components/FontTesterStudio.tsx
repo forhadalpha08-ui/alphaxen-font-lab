@@ -20,14 +20,14 @@ const PRESET_PHRASES = [
   '0123456789 &@$!#%*+='
 ];
 
-// Pure Blue and Purple Theme mapping
+// Red and White Studio Theme mapping
 const FONT_THEME_COLORS: Record<string, { primary: string; secondary: string; glow: string }> = {
-  'abdullah-martel': { primary: '#38bdf8', secondary: '#818cf8', glow: 'rgba(56, 189, 248, 0.4)' },
-  'abdullah-metallic-chrome': { primary: '#60a5fa', secondary: '#c084fc', glow: 'rgba(96, 165, 250, 0.4)' },
-  'abdullah-molten-chrome': { primary: '#818cf8', secondary: '#a855f7', glow: 'rgba(129, 140, 248, 0.4)' },
-  'abdullah-moon-chrome': { primary: '#c084fc', secondary: '#38bdf8', glow: 'rgba(192, 132, 252, 0.4)' },
-  'abdullah-stone-chrome': { primary: '#38bdf8', secondary: '#a855f7', glow: 'rgba(56, 189, 248, 0.4)' },
-  'abdullah-stone-moon': { primary: '#a855f7', secondary: '#60a5fa', glow: 'rgba(168, 85, 247, 0.4)' }
+  'abdullah-martel': { primary: '#8b5cf6', secondary: '#6366f1', glow: 'rgba(139, 92, 246, 0.4)' },
+  'abdullah-metallic-chrome': { primary: '#ffffff', secondary: '#38bdf8', glow: 'rgba(255, 255, 255, 0.4)' },
+  'abdullah-molten-chrome': { primary: '#c084fc', secondary: '#818cf8', glow: 'rgba(192, 132, 252, 0.4)' },
+  'abdullah-moon-chrome': { primary: '#818cf8', secondary: '#3b82f6', glow: 'rgba(129, 140, 248, 0.4)' },
+  'abdullah-stone-chrome': { primary: '#ffffff', secondary: '#60a5fa', glow: 'rgba(255, 255, 255, 0.4)' },
+  'abdullah-stone-moon': { primary: '#a78bfa', secondary: '#6366f1', glow: 'rgba(167, 139, 250, 0.4)' }
 };
 
 export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
@@ -61,9 +61,9 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   const currentTheme = FONT_THEME_COLORS[selectedFont.id] || {
-    primary: '#38bdf8',
-    secondary: '#a855f7',
-    glow: 'rgba(56, 189, 248, 0.4)'
+    primary: '#8b5cf6',
+    secondary: '#3b82f6',
+    glow: 'rgba(139, 92, 246, 0.4)'
   };
 
   // Load 3D glyph maps when font changes
@@ -152,17 +152,17 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#070914] border border-blue-500/20 rounded-[2rem] overflow-hidden shadow-2xl relative text-slate-200">
+    <div className="w-full bg-[#070914] border border-purple-500/20 rounded-[2rem] overflow-hidden shadow-2xl relative text-slate-200">
       
       {/* Top Pure Blue-to-Purple Cosmic Accent Bar */}
       <div 
-        className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 transition-all duration-300"
+        className="h-1.5 w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-sky-400 transition-all duration-300"
       />
 
       {/* 1. TYPEFACE SELECTOR BAR */}
-      <div className="p-4 sm:p-6 bg-black/60 border-b border-blue-500/15">
+      <div className="p-4 sm:p-6 liquid-glass-textbox rounded-none border-x-0 border-t-0">
         <div className="flex items-center justify-between mb-3 text-[10px] font-mono font-bold uppercase tracking-wider">
-          <span className="flex items-center gap-1.5 text-cyan-400">
+          <span className="flex items-center gap-1.5 text-purple-400">
             <Sparkles size={12} className="text-purple-400" />
             <span>REAL OPEN-TYPE / TRUE-TYPE TYPEFACES:</span>
           </span>
@@ -172,15 +172,15 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
           {FONT_CATALOG.map((font) => {
             const isSelected = selectedFont.id === font.id;
-            const theme = FONT_THEME_COLORS[font.id] || { primary: '#38bdf8', secondary: '#a855f7' };
+            const theme = FONT_THEME_COLORS[font.id] || { primary: '#8b5cf6', secondary: '#3b82f6' };
             return (
               <button
                 key={font.id}
                 onClick={() => handleFontSelect(font)}
                 className={`p-3 rounded-xl border text-left transition-all duration-150 cursor-pointer ${
                   isSelected
-                    ? 'bg-blue-950/40 border-cyan-400 shadow-lg shadow-cyan-500/10 scale-[1.02]'
-                    : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-blue-400/30'
+                    ? 'liquid-glass-textbox border-purple-400 shadow-lg shadow-purple-500/20 scale-[1.02]'
+                    : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-purple-400/30'
                 }`}
                 style={isSelected ? { borderColor: theme.primary } : {}}
               >
@@ -189,7 +189,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
                     className="w-2.5 h-2.5 rounded-full shadow-sm"
                     style={{ backgroundColor: theme.primary }}
                   />
-                  <span className="text-[9px] font-mono font-bold text-cyan-400">
+                  <span className="text-[9px] font-mono font-bold text-purple-400">
                     ${font.prices.commercial}
                   </span>
                 </div>
@@ -206,18 +206,18 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
       </div>
 
       {/* 2. MODE & CONTROL TOOLBAR */}
-      <div className="p-4 sm:p-5 bg-[#090c1e] border-b border-blue-500/15 flex flex-wrap items-center justify-between gap-4 text-xs">
+      <div className="p-4 sm:p-5 liquid-glass-textbox rounded-none border-x-0 border-t-0 flex flex-wrap items-center justify-between gap-4 text-xs">
         
-        {/* Render Mode Switcher (Pure Blue & Purple Pill Buttons) */}
+        {/* Render Mode Switcher */}
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">MODE:</span>
-          <div className="flex items-center p-1 bg-black/80 rounded-xl border border-blue-500/20">
+          <span className="text-[10px] font-black uppercase tracking-wider text-zinc-300">MODE:</span>
+          <div className="flex items-center p-1 liquid-glass-textbox rounded-xl">
             <button
               onClick={() => setRenderMode('texture')}
               className={`px-3.5 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
                 renderMode === 'texture'
-                  ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black shadow-md shadow-cyan-500/20 font-black'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'neu-btn-primary text-white shadow-md shadow-purple-500/20 font-black'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               <Eye size={12} />
@@ -227,8 +227,8 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
               onClick={() => setRenderMode('vector')}
               className={`px-3.5 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
                 renderMode === 'vector'
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md shadow-purple-500/20 font-black'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'neu-btn-primary text-white shadow-md shadow-purple-500/20 font-black'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               <Type size={12} />
@@ -241,11 +241,11 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
         {renderMode === 'vector' ? (
           <div className="flex items-center gap-3">
             {/* Format OTF/TTF */}
-            <div className="flex items-center gap-1.5 bg-black/60 p-1 rounded-xl border border-blue-500/20">
+            <div className="flex items-center gap-1.5 liquid-glass-textbox p-1 rounded-xl">
               <button
                 onClick={() => setFormatMode('OTF')}
                 className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
-                  formatMode === 'OTF' ? 'bg-cyan-500 text-black font-bold' : 'text-slate-400 hover:text-white'
+                  formatMode === 'OTF' ? 'bg-indigo-600 text-white font-bold' : 'text-zinc-400 hover:text-white'
                 }`}
               >
                 .OTF
@@ -253,7 +253,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
               <button
                 onClick={() => setFormatMode('TTF')}
                 className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
-                  formatMode === 'TTF' ? 'bg-purple-500 text-white font-bold' : 'text-slate-400 hover:text-white'
+                  formatMode === 'TTF' ? 'bg-indigo-600 text-white font-bold' : 'text-zinc-400 hover:text-white'
                 }`}
               >
                 .TTF
@@ -272,8 +272,8 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
                   onClick={() => setVectorWeight(w.weight)}
                   className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
                     vectorWeight === w.weight
-                      ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-black shadow-md'
-                      : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
+                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-black shadow-md'
+                      : 'bg-white/10 text-zinc-200 hover:bg-white/20 hover:text-white'
                   }`}
                 >
                   {w.label}
@@ -283,33 +283,33 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
 
             {/* Font Size Slider */}
             <div className="flex items-center gap-2 ml-2">
-              <span className="text-[10px] font-mono text-slate-400">SIZE:</span>
+              <span className="text-[10px] font-mono text-zinc-300">SIZE:</span>
               <input
                 type="range"
                 min="20"
                 max="90"
                 value={vectorFontSize}
                 onChange={(e) => setVectorFontSize(Number(e.target.value))}
-                className="w-24 bg-white/10 h-1.5 rounded-lg cursor-pointer accent-cyan-400"
+                className="w-24 bg-white/10 h-1.5 rounded-lg cursor-pointer accent-purple-400"
               />
-              <span className="text-[10px] font-mono font-bold w-8 text-right text-cyan-400">
+              <span className="text-[10px] font-mono font-bold w-8 text-right text-purple-400">
                 {vectorFontSize}px
               </span>
             </div>
           </div>
         ) : (
-          /* Texture Glyph Size Slider (Pure Blue/Purple Slider) */
+          /* Texture Glyph Size Slider */
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">GLYPH SCALE:</span>
+            <span className="text-[10px] font-black uppercase tracking-wider text-zinc-300">GLYPH SCALE:</span>
             <input
               type="range"
               min="32"
               max="110"
               value={glyphSize}
               onChange={(e) => setGlyphSize(Number(e.target.value))}
-              className="w-28 sm:w-40 bg-white/10 h-1.5 rounded-lg cursor-pointer accent-cyan-400"
+              className="w-28 sm:w-40 bg-white/10 h-1.5 rounded-lg cursor-pointer accent-purple-400"
             />
-            <span className="text-xs font-mono font-bold w-10 text-right text-cyan-400">
+            <span className="text-xs font-mono font-bold w-10 text-right text-purple-400">
               {glyphSize}px
             </span>
           </div>
@@ -317,16 +317,16 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
       </div>
 
       {/* 3. PRESET SAMPLES & QUICK INPUT BAR */}
-      <div className="px-4 sm:px-6 py-2.5 bg-black/60 border-b border-blue-500/15 flex flex-wrap items-center justify-between gap-2">
+      <div className="px-4 sm:px-6 py-2.5 liquid-glass-textbox rounded-none border-x-0 border-t-0 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar flex-1">
-          <span className="text-[9px] font-bold uppercase tracking-wider text-purple-300/70 whitespace-nowrap">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-purple-400 whitespace-nowrap">
             SAMPLE:
           </span>
           {PRESET_PHRASES.map((phrase, idx) => (
             <button
               key={idx}
               onClick={() => setCustomText(phrase)}
-              className="px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-slate-300 hover:text-cyan-300 hover:border-cyan-500/30 hover:bg-blue-950/30 whitespace-nowrap transition-colors cursor-pointer"
+              className="px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-zinc-200 hover:text-white hover:border-purple-500/40 hover:bg-purple-950/30 whitespace-nowrap transition-colors cursor-pointer"
             >
               {phrase.length > 22 ? phrase.substring(0, 22) + '...' : phrase}
             </button>
@@ -339,7 +339,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
             setGlyphSize(64);
             setVectorFontSize(52);
           }}
-          className="p-1 text-slate-400 hover:text-cyan-300 cursor-pointer flex items-center gap-1 text-[9px] uppercase font-bold"
+          className="p-1 text-zinc-400 hover:text-white cursor-pointer flex items-center gap-1 text-[9px] uppercase font-bold"
           title="Reset"
         >
           <RotateCcw size={11} />
@@ -348,7 +348,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
       </div>
 
       {/* 4. MAIN LIVE INTERACTIVE RENDERING STAGE */}
-      <div className="p-6 sm:p-10 min-h-[300px] bg-[#03050c] flex flex-col justify-center items-center relative overflow-hidden">
+      <div className="p-6 sm:p-10 min-h-[300px] liquid-glass-textbox rounded-none border-x-0 border-t-0 flex flex-col justify-center items-center relative overflow-hidden">
         
         {renderMode === 'texture' ? (
           /* =========================================================================
@@ -358,9 +358,9 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
           <div className="w-full flex flex-col items-center justify-center space-y-6">
             
             {/* Live Interactive 3D Glyphs Stage */}
-            <div className="w-full min-h-[160px] p-6 rounded-2xl bg-[#060815] border border-blue-500/20 flex flex-wrap items-center justify-center gap-x-1 gap-y-3 relative overflow-hidden shadow-inner">
+            <div className="w-full min-h-[160px] p-6 rounded-2xl liquid-glass-textbox flex flex-wrap items-center justify-center gap-x-1 gap-y-3 relative overflow-hidden shadow-inner">
               {loadingGlyphs ? (
-                <div className="text-cyan-300 font-mono text-xs flex items-center gap-2">
+                <div className="text-purple-300 font-mono text-xs flex items-center gap-2">
                   <Sparkles size={14} className="animate-spin text-purple-400" />
                   <span>Loading authentic 3D photorealistic glyphs...</span>
                 </div>
@@ -410,8 +410,8 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
             </div>
 
             {/* Live Free Text Input for 3D Mode */}
-            <div className="w-full max-w-2xl flex items-center gap-3 bg-black/70 border border-blue-500/30 rounded-xl px-4 py-2.5 shadow-lg shadow-blue-500/5">
-              <span className="text-[10px] font-mono font-bold uppercase text-cyan-400 whitespace-nowrap">
+            <div className="w-full max-w-2xl flex items-center gap-3 liquid-glass-textbox rounded-xl px-4 py-2.5">
+              <span className="text-[10px] font-mono font-bold uppercase text-purple-400 whitespace-nowrap">
                 TYPE LIVE:
               </span>
               <input
@@ -454,11 +454,11 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
         )}
 
         {/* Font Info & Direct Download / Copy Bar */}
-        <div className="w-full pt-6 mt-6 border-t border-blue-500/15 flex flex-wrap items-center justify-between text-[10px] font-mono text-slate-400 gap-3">
+        <div className="w-full pt-6 mt-6 border-t border-purple-500/15 flex flex-wrap items-center justify-between text-[10px] font-mono text-slate-400 gap-3">
           <div className="flex items-center gap-2.5 font-bold uppercase tracking-wider">
             <span>TYPEFACE: <strong className="text-white">{selectedFont.name}</strong></span>
             <span>•</span>
-            <span>MODE: <strong className="text-cyan-400">{renderMode === 'texture' ? '3D PHOTOREALISTIC COLOR' : `REAL .${formatMode} VECTOR`}</strong></span>
+            <span>MODE: <strong className="text-purple-400">{renderMode === 'texture' ? '3D PHOTOREALISTIC COLOR' : `REAL .${formatMode} VECTOR`}</strong></span>
             <span>•</span>
             <span>STATUS: <strong className="text-purple-400">AUTHENTIC SUITE</strong></span>
           </div>
@@ -466,10 +466,10 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleDirectDownload('current')}
-              className="px-3 py-1.5 rounded-lg border border-cyan-500/40 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-wider transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg border border-purple-500/40 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-wider transition-all cursor-pointer"
               title="Download selected font binary"
             >
-              {downloadSuccess ? <Check size={12} className="text-emerald-400" /> : <Download size={12} />}
+              {downloadSuccess ? <Check size={12} className="text-purple-400" /> : <Download size={12} />}
               <span>{downloadSuccess ? 'DOWNLOADED' : `GET .${formatMode}`}</span>
             </button>
 
@@ -486,7 +486,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
               onClick={handleCopy}
               className="px-3 py-1.5 rounded-lg border border-white/15 bg-white/5 text-white hover:bg-white/10 flex items-center gap-1.5 font-bold text-[9px] uppercase tracking-wider transition-all cursor-pointer"
             >
-              {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+              {copied ? <Check size={12} className="text-purple-400" /> : <Copy size={12} />}
               <span>{copied ? 'COPIED' : 'COPY TEXT'}</span>
             </button>
           </div>
@@ -494,7 +494,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
       </div>
 
       {/* 5. BOTTOM DIRECT ACTION & LICENSING BAR (Pure Blue to Purple Gradient) */}
-      <div className="p-4 sm:p-6 border-t border-blue-500/20 bg-black/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-4 sm:p-6 border-t border-purple-500/20 bg-black/80 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4 text-xs">
           <div>
             <span className="text-purple-300/80 uppercase font-bold text-[9px] tracking-wider block">PERPETUAL COMMERCIAL LICENSE</span>
@@ -504,7 +504,7 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
           <div className="h-7 w-px bg-white/10" />
           <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">
             <span>FILES: </span>
-            <strong className="text-cyan-300">AUTHENTIC OTF + TTF + 3D COLOR SUITE</strong>
+            <strong className="text-purple-300">AUTHENTIC OTF + TTF + 3D COLOR SUITE</strong>
           </div>
         </div>
 
@@ -516,9 +516,9 @@ export const FontTesterStudio: React.FC<FontTesterStudioProps> = ({
               window.location.hash = '#/shop';
             }
           }}
-          className="h-11 px-7 rounded-xl font-black uppercase tracking-[0.18em] text-[10px] text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 flex items-center gap-2 cursor-pointer shadow-lg shadow-purple-500/25 hover:scale-105 transition-all w-full sm:w-auto justify-center"
+          className="h-11 px-7 rounded-xl font-black uppercase tracking-[0.18em] text-[10px] text-white neu-btn-primary flex items-center gap-2 cursor-pointer shadow-lg shadow-purple-500/25 hover:scale-105 transition-all w-full sm:w-auto justify-center"
         >
-          <ShieldCheck size={14} className="text-cyan-300" />
+          <ShieldCheck size={14} className="text-purple-300" />
           <span>LICENSE {selectedFont.name.toUpperCase()}</span>
           <ArrowRight size={13} />
         </button>

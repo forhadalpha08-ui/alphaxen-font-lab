@@ -60,11 +60,8 @@ export const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden selection:bg-indigo-500/30 font-sans">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden selection:bg-purple-500/30 font-sans">
       
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[520px] bg-gradient-to-tr from-indigo-600/15 via-purple-600/15 to-cyan-500/10 blur-[150px] -z-10 pointer-events-none" />
-
       <div className="w-full max-w-lg space-y-8 animate-slide-up relative z-10">
         
         {/* Header Branding */}
@@ -81,10 +78,10 @@ export const ForgotPassword: React.FC = () => {
         </div>
 
         {/* Main Obsidian Card */}
-        <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-10 rounded-[2.5rem] shadow-2xl space-y-6 relative overflow-hidden">
+        <div className="bg-[#0a0a0a] border border-white/20 p-8 sm:p-10 rounded-[2.5rem] shadow-2xl space-y-6 relative overflow-hidden">
           {resetSuccess ? (
             <div className="text-center py-6 space-y-4 animate-fade-in">
-              <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-lg">
+              <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center mx-auto shadow-lg">
                 <CheckCircle2 size={32} />
               </div>
               <h2 className="text-2xl font-black text-white font-grotesk">PASSWORD RESET SUCCESSFUL</h2>
@@ -100,7 +97,7 @@ export const ForgotPassword: React.FC = () => {
             </div>
           ) : sent ? (
             <div className="text-center py-6 space-y-4 animate-fade-in">
-              <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto shadow-lg">
+              <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center mx-auto shadow-lg">
                 <CheckCircle2 size={32} />
               </div>
               <h2 className="text-2xl font-black text-white font-grotesk">Check your inbox</h2>
@@ -117,13 +114,13 @@ export const ForgotPassword: React.FC = () => {
           ) : (
             <>
               {/* Method Switcher */}
-              <div className="flex items-center justify-between p-1 bg-[#050814] border border-white/15 rounded-xl">
+              <div className="flex items-center justify-between p-1 bg-[#0b0e17] border border-white/15 rounded-xl">
                 <button
                   type="button"
                   onClick={() => setRecoveryMode('link')}
                   className={`flex-1 py-2 px-3 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     recoveryMode === 'link'
-                      ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                      ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -157,7 +154,7 @@ export const ForgotPassword: React.FC = () => {
                     Email Address
                   </label>
                   <div className="relative group">
-                    <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors" />
+                    <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-400 transition-colors" />
                     <input
                       name="email"
                       type="email"
@@ -168,7 +165,7 @@ export const ForgotPassword: React.FC = () => {
                       placeholder="designer@company.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                      className="w-full bg-[#050814] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-cyan-500/80 focus:ring-2 focus:ring-cyan-500/20 transition-all lowercase"
+                      className="w-full bg-[#0b0e17] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all lowercase"
                     />
                   </div>
                 </div>
@@ -188,7 +185,7 @@ export const ForgotPassword: React.FC = () => {
                           placeholder="e.g. AX9#24"
                           value={pinCode}
                           onChange={(e) => setPinCode(e.target.value)}
-                          className="w-full bg-[#050814] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-mono font-bold tracking-widest uppercase focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                          className="w-full bg-[#0b0e17] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-mono font-bold tracking-widest uppercase focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         />
                       </div>
                     </div>
@@ -198,14 +195,14 @@ export const ForgotPassword: React.FC = () => {
                         New Password (6+ Digits/Letters/Symbols)
                       </label>
                       <div className="relative group">
-                        <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors" />
+                        <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-400 transition-colors" />
                         <input
                           type="password"
                           required
                           placeholder="New strong password"
                           value={newPassword}
                           onChange={(e) => setNewPassword(e.target.value)}
-                          className="w-full bg-[#050814] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-mono font-bold focus:outline-none focus:border-cyan-500/80 focus:ring-2 focus:ring-cyan-500/20 transition-all"
+                          className="w-full bg-[#0b0e17] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-mono font-bold focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         />
                       </div>
                       <PasswordSecurityMeter
@@ -234,7 +231,7 @@ export const ForgotPassword: React.FC = () => {
 
               <div className="text-center pt-2 text-xs text-slate-300 font-medium border-t border-white/10">
                 Remember your password?{' '}
-                <Link to="/login" className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors underline underline-offset-4">
+                <Link to="/login" className="text-purple-400 hover:text-purple-300 font-bold transition-colors underline underline-offset-4">
                   Back to Sign In
                 </Link>
               </div>

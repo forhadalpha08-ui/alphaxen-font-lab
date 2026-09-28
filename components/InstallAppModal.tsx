@@ -120,7 +120,7 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
     window.location.href = window.location.origin ? window.location.origin + "/#/" : "https://alphaxen.com/#/";
   </script>
 </head>
-<body style="background:#070a13;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+<body style="background:#0b0e17;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
   <div style="text-align:center;">
     <h2>Launching Alphaxen Type Foundry...</h2>
   </div>
@@ -154,12 +154,12 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
       onClick={onClose}
     >
       <div 
-        className="bg-[#0c101d] rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.95)] border border-white/20 flex flex-col max-h-[92vh] relative"
+        className="bg-[#0a0a0a] rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.95)] border border-white/20 flex flex-col max-h-[92vh] relative"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Modal Top Header */}
-        <div className="p-6 sm:p-8 border-b border-white/10 bg-[#050814] flex items-center justify-between relative">
+        <div className="p-6 sm:p-8 border-b border-white/10 bg-[#0b0e17] flex items-center justify-between relative">
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 neu-btn-primary rounded-2xl flex items-center justify-center shadow-lg">
               <Download className="text-white" size={22} />
@@ -169,7 +169,7 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
                 <h3 className="text-lg sm:text-xl font-black tracking-tight text-white font-grotesk uppercase">
                   Install Alphaxen App
                 </h3>
-                <span className="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-widest bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-widest bg-purple-500/20 text-purple-300 border border-purple-500/30">
                   Universal PWA
                 </span>
               </div>
@@ -191,10 +191,10 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
         <div className="p-6 sm:p-8 overflow-y-auto custom-scrollbar space-y-6">
 
           {/* Quick 1-Click Action Card */}
-          <div className="bg-[#050814] border border-cyan-500/30 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
+          <div className="bg-[#0b0e17] border border-purple-500/30 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,1)]" />
+                <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
                 <h4 className="text-xs font-black uppercase tracking-wider text-white">1-CLICK NATIVE PWA INSTALL</h4>
               </div>
               <p className="text-[11px] text-slate-300 font-medium">
@@ -213,7 +213,7 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
 
               <button
                 onClick={handleDownloadLauncher}
-                className="neu-btn h-12 px-4 rounded-xl text-[10px] font-black uppercase text-cyan-300 hover:text-white cursor-pointer transition-all border border-cyan-500/30"
+                className="neu-btn h-12 px-4 rounded-xl text-[10px] font-black uppercase text-purple-300 hover:text-white cursor-pointer transition-all border border-purple-500/30"
                 title="Download Standalone Launcher"
               >
                 <HardDrive size={14} />
@@ -222,7 +222,7 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
           </div>
 
           {/* Device Tabs */}
-          <div className="flex items-center gap-1.5 p-1 bg-[#050814] border border-white/10 rounded-xl overflow-x-auto custom-scrollbar">
+          <div className="flex items-center gap-1.5 p-1 bg-[#0b0e17] border border-white/10 rounded-xl overflow-x-auto custom-scrollbar">
             {platforms.map((p) => (
               <button
                 key={p.id}
@@ -236,30 +236,30 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
                 {p.icon}
                 <span>{p.label}</span>
                 {detectedPlatform === p.id && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
                 )}
               </button>
             ))}
           </div>
 
           {/* Device Guided Steps */}
-          <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl space-y-4">
+          <div className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-4">
             {activeTab === 'windows' && (
               <div className="space-y-3">
                 <h5 className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-2">
-                  <Monitor size={15} className="text-cyan-400" /> WINDOWS 11 / 10 (EDGE / CHROME)
+                  <Monitor size={15} className="text-purple-400" /> WINDOWS 11 / 10 (EDGE / CHROME)
                 </h5>
                 <ol className="space-y-2 text-xs text-slate-300 font-medium">
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-300 font-mono font-bold">1.</span>
+                    <span className="text-purple-300 font-mono font-bold">1.</span>
                     <span>Click the <strong>Install Icon</strong> (🖥️ or ➕) in your browser address bar.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-300 font-mono font-bold">2.</span>
+                    <span className="text-purple-300 font-mono font-bold">2.</span>
                     <span>Click <strong>"Install"</strong> in the popup confirmation dialog.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-300 font-mono font-bold">3.</span>
+                    <span className="text-purple-300 font-mono font-bold">3.</span>
                     <span>Launch directly from your Windows Start menu or Taskbar.</span>
                   </li>
                 </ol>
@@ -291,19 +291,19 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
             {activeTab === 'ios' && (
               <div className="space-y-3">
                 <h5 className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-2">
-                  <Apple size={15} className="text-cyan-400" /> IPHONE &amp; IPAD (SAFARI)
+                  <Apple size={15} className="text-purple-400" /> IPHONE &amp; IPAD (SAFARI)
                 </h5>
                 <ol className="space-y-2 text-xs text-slate-300 font-medium">
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-300 font-mono font-bold">1.</span>
+                    <span className="text-purple-300 font-mono font-bold">1.</span>
                     <span>Tap the <strong>Share</strong> button ($\uparrow$) at the bottom of Safari.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-300 font-mono font-bold">2.</span>
+                    <span className="text-purple-300 font-mono font-bold">2.</span>
                     <span>Scroll down and tap <strong>"Add to Home Screen"</strong> ($+$).</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-cyan-300 font-mono font-bold">3.</span>
+                    <span className="text-purple-300 font-mono font-bold">3.</span>
                     <span>Tap <strong>"Add"</strong> at top right. Launches full-screen without URL bar.</span>
                   </li>
                 </ol>
@@ -313,19 +313,19 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
             {activeTab === 'android' && (
               <div className="space-y-3">
                 <h5 className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-2">
-                  <Smartphone size={15} className="text-emerald-400" /> ANDROID (CHROME / SAMSUNG)
+                  <Smartphone size={15} className="text-purple-400" /> ANDROID (CHROME / SAMSUNG)
                 </h5>
                 <ol className="space-y-2 text-xs text-slate-300 font-medium">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-300 font-mono font-bold">1.</span>
+                    <span className="text-purple-300 font-mono font-bold">1.</span>
                     <span>Tap the <strong>"Install App"</strong> button above or bottom banner.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-300 font-mono font-bold">2.</span>
+                    <span className="text-purple-300 font-mono font-bold">2.</span>
                     <span>Or tap the <strong>3-dots (⋮)</strong> menu $\rightarrow$ <strong>"Install app"</strong>.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-300 font-mono font-bold">3.</span>
+                    <span className="text-purple-300 font-mono font-bold">3.</span>
                     <span>Installs native WebAPK with full offline cache in your app drawer.</span>
                   </li>
                 </ol>
@@ -335,19 +335,19 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
             {activeTab === 'linux' && (
               <div className="space-y-3">
                 <h5 className="text-xs font-black uppercase text-white tracking-wider flex items-center gap-2">
-                  <Globe size={15} className="text-indigo-400" /> LINUX &amp; CHROMEOS
+                  <Globe size={15} className="text-purple-400" /> LINUX &amp; CHROMEOS
                 </h5>
                 <ol className="space-y-2 text-xs text-slate-300 font-medium">
                   <li className="flex items-start gap-2">
-                    <span className="text-indigo-300 font-mono font-bold">1.</span>
+                    <span className="text-purple-300 font-mono font-bold">1.</span>
                     <span>Open in Chrome / Chromium / Brave / Edge on your Linux desktop.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-indigo-300 font-mono font-bold">2.</span>
+                    <span className="text-purple-300 font-mono font-bold">2.</span>
                     <span>Click the address bar install icon or Menu $\rightarrow$ Install Alphaxen.</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-indigo-300 font-mono font-bold">3.</span>
+                    <span className="text-purple-300 font-mono font-bold">3.</span>
                     <span>Automatically creates <code>.desktop</code> entry in your desktop environment.</span>
                   </li>
                 </ol>
@@ -360,7 +360,7 @@ export const InstallAppModal: React.FC<InstallAppModalProps> = ({ isOpen, onClos
             <Link
               to="/install"
               onClick={onClose}
-              className="text-xs font-bold text-cyan-400 hover:text-cyan-300 uppercase tracking-wider inline-flex items-center gap-1.5 underline underline-offset-4"
+              className="text-xs font-bold text-purple-400 hover:text-purple-300 uppercase tracking-wider inline-flex items-center gap-1.5 underline underline-offset-4"
             >
               <span>View Full Multi-Device Installation Manual &amp; Offline Kit</span>
               <ExternalLink size={13} />

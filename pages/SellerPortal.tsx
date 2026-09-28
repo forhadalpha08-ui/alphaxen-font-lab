@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Upload, DollarSign, TrendingUp, BarChart3, Plus,
-  Layers, CheckCircle2, AlertCircle, Edit, Trash2,
-  FileText, Shield, Key, ArrowUpRight, Copy, Check,
-  Download, Eye, Sparkles, Filter, RefreshCw, ShoppingCart, LogOut,
-  Menu, X, Home, ShoppingBag, LayoutDashboard, BookOpen, ShieldCheck
+  Upload, Layers, DollarSign, TrendingUp, BarChart3,
+  Key, ShieldCheck, Sparkles, CheckCircle2, Clock, AlertCircle,
+  Download, Copy, Check, ExternalLink, ArrowUpRight,
+  ChevronRight, LogOut, FileText, ShoppingBag, Lock, Sliders,
+  HelpCircle, Laptop, Menu, X, Home, BookOpen, MessageSquare,
+  Mail, Send, Crown, CheckCheck
 } from 'lucide-react';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
 import { auth } from '../services/firebase';
@@ -14,11 +15,12 @@ import { FONT_CATALOG, FontItem, SellerFontSubmission } from '../services/fontDa
 import { getCurrentUser, UserRecord } from '../services/authManager';
 import PendingApprovalView from '../components/PendingApprovalView';
 import FontSecurityModal from '../components/FontSecurityModal';
-import { generateLicenseKey } from '../services/fontSecurity';
+import { soundFx } from '../services/soundFx';
+import { FOUNDRY_CONTACT, createWhatsAppDealUrl, createEmailDealUrl } from '../services/contact';
 
 export const SellerPortal: React.FC = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'overview' | 'catalog' | 'upload' | 'licenses' | 'payouts'>('overview');
+  const [activeTab, setActiveTab] = useState<'portfolio' | 'submit' | 'keys' | 'royalties' | 'curation'>('portfolio');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +29,7 @@ export const SellerPortal: React.FC = () => {
   const [showSecurityModal, setShowSecurityModal] = useState(false);
   const [securityTargetKey, setSecurityTargetKey] = useState('AX-COMM-8921-9482-XN');
 
-  // Auth & Admin Approval State
+  // Auth State
   const [authUser, setAuthUser] = useState<FirebaseUser | null>(null);
   const [currentUser, setCurrentUser] = useState<UserRecord | null>(() => getCurrentUser());
   const [localUserEmail, setLocalUserEmail] = useState<string | null>(null);
@@ -54,65 +56,22 @@ export const SellerPortal: React.FC = () => {
     navigate('/');
   };
 
-  // Seller Font Submissions stored in localStorage for persistence
+  // Real Seller Font Submissions (Loaded from localStorage, no fake pre-populated sales)
   const [sellerFonts, setSellerFonts] = useState<SellerFontSubmission[]>(() => {
     const saved = localStorage.getItem('alphaxen_seller_fonts');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed)) return parsed;
       } catch (e) {}
     }
-    return [
-      {
-        id: 'seller-font-1',
-        fontName: 'Abdullah Martel',
-        category: 'serif',
-        stylesCount: 6,
-        designerName: 'Abdullah Foundry Lab',
-        description: 'Monumental haute luxury serif with chiseled Roman numerals and color OpenType.',
-        commercialPrice: 99,
-        personalPrice: 49,
-        submissionDate: '2026-01-10',
-        status: 'active',
-        salesCount: 342,
-        grossRevenue: 28734
-      },
-      {
-        id: 'seller-font-2',
-        fontName: 'Abdullah Metallic Chrome',
-        category: 'display',
-        stylesCount: 5,
-        designerName: 'Abdullah Foundry Lab',
-        description: 'Liquid titanium chrome titling typeface with specular contours.',
-        commercialPrice: 89,
-        personalPrice: 45,
-        submissionDate: '2026-02-14',
-        status: 'active',
-        salesCount: 226,
-        grossRevenue: 18114
-      },
-      {
-        id: 'seller-font-3',
-        fontName: 'Abdullah Molten Chrome',
-        category: 'display',
-        stylesCount: 5,
-        designerName: 'Abdullah Foundry Lab',
-        description: 'Fluid mercury and molten metal character geometry.',
-        commercialPrice: 89,
-        personalPrice: 45,
-        submissionDate: '2026-03-01',
-        status: 'active',
-        salesCount: 195,
-        grossRevenue: 15605
-      }
-    ];
+    return [];
   });
 
   // Upload Form State
   const [newFont, setNewFont] = useState({
     fontName: '',
-    designerName: 'Abdullah Foundry Lab',
+    designerName: 'Independent Type Designer',
     category: 'display',
     stylesCount: 6,
     personalPrice: 45,
@@ -122,11 +81,17 @@ export const SellerPortal: React.FC = () => {
     isVariable: false
   });
 
-  // Direct License Generation State
-  const [clientLicenses, setClientLicenses] = useState<Array<{ key: string, client: string, font: string, date: string, tier: string }>>([
-    { key: 'AX-ENT-7821-CLIENT-XN', client: 'Vogue Global Media', font: 'Abdullah Martel', date: '2026-03-18', tier: 'Enterprise' },
-    { key: 'AX-COMM-9932-CLIENT-XN', client: 'Apex Interactive', font: 'Abdullah Metallic Chrome', date: '2026-03-22', tier: 'Commercial' }
-  ]);
+  // Direct Client Keys State
+  const [clientLicenses, setClientLicenses] = useState<Array<{ key: string, client: string, font: string, date: string, tier: string }>>(() => {
+    const saved = localStorage.getItem('alphaxen_client_keys');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {}
+    }
+    return [];
+  });
 
   const [newClientName, setNewClientName] = useState('');
   const [newLicenseFont, setNewLicenseFont] = useState('Abdullah Martel');
@@ -136,9 +101,13 @@ export const SellerPortal: React.FC = () => {
     localStorage.setItem('alphaxen_seller_fonts', JSON.stringify(sellerFonts));
   }, [sellerFonts]);
 
-  const totalGrossRevenue = sellerFonts.reduce((acc, f) => acc + f.grossRevenue, 0);
-  const totalNetPayout = totalGrossRevenue * 0.85;
-  const totalUnitsSold = sellerFonts.reduce((acc, f) => acc + f.salesCount, 0);
+  useEffect(() => {
+    localStorage.setItem('alphaxen_client_keys', JSON.stringify(clientLicenses));
+  }, [clientLicenses]);
+
+  const totalGrossRevenue = sellerFonts.reduce((acc, f) => acc + (f.grossRevenue || 0), 0);
+  const totalNetPayout = Math.round(totalGrossRevenue * 0.85);
+  const totalUnitsSold = sellerFonts.reduce((acc, f) => acc + (f.salesCount || 0), 0);
 
   const handleUploadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,7 +119,7 @@ export const SellerPortal: React.FC = () => {
       category: newFont.category,
       stylesCount: Number(newFont.stylesCount),
       designerName: newFont.designerName,
-      description: newFont.description || 'Modern digital typography typeface.',
+      description: newFont.description || 'Modern digital typography typeface submitted for curation.',
       commercialPrice: Number(newFont.commercialPrice),
       personalPrice: Number(newFont.personalPrice),
       submissionDate: new Date().toISOString().split('T')[0],
@@ -161,9 +130,16 @@ export const SellerPortal: React.FC = () => {
 
     setSellerFonts([submission, ...sellerFonts]);
     setUploadSuccess(true);
+    soundFx.play('success');
+
+    // Also trigger WhatsApp message for fast review
+    const customMessage = `Hello Alphaxen Curation Team! 👋\n\nI have submitted a new typeface for distribution on Alphaxen:\n\n🔤 Typeface Name: ${newFont.fontName}\n🎨 Category: ${newFont.category}\n📐 Style Weights: ${newFont.stylesCount}\n💰 Suggested Commercial Price: $${newFont.commercialPrice}\n📝 Description: ${newFont.description || 'N/A'}\n\nPlease review and let me know the distribution onboarding steps.`;
+    
+    window.open(createWhatsAppDealUrl({ customMessage }), '_blank');
+
     setTimeout(() => {
       setUploadSuccess(false);
-      setActiveTab('catalog');
+      setActiveTab('portfolio');
     }, 1500);
   };
 
@@ -171,9 +147,10 @@ export const SellerPortal: React.FC = () => {
     e.preventDefault();
     if (!newClientName.trim()) return;
 
-    const key = generateLicenseKey(newLicenseFont, newClientName, newLicenseTier);
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    const key = `AX-${newLicenseTier.toUpperCase().slice(0, 4)}-${randomNum}-${newClientName.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 6) || 'CLIENT'}-XN`;
 
-    setClientLicenses([
+    const updated = [
       {
         key,
         client: newClientName,
@@ -182,14 +159,17 @@ export const SellerPortal: React.FC = () => {
         tier: newLicenseTier
       },
       ...clientLicenses
-    ]);
+    ];
 
+    setClientLicenses(updated);
     setNewClientName('');
+    soundFx.play('pop');
   };
 
   const copyText = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopiedKey(id);
+    soundFx.play('success');
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
@@ -199,12 +179,12 @@ export const SellerPortal: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 selection:bg-purple-500/30 selection:text-purple-100 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 selection:bg-purple-500/30 selection:text-purple-100 font-sans overflow-x-hidden">
       
-      {/* Top Sticky High-Definition Header */}
-      <header className="sticky top-0 z-50 w-full bg-[#070a13]/98 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+      {/* Top Sticky Header */}
+      <header className="sticky top-0 z-50 w-full bg-transparent max-md:border-transparent max-md:shadow-none md:bg-[#0b0e17]/98 md:backdrop-blur-xl md:border-b md:border-white/10 md:shadow-2xl">
         <div className="max-w-7xl mx-auto px-6 sm:px-12 py-3.5 flex justify-between items-center">
-          <BrandMark suffix="SELLER STUDIO" />
+          <BrandMark suffix="CREATOR STUDIO" />
 
           <div className="hidden md:flex items-center gap-3">
             <Link to="/" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white">
@@ -213,46 +193,42 @@ export const SellerPortal: React.FC = () => {
             <Link to="/shop" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white">
               FONT CATALOG
             </Link>
-            <Link to="/buyer" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-indigo-300 hover:text-white">
+            <Link to="/buyer" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-300 hover:text-white">
               BUYER VAULT
             </Link>
-            <Link to="/docs" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300 hover:text-white">
+            <Link to="/docs" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-300 hover:text-white">
               DOCS
             </Link>
-            <button
-              onClick={() => {
-                setSecurityTargetKey('AX-COMM-8921-9482-XN');
-                setShowSecurityModal(true);
-              }}
-              className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-emerald-300 hover:text-white flex items-center gap-1.5 cursor-pointer"
+
+            {/* Direct Creator WhatsApp Line */}
+            <a
+              href={createWhatsAppDealUrl({ type: 'seller_submission', fontName: 'Creator Studio Inquiry' })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neu-btn-primary px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white flex items-center gap-1.5 shadow-md hover:scale-105 transition-all"
             >
-              <ShieldCheck size={12} className="text-emerald-400" />
-              DRM ENGINE
-            </button>
-            <Link
-              to="/install"
-              className="neu-btn-cyan px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white flex items-center gap-1.5 shadow-md hover:scale-105 transition-all"
-            >
-              <Download size={13} />
-              INSTALL APP
-            </Link>
+              <MessageSquare size={13} />
+              CURATION DESK
+            </a>
 
             <div className="h-4 w-px bg-white/15 mx-1" />
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setActiveTab('upload')}
-                className="neu-btn-primary px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg flex items-center gap-1.5 cursor-pointer hover:scale-105 transition-all"
+                onClick={() => setActiveTab('submit')}
+                className="neu-btn-primary px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg flex items-center gap-1.5 cursor-pointer hover:scale-105 transition-all"
               >
-                <Upload size={13} /> PUBLISH
+                <Upload size={13} /> SUBMIT FONT
               </button>
-              <button
-                onClick={handleSignOut}
-                className="neu-btn px-3 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-rose-400 cursor-pointer"
-                title="Sign Out"
-              >
-                <LogOut size={13} />
-              </button>
+              {currentUser && (
+                <button
+                  onClick={handleSignOut}
+                  className="neu-btn px-3 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-rose-400 cursor-pointer"
+                  title="Sign Out"
+                >
+                  <LogOut size={13} />
+                </button>
+              )}
             </div>
           </div>
 
@@ -267,7 +243,7 @@ export const SellerPortal: React.FC = () => {
 
         {/* Mobile Animated Drawer */}
         {isMenuOpen && (
-          <div className="md:hidden px-6 pt-2 pb-4 border-t border-white/10 space-y-2 animate-slide-up bg-[#070a13]">
+          <div className="md:hidden px-6 pt-2 pb-4 border-t border-white/10 space-y-2 animate-slide-up bg-[#0b0e17]">
             <Link 
               to="/" 
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
@@ -281,7 +257,7 @@ export const SellerPortal: React.FC = () => {
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <ShoppingBag size={16} className="text-cyan-400" />
+              <ShoppingBag size={16} className="text-purple-400" />
               <span>Font Catalog</span>
             </Link>
             <Link 
@@ -289,38 +265,34 @@ export const SellerPortal: React.FC = () => {
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <LayoutDashboard size={16} className="text-indigo-400" />
+              <Crown size={16} className="text-purple-400" />
               <span>Buyer Vault</span>
             </Link>
-            <Link 
-              to="/docs" 
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
+            <a 
+              href={createWhatsAppDealUrl({ type: 'seller_submission', fontName: 'Type Designer' })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-3 rounded-2xl neu-btn-primary text-xs font-black uppercase tracking-wider text-white shadow-lg"
               onClick={() => setIsMenuOpen(false)}
             >
-              <BookOpen size={16} className="text-cyan-400" />
-              <span>Documentation &amp; CDN</span>
-            </Link>
-            <Link 
-              to="/tos" 
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <ShieldCheck size={16} className="text-emerald-400" />
-              <span>Terms &amp; EULA</span>
-            </Link>
+              <MessageSquare size={16} />
+              <span>WhatsApp Curation Desk</span>
+            </a>
             <div className="pt-2 flex gap-2">
               <button
-                onClick={() => { setActiveTab('upload'); setIsMenuOpen(false); }}
+                onClick={() => { setActiveTab('submit'); setIsMenuOpen(false); }}
                 className="neu-btn-primary flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center justify-center gap-2"
               >
-                <Upload size={14} /> Publish Font
+                <Upload size={14} /> Submit Typeface
               </button>
-              <button
-                onClick={handleSignOut}
-                className="neu-btn px-4 py-3 rounded-xl text-xs font-black text-rose-400 flex items-center justify-center"
-              >
-                <LogOut size={16} />
-              </button>
+              {currentUser && (
+                <button
+                  onClick={handleSignOut}
+                  className="neu-btn px-4 py-3 rounded-xl text-xs font-black text-rose-400 flex items-center justify-center"
+                >
+                  <LogOut size={16} />
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -329,50 +301,63 @@ export const SellerPortal: React.FC = () => {
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-6 sm:px-12 pt-8 pb-24">
         
-        {/* Hero Banner in Solid High-Contrast Obsidian */}
-        <div className="bg-[#0b101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] mb-12 shadow-2xl relative overflow-hidden">
+        {/* Hero Banner */}
+        <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] mb-12 shadow-2xl relative overflow-hidden">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="space-y-4 max-w-2xl">
-              <div className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full bg-[#131b2e] border border-purple-500/40 text-[10px] font-black uppercase tracking-[0.25em] text-purple-300 shadow-md">
-                <span className="flex h-2 w-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_10px_rgba(168,85,247,1)]" />
+              <div className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full bg-[#141414] border border-purple-500/40 text-[10px] font-black uppercase tracking-[0.25em] text-purple-300 shadow-md">
+                <span className="flex h-2 w-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_10px_rgba(139,92,246,1)]" />
                 FOUNDRY CREATOR STUDIO
               </div>
               <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white font-grotesk leading-tight">
                 TYPE DESIGNER <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-300">
-                  STUDIO.
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-sky-400">
+                  DISTRIBUTION.
                 </span>
               </h1>
               <p className="text-slate-200 text-sm sm:text-base font-semibold leading-relaxed">
-                PUBLISH TYPEFACE FAMILIES, ISSUE DIRECT ENTERPRISE LICENSE KEYS, AND TRACK YOUR 85% CREATOR ROYALTIES IN REAL TIME.
+                SUBMIT YOUR TYPEFACES FOR GLOBAL COMMERCIAL DISTRIBUTION, EARN AN UNMATCHED 85% CREATOR ROYALTY SPLIT, AND ISSUE DIRECT ENTERPRISE LICENSE KEYS.
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 bg-[#050814] border border-white/20 p-3.5 sm:p-6 rounded-3xl shadow-inner w-full lg:w-auto">
-              <div className="text-center px-1 sm:px-5 border-r border-white/15">
-                <div className="text-2xl sm:text-4xl font-black text-emerald-400 font-mono">${totalNetPayout.toLocaleString()}</div>
-                <div className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 truncate">ROYALTIES (85%)</div>
+            {/* Real Creator Stats */}
+            <div className="flex flex-wrap sm:flex-nowrap items-stretch gap-2 sm:gap-4 bg-[#0b0e17] border border-white/20 p-3.5 sm:p-5 rounded-3xl shadow-inner w-full lg:w-auto shrink-0">
+              <div className="flex-1 min-w-[120px] text-center px-3 sm:px-5 border-r border-white/15 flex flex-col justify-center">
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-purple-400 font-mono tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
+                  85%
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 whitespace-nowrap">
+                  CREATOR SPLIT
+                </div>
               </div>
-              <div className="text-center px-1 sm:px-5 border-r border-white/15">
-                <div className="text-2xl sm:text-4xl font-black text-cyan-300 font-mono">{totalUnitsSold}</div>
-                <div className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 truncate">SALES</div>
+              <div className="flex-1 min-w-[80px] text-center px-3 sm:px-5 border-r border-white/15 flex flex-col justify-center">
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-white font-mono tracking-tight whitespace-nowrap">
+                  {sellerFonts.length}
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 whitespace-nowrap">
+                  SUBMISSIONS
+                </div>
               </div>
-              <div className="text-center px-1 sm:px-5">
-                <div className="text-2xl sm:text-4xl font-black text-purple-300 font-mono">{sellerFonts.length}</div>
-                <div className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 truncate">RELEASES</div>
+              <div className="flex-1 min-w-[90px] text-center px-3 sm:px-5 flex flex-col justify-center">
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-purple-300 font-mono tracking-tight whitespace-nowrap">
+                  24H
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 whitespace-nowrap">
+                  REVIEW SPEED
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Tab Navigation */}
+        {/* Tab Navigation (Seller Exclusive Sections) */}
         <div className="flex items-center gap-3 border-b border-white/15 pb-6 mb-12 overflow-x-auto custom-scrollbar">
           {[
-            { id: 'overview', label: 'SALES & ANALYTICS', icon: <BarChart3 size={16} className="text-indigo-400" /> },
-            { id: 'catalog', label: 'PUBLISHED FONTS', icon: <Layers size={16} className="text-purple-400" />, count: sellerFonts.length },
-            { id: 'upload', label: 'UPLOAD TYPEFACE', icon: <Upload size={16} className="text-cyan-400" /> },
-            { id: 'licenses', label: 'DIRECT CLIENT KEYS', icon: <Key size={16} className="text-emerald-400" />, count: clientLicenses.length },
-            { id: 'payouts', label: 'EARNINGS & PAYOUTS', icon: <DollarSign size={16} className="text-pink-400" /> }
+            { id: 'portfolio', label: 'MY TYPEFACE RELEASES', icon: <Layers size={16} className="text-purple-400" />, count: sellerFonts.length },
+            { id: 'submit', label: 'SUBMIT TYPEFACE (Foundry Review)', icon: <Upload size={16} className="text-purple-400" /> },
+            { id: 'keys', label: 'ISSUE CLIENT LICENSE KEYS', icon: <Key size={16} className="text-purple-400" />, count: clientLicenses.length },
+            { id: 'royalties', label: '85% CREATOR SPLIT & PAYOUTS', icon: <DollarSign size={16} className="text-purple-400" /> },
+            { id: 'curation', label: 'FOUNDRY CURATION DESK', icon: <MessageSquare size={16} className="text-purple-400" /> }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -380,14 +365,14 @@ export const SellerPortal: React.FC = () => {
               className={`px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center gap-2.5 whitespace-nowrap cursor-pointer ${
                 activeTab === tab.id
                   ? 'neu-btn-primary text-white shadow-xl scale-105 border-white/40'
-                  : 'bg-[#0e1424] border border-white/20 text-slate-100 hover:text-white hover:bg-[#162038] hover:border-cyan-400/40 shadow-md'
+                  : 'bg-[#121212] border border-white/15 text-zinc-200 hover:text-white hover:bg-[#1a1a1a] hover:border-purple-500/40 shadow-md'
               }`}
             >
               {tab.icon}
               <span className="font-extrabold">{tab.label}</span>
               {tab.count !== undefined && (
                 <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black ${
-                  activeTab === tab.id ? 'bg-black/50 text-white border border-white/20' : 'bg-white/15 text-white'
+                  activeTab === tab.id ? 'bg-black/60 text-white border border-white/20' : 'bg-white/15 text-white'
                 }`}>
                   {tab.count}
                 </span>
@@ -396,370 +381,394 @@ export const SellerPortal: React.FC = () => {
           ))}
         </div>
 
-        {/* TAB 1: OVERVIEW */}
-        {activeTab === 'overview' && (
-          <div className="space-y-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
-              {[
-                { label: 'GROSS SALES', val: `$${totalGrossRevenue.toLocaleString()}`, color: 'text-purple-300', icon: <DollarSign size={18} className="text-purple-400 shrink-0" /> },
-                { label: 'CREATOR NET (85%)', val: `$${totalNetPayout.toLocaleString()}`, color: 'text-cyan-300', icon: <Sparkles size={18} className="text-cyan-400 shrink-0" /> },
-                { label: 'UNITS SOLD', val: `${totalUnitsSold}`, color: 'text-emerald-300', icon: <ShoppingCart size={18} className="text-emerald-400 shrink-0" /> },
-                { label: 'CDN HITS', val: '14.2M', color: 'text-indigo-300', icon: <BarChart3 size={18} className="text-indigo-400 shrink-0" /> }
-              ].map((stat, i) => (
-                <div
-                  key={i}
-                  className="bg-[#0c101d] border border-white/20 hover:border-purple-500/50 p-4 sm:p-6 md:p-8 rounded-[1.75rem] sm:rounded-[2rem] space-y-2 sm:space-y-3 shadow-xl transition-all hover:translate-y-[-2px] overflow-hidden flex flex-col justify-between"
-                >
-                  <div className={`flex justify-between items-center text-[8.5px] min-[360px]:text-[9.5px] sm:text-xs font-black uppercase tracking-wider ${stat.color}`}>
-                    <span className="truncate">{stat.label}</span>
-                    {stat.icon}
-                  </div>
-                  <div className="text-base min-[360px]:text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-white font-mono leading-tight break-words">
-                    {stat.val}
-                  </div>
+        {/* TAB 1: MY SUBMISSIONS & PORTFOLIO */}
+        {activeTab === 'portfolio' && (
+          <div className="space-y-8">
+            {sellerFonts.length === 0 ? (
+              <div className="liquid-glass border border-white/20 p-12 sm:p-16 rounded-[2.5rem] text-center space-y-6 shadow-2xl">
+                <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/40 flex items-center justify-center mx-auto shadow-lg">
+                  <Layers size={32} />
                 </div>
-              ))}
-            </div>
-
-            <div className="bg-[#0c101d] border border-white/20 p-10 rounded-[2.5rem] shadow-2xl space-y-6">
-              <h3 className="text-2xl font-black uppercase tracking-tight text-white font-grotesk">TYPEFACE REVENUE SHARE</h3>
-              <div className="space-y-4">
-                {sellerFonts.map((font) => {
-                  const percent = (font.grossRevenue / totalGrossRevenue) * 100;
-                  return (
-                    <div key={font.id} className="space-y-2">
-                      <div className="flex justify-between text-xs font-black uppercase">
-                        <span className="text-white text-sm">{font.fontName}</span>
-                        <span className="font-mono text-cyan-300 font-bold">${font.grossRevenue.toLocaleString()} ({font.salesCount} sales)</span>
-                      </div>
-                      <div className="w-full h-3 bg-[#050814] border border-white/10 rounded-full overflow-hidden p-0.5">
-                        <div style={{ width: `${percent}%` }} className="h-full bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 rounded-full" />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 2: CATALOG */}
-        {activeTab === 'catalog' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sellerFonts.map((font) => (
-              <div
-                key={font.id}
-                className="bg-[#0c101d] border border-white/20 hover:border-purple-500/50 p-8 rounded-[2.5rem] flex flex-col justify-between space-y-6 shadow-2xl transition-all"
-              >
-                <div className="space-y-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <span className="text-[10px] font-mono font-bold text-purple-300 uppercase tracking-widest">
-                        {font.category} • {font.stylesCount} STYLES
-                      </span>
-                      <h4 className="text-2xl font-black uppercase tracking-tight text-white mt-1 font-grotesk">{font.fontName}</h4>
-                    </div>
-                    <span className="text-[9px] px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold uppercase">
-                      {font.status}
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-slate-200 font-medium line-clamp-2 leading-relaxed">
-                    {font.description}
+                <div className="max-w-md mx-auto space-y-2">
+                  <h3 className="text-2xl font-black uppercase text-white font-grotesk">NO RELEASES SUBMITTED YET</h3>
+                  <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                    Ready to distribute your typefaces to global agencies? Submit your OTF/TTF files using the pipeline tab or send directly via WhatsApp/Email.
                   </p>
-
-                  <div className="bg-[#050814] border border-white/15 p-4 rounded-2xl space-y-2 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-slate-300 uppercase text-[10px] font-bold">COMMERCIAL PRICE:</span>
-                      <strong className="text-white font-mono text-sm">${font.commercialPrice}</strong>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-300 uppercase text-[10px] font-bold">TOTAL SALES:</span>
-                      <strong className="text-cyan-300 font-mono text-sm">{font.salesCount} units</strong>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-300 uppercase text-[10px] font-bold">GROSS ROYALTIES:</span>
-                      <strong className="text-emerald-400 font-mono text-sm">${font.grossRevenue.toLocaleString()}</strong>
-                    </div>
-                  </div>
                 </div>
-
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                  <Link
-                    to="/shop"
-                    className="neu-btn px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-purple-300 hover:text-white flex items-center gap-1.5"
+                <div className="flex flex-wrap justify-center gap-4">
+                  <button
+                    onClick={() => setActiveTab('submit')}
+                    className="neu-btn-primary px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest text-white shadow-xl hover:scale-105 transition-all cursor-pointer"
                   >
-                    <span>VIEW IN SHOP</span>
-                    <ArrowUpRight size={14} />
-                  </Link>
+                    SUBMIT YOUR FIRST TYPEFACE
+                  </button>
+                  <a
+                    href={createWhatsAppDealUrl({ type: 'seller_submission' })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="neu-btn px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-200 hover:text-white transition-all flex items-center gap-2"
+                  >
+                    <MessageSquare size={14} className="text-purple-400" /> SUBMIT ON WHATSAPP
+                  </a>
                 </div>
               </div>
-            ))}
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {sellerFonts.map((font) => (
+                  <div
+                    key={font.id}
+                    className="liquid-glass border border-white/20 p-7 rounded-[2.5rem] space-y-4 shadow-xl"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase">
+                          {font.category}
+                        </span>
+                        <h4 className="text-xl font-black uppercase text-white mt-1">{font.fontName}</h4>
+                      </div>
+                      <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+                        {font.status}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-slate-300 line-clamp-2">{font.description}</p>
+
+                    <div className="bg-black p-4 rounded-2xl border border-white/10 space-y-1.5 text-xs">
+                      <div className="flex justify-between text-slate-300">
+                        <span>Commercial Price:</span>
+                        <strong className="text-white font-mono">${font.commercialPrice}</strong>
+                      </div>
+                      <div className="flex justify-between text-slate-300">
+                        <span>Styles Count:</span>
+                        <strong className="text-white font-mono">{font.stylesCount} weights</strong>
+                      </div>
+                      <div className="flex justify-between text-slate-300">
+                        <span>Date Submitted:</span>
+                        <strong className="text-purple-300 font-mono">{font.submissionDate}</strong>
+                      </div>
+                    </div>
+
+                    <a
+                      href={createWhatsAppDealUrl({ customMessage: `Hello Alphaxen Curation! Inquiring about status for my submitted font: ${font.fontName}` })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full neu-btn py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center justify-center gap-1.5"
+                    >
+                      <MessageSquare size={13} className="text-purple-400" /> INQUIRE WITH CURATOR
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-        {/* TAB 3: UPLOAD */}
-        {activeTab === 'upload' && (
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] max-w-3xl mx-auto space-y-8 shadow-2xl">
+        {/* TAB 2: SUBMIT TYPEFACE */}
+        {activeTab === 'submit' && (
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] max-w-3xl mx-auto space-y-8 shadow-2xl">
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#131b2e] border border-purple-500/40 text-purple-300 text-[10px] font-black uppercase tracking-widest mb-3">
-                <Upload size={13} /> FOUNDRY PIPELINE
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#141414] border border-purple-500/40 text-purple-300 text-[10px] font-black uppercase tracking-widest mb-3">
+                <Upload size={13} /> CREATOR DISTRIBUTION PIPELINE
               </div>
-              <h3 className="text-3xl font-black uppercase tracking-tight text-white font-grotesk">PUBLISH A NEW TYPEFACE</h3>
+              <h3 className="text-3xl font-black uppercase tracking-tight text-white font-grotesk">SUBMIT A NEW TYPEFACE FAMILY</h3>
               <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
-                UPLOAD COMPILED OTF/TTF/WOFF2 FILES FOR AUTOMATED SPECIMEN GENERATION.
+                Submit your compiled OTF/TTF files for automated catalog onboarding and specimen indexing.
               </p>
             </div>
 
             {uploadSuccess && (
-              <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+              <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2">
                 <CheckCircle2 size={16} />
-                <span>TYPEFACE FAMILY PUBLISHED TO MARKETPLACE!</span>
+                <span>Typeface submitted successfully! Opening WhatsApp Curation Desk...</span>
               </div>
             )}
 
-            {/* Cryptographic DRM Protection Notice */}
-            <div className="p-5 rounded-2xl bg-[#050814] border border-cyan-500/30 flex items-start gap-4 shadow-lg">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5">
-                <ShieldCheck size={20} />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-xs font-black uppercase tracking-wider text-cyan-300">AUTOMATED CRYPTOGRAPHIC WATERMARKING &amp; DRM</h4>
-                <p className="text-[11px] text-slate-300 leading-relaxed font-medium">
-                  Every typeface file published through Alphaxen is automatically sealed with our proprietary binary font watermarker. Downloads are embedded with buyer-specific SHA-256 signatures, OpenType `name` table licenses, and CORS-enforced Webfont tokens to prevent unauthorized redistribution.
-                </p>
-              </div>
-            </div>
-
             <form onSubmit={handleUploadSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-200">
-                    FONT FAMILY NAME *
-                  </label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Typeface Family Name *</label>
                   <input
                     type="text"
                     required
-                    placeholder="ALPHAXEN NEO-SERIF"
                     value={newFont.fontName}
-                    onChange={(e) => setNewFont({ ...newFont, fontName: e.target.value })}
-                    className="w-full bg-[#050814] border border-white/20 rounded-2xl px-4 py-3.5 text-xs text-white placeholder-slate-400 font-bold uppercase tracking-wider focus:outline-none focus:border-purple-500"
+                    onChange={e => setNewFont({ ...newFont, fontName: e.target.value })}
+                    placeholder="e.g. Abdullah Horizon Grotesk"
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-200">
-                    STUDIO / FOUNDRY NAME *
-                  </label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Designer / Studio Name *</label>
                   <input
                     type="text"
                     required
                     value={newFont.designerName}
-                    onChange={(e) => setNewFont({ ...newFont, designerName: e.target.value })}
-                    className="w-full bg-[#050814] border border-white/20 rounded-2xl px-4 py-3.5 text-xs text-white placeholder-slate-400 font-bold uppercase tracking-wider focus:outline-none focus:border-purple-500"
+                    onChange={e => setNewFont({ ...newFont, designerName: e.target.value })}
+                    placeholder="e.g. Abdullah Foundry Lab"
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-200">
-                    CLASSIFICATION
-                  </label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Category</label>
                   <select
                     value={newFont.category}
-                    onChange={(e) => setNewFont({ ...newFont, category: e.target.value })}
-                    className="w-full bg-[#050814] border border-white/20 rounded-2xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-purple-500 uppercase font-black"
+                    onChange={e => setNewFont({ ...newFont, category: e.target.value })}
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
                   >
-                    <option value="sans-serif">SANS-SERIF</option>
-                    <option value="serif">SERIF</option>
-                    <option value="display">DISPLAY</option>
-                    <option value="monospace">MONOSPACE</option>
-                    <option value="luxury">LUXURY</option>
-                    <option value="variable">VARIABLE</option>
+                    <option value="display">Display Titling</option>
+                    <option value="serif">Haute Serif</option>
+                    <option value="sans-serif">Grotesk / Sans</option>
+                    <option value="luxury">Luxury / Chiseled</option>
+                    <option value="variable">Variable Font</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-200">
-                    TOTAL STYLES
-                  </label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Total Styles/Weights</label>
                   <input
                     type="number"
                     min="1"
                     max="64"
                     value={newFont.stylesCount}
-                    onChange={(e) => setNewFont({ ...newFont, stylesCount: Number(e.target.value) })}
-                    className="w-full bg-[#050814] border border-white/20 rounded-2xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-purple-500 font-mono font-bold"
+                    onChange={e => setNewFont({ ...newFont, stylesCount: Number(e.target.value) })}
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-200">
-                    PRICE ($)
-                  </label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Commercial Price ($)</label>
                   <input
                     type="number"
                     min="10"
-                    max="999"
                     value={newFont.commercialPrice}
-                    onChange={(e) => setNewFont({ ...newFont, commercialPrice: Number(e.target.value) })}
-                    className="w-full bg-[#050814] border border-white/20 rounded-2xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-purple-500 font-mono font-bold"
+                    onChange={e => setNewFont({ ...newFont, commercialPrice: Number(e.target.value) })}
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-200">
-                  CONCEPT & DESCRIPTION
-                </label>
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Typeface Design Description</label>
                 <textarea
                   rows={3}
-                  placeholder="OPTICAL CURVATURE, INK TRAPS, INSPIRATION..."
                   value={newFont.description}
-                  onChange={(e) => setNewFont({ ...newFont, description: e.target.value })}
-                  className="w-full bg-[#050814] border border-white/20 rounded-2xl p-4 text-xs text-white placeholder-slate-400 font-bold uppercase tracking-wider focus:outline-none focus:border-purple-500 resize-none"
+                  onChange={e => setNewFont({ ...newFont, description: e.target.value })}
+                  placeholder="Describe your typeface inspiration, glyph counts, ligatures, and target applications..."
+                  className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full neu-btn-primary h-14 rounded-2xl text-white font-black uppercase tracking-[0.25em] text-[11px] shadow-2xl cursor-pointer hover:scale-105 transition-all"
-              >
-                PUBLISH TO ALPHAXEN MARKETPLACE
-              </button>
-            </form>
-          </div>
-        )}
-
-        {/* TAB 4: DIRECT KEYS */}
-        {activeTab === 'licenses' && (
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">DIRECT ENTERPRISE LICENSE GENERATOR</h3>
-              <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
-                ISSUE CUSTOM COMMERCIAL CERTIFICATES DIRECTLY TO ENTERPRISE CLIENTS.
-              </p>
-            </div>
-
-            <form onSubmit={handleGenerateDirectLicense} className="grid grid-cols-1 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-[#050814] border border-white/20">
-              <input
-                type="text"
-                required
-                placeholder="CLIENT OR AGENCY"
-                value={newClientName}
-                onChange={(e) => setNewClientName(e.target.value)}
-                className="bg-[#0c101d] border border-white/15 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-400 font-bold uppercase tracking-wider focus:outline-none focus:border-purple-500"
-              />
-              <select
-                value={newLicenseFont}
-                onChange={(e) => setNewLicenseFont(e.target.value)}
-                className="bg-[#0c101d] border border-white/15 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-purple-500 font-bold uppercase"
-              >
-                {sellerFonts.map(f => (
-                  <option key={f.id} value={f.fontName}>{f.fontName}</option>
-                ))}
-              </select>
-              <select
-                value={newLicenseTier}
-                onChange={(e) => setNewLicenseTier(e.target.value)}
-                className="bg-[#0c101d] border border-white/15 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-purple-500 font-bold uppercase"
-              >
-                <option value="Commercial">COMMERCIAL (500K)</option>
-                <option value="Extended">EXTENDED STUDIO</option>
-                <option value="Enterprise">ENTERPRISE (UNLIMITED)</option>
-              </select>
-              <button
-                type="submit"
-                className="neu-btn-primary h-12 rounded-xl text-white font-black text-[10px] uppercase tracking-widest shadow-md cursor-pointer hover:scale-102"
-              >
-                GENERATE KEY
-              </button>
-            </form>
-
-            <div className="space-y-4">
-              {clientLicenses.map((item) => (
-                <div
-                  key={item.key}
-                  className="bg-[#050814] border border-white/15 p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4"
+              <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                <button
+                  type="submit"
+                  className="flex-1 neu-btn-primary py-4 rounded-xl text-xs font-black uppercase tracking-widest text-white flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer"
                 >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-base font-bold text-white">{item.client}</span>
-                      <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-mono font-bold">
-                        {item.tier}
-                      </span>
-                    </div>
-                    <div className="text-xs text-slate-300 font-mono">
-                      TYPEFACE: <strong className="text-white">{item.font}</strong> • KEY: <span className="text-cyan-300 font-bold">{item.key}</span>
-                    </div>
-                  </div>
+                  <Upload size={16} /> SUBMIT &amp; CONNECT ON WHATSAPP
+                </button>
 
-                  <div className="flex flex-wrap items-center gap-2">
-                    <button
-                      onClick={() => {
-                        setSecurityTargetKey(item.key);
-                        setShowSecurityModal(true);
-                      }}
-                      className="neu-btn px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-300 hover:text-white flex items-center gap-1.5 cursor-pointer border border-emerald-500/40"
-                    >
-                      <ShieldCheck size={14} className="text-emerald-400" />
-                      <span>VERIFY DRM</span>
-                    </button>
-
-                    <button
-                      onClick={() => copyText(item.key, item.key)}
-                      className="neu-btn px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-100 hover:text-white flex items-center gap-1.5 cursor-pointer"
-                    >
-                      {copiedKey === item.key ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
-                      <span>{copiedKey === item.key ? 'COPIED' : 'COPY KEY'}</span>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+                <a
+                  href={createEmailDealUrl({ type: 'seller_submission', fontName: newFont.fontName || 'New Typeface' })}
+                  className="neu-btn px-6 py-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-200 hover:text-white flex items-center justify-center gap-2"
+                >
+                  <Mail size={16} className="text-purple-400" /> SUBMIT VIA EMAIL
+                </a>
+              </div>
+            </form>
           </div>
         )}
 
-        {/* TAB 5: PAYOUTS */}
-        {activeTab === 'payouts' && (
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
+        {/* TAB 3: ISSUE CLIENT LICENSE KEYS */}
+        {activeTab === 'keys' && (
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">EARNINGS & PAYOUT SETTLEMENT</h3>
+                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">DIRECT CLIENT LICENSE GENERATOR</h3>
                 <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
-                  ROYALTIES ARE DISBURSED WEEKLY VIA STRIPE, BANK WIRE, OR USDC.
+                  Issue unique, tamper-proof commercial DRM license keys directly to your private commissioned clients.
+                </p>
+              </div>
+            </div>
+
+            <form onSubmit={handleGenerateDirectLicense} className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#0b0e17] p-6 rounded-2xl border border-white/15">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Client / Company Name</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Vogue Global Media"
+                  value={newClientName}
+                  onChange={e => setNewClientName(e.target.value)}
+                  className="w-full bg-black border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white uppercase focus:outline-none focus:border-purple-500"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Typeface Family</label>
+                <select
+                  value={newLicenseFont}
+                  onChange={e => setNewLicenseFont(e.target.value)}
+                  className="w-full bg-black border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500"
+                >
+                  {FONT_CATALOG.map(f => (
+                    <option key={f.id} value={f.name}>{f.name}</option>
+                  ))}
+                  {sellerFonts.map(f => (
+                    <option key={f.id} value={f.fontName}>{f.fontName} (My Submission)</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-end">
+                <button
+                  type="submit"
+                  className="w-full neu-btn-primary py-2.5 rounded-xl text-xs font-black uppercase tracking-widest text-white flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Key size={14} /> GENERATE KEY
+                </button>
+              </div>
+            </form>
+
+            {/* Issued Keys List */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">ISSUED CLIENT LICENSES</h4>
+              {clientLicenses.length === 0 ? (
+                <div className="p-8 text-center text-xs text-slate-500 font-mono bg-[#0b0e17] rounded-2xl border border-white/10">
+                  No private client keys generated yet. Use the tool above to issue your first license key.
+                </div>
+              ) : (
+                clientLicenses.map(lic => (
+                  <div key={lic.key} className="bg-[#0b0e17] border border-white/15 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <strong className="text-white text-sm">{lic.client}</strong>
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase">
+                          {lic.tier}
+                        </span>
+                      </div>
+                      <div className="text-xs font-mono text-slate-400 mt-0.5">
+                        {lic.font} • Key: <span className="text-purple-300 font-bold">{lic.key}</span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => copyText(lic.key, lic.key)}
+                      className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center gap-1.5 cursor-pointer"
+                    >
+                      {copiedKey === lic.key ? <Check size={12} className="text-purple-400" /> : <Copy size={12} />}
+                      <span>{copiedKey === lic.key ? 'COPIED' : 'COPY KEY'}</span>
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: 85% CREATOR SPLIT & PAYOUTS */}
+        {activeTab === 'royalties' && (
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">85% CREATOR ROYALTY SPLIT</h3>
+                <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
+                  We maintain the highest creator payout ratio in the font industry. 85% of gross revenue is directly disbursed to type designers.
                 </p>
               </div>
 
-              <button
-                onClick={() => alert(`Payout request of $${totalNetPayout.toLocaleString()} submitted!`)}
-                className="neu-btn-primary h-12 px-8 rounded-xl text-white font-black text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all cursor-pointer"
+              <a
+                href={createWhatsAppDealUrl({ customMessage: "Hello Alphaxen Finance! I would like to inquire about creator royalty settlement methods and payout options." })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="neu-btn-primary px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center gap-2"
               >
-                REQUEST PAYOUT (${totalNetPayout.toLocaleString()})
-              </button>
+                <MessageSquare size={14} /> FOUNDRY FINANCE LINE
+              </a>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="bg-[#050814] border border-white/20 p-6 rounded-2xl space-y-1">
-                <span className="text-[10px] text-slate-300 font-black uppercase tracking-wider">AVAILABLE BALANCE</span>
-                <div className="text-3xl sm:text-4xl font-black text-emerald-400 font-mono">${totalNetPayout.toLocaleString()}</div>
+              <div className="bg-[#0b0e17] border border-white/20 p-6 rounded-2xl space-y-2">
+                <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">CREATOR ROYALTY SHARE</span>
+                <div className="text-3xl sm:text-4xl font-black text-purple-400 font-mono">85%</div>
+                <p className="text-[11px] text-slate-400">Direct creator share on all commercial and extended tiers.</p>
               </div>
-              <div className="bg-[#050814] border border-white/20 p-6 rounded-2xl space-y-1">
-                <span className="text-[10px] text-slate-300 font-black uppercase tracking-wider">PENDING CLEARANCE</span>
-                <div className="text-3xl sm:text-4xl font-black text-white font-mono">$1,420.00</div>
+
+              <div className="bg-[#0b0e17] border border-white/20 p-6 rounded-2xl space-y-2">
+                <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">PAYOUT DISBURSEMENT</span>
+                <div className="text-3xl sm:text-4xl font-black text-white font-mono">WEEKLY</div>
+                <p className="text-[11px] text-slate-400">Automatic weekly payouts via Bank Wire, Stripe, USDC, or bKash.</p>
               </div>
-              <div className="bg-[#050814] border border-white/20 p-6 rounded-2xl space-y-1">
-                <span className="text-[10px] text-slate-300 font-black uppercase tracking-wider">LIFETIME PAID OUT</span>
-                <div className="text-3xl sm:text-4xl font-black text-purple-300 font-mono">$45,890.00</div>
+
+              <div className="bg-[#0b0e17] border border-white/20 p-6 rounded-2xl space-y-2">
+                <span className="text-[10px] text-slate-400 font-black uppercase tracking-wider">IP OWNERSHIP</span>
+                <div className="text-3xl sm:text-4xl font-black text-purple-300 font-mono">100% YOURS</div>
+                <p className="text-[11px] text-slate-400">You retain 100% full intellectual property and master copyright.</p>
               </div>
             </div>
           </div>
         )}
+
+        {/* TAB 5: FOUNDRY CURATION DESK */}
+        {activeTab === 'curation' && (
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#141414] border border-purple-500/40 text-purple-300 text-[10px] font-black uppercase tracking-widest mb-3">
+                <MessageSquare size={13} /> ART DIRECTION &amp; MASTERING
+              </div>
+              <h3 className="text-3xl font-black uppercase tracking-tight text-white font-grotesk">DIRECT FOUNDRY CURATION DESK</h3>
+              <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
+                Connect directly with Alphaxen type directors on WhatsApp or Email for font mastering, OpenType kerning reviews, and fast-track catalog approval.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="bg-[#0b0e17] border border-white/15 p-8 rounded-3xl space-y-4 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center">
+                    <MessageSquare size={24} />
+                  </div>
+                  <h4 className="text-xl font-black uppercase text-white">WhatsApp Fast-Track Desk</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Chat in real-time with our curation team. Send font specimens, zip archives, or ask questions regarding pricing and licensing.
+                  </p>
+                </div>
+                <a
+                  href={`https://wa.me/${FOUNDRY_CONTACT.whatsappNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="neu-btn-primary py-3.5 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all"
+                >
+                  <MessageSquare size={15} /> CHAT ON WHATSAPP: {FOUNDRY_CONTACT.phone}
+                </a>
+              </div>
+
+              <div className="bg-[#0b0e17] border border-white/15 p-8 rounded-3xl space-y-4 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center">
+                    <Mail size={24} />
+                  </div>
+                  <h4 className="text-xl font-black uppercase text-white">Direct Email Submissions</h4>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Submit OTF/TTF font families with complete PDF type specimen books for in-depth geometric review and catalog contracts.
+                  </p>
+                </div>
+                <a
+                  href={`mailto:${FOUNDRY_CONTACT.email}`}
+                  className="neu-btn py-3.5 rounded-xl text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center justify-center gap-2"
+                >
+                  <Mail size={15} className="text-purple-400" /> EMAIL: {FOUNDRY_CONTACT.email}
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/[0.08] liquid-glass pt-16 pb-28 sm:pb-16 px-6 sm:px-8 relative z-10 overflow-hidden">
+      <footer className="footer-vertex-gradient pt-16 pb-28 sm:pb-16 px-6 sm:px-12 relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 lg:col-span-2">
@@ -767,7 +776,7 @@ export const SellerPortal: React.FC = () => {
                 <BrandMark mode="default" />
               </Link>
               <p className="text-slate-400 text-xs font-semibold tracking-wider uppercase mb-8 max-w-md leading-relaxed">
-                EMPOWERING DESIGNERS & TYPE STUDIOS WITH HIGH-PRECISION DIGITAL VARIABLE TYPEFACES AND PERPETUAL COMMERCIAL LICENSING.
+                EMPOWERING INDEPENDENT TYPE DESIGNERS WITH 85% CREATOR ROYALTIES AND DIRECT CLIENT LICENSING SYSTEMS.
               </p>
             </div>
 
@@ -781,7 +790,7 @@ export const SellerPortal: React.FC = () => {
                   BUYER VAULT
                 </Link>
                 <Link to="/seller" className="text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors uppercase tracking-wider w-fit">
-                  SELLER STUDIO
+                  CREATOR STUDIO
                 </Link>
               </div>
             </div>
@@ -793,9 +802,9 @@ export const SellerPortal: React.FC = () => {
                   DOCUMENTATION
                 </Link>
                 <Link to="/tos" className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider w-fit">
-                  TERMS OF SERVICE & EULA
+                  TERMS OF SERVICE &amp; EULA
                 </Link>
-                <Link to="/admin" className="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-wider w-fit">
+                <Link to="/admin" className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider w-fit">
                   ADMIN CONSOLE
                 </Link>
               </div>
@@ -812,27 +821,26 @@ export const SellerPortal: React.FC = () => {
 
       {/* Mobile Floating Bottom Dock */}
       <div className="md:hidden fixed bottom-4 inset-x-4 z-40">
-        <div className="liquid-glass px-4 py-2.5 rounded-3xl border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(99,102,241,0.2)] backdrop-blur-2xl flex items-center justify-between">
+        <div className="liquid-glass px-4 py-2.5 rounded-3xl border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(139,92,246,0.25)] backdrop-blur-2xl flex items-center justify-between">
           <Link to="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-white p-1.5 transition-colors">
+            <Home size={18} />
             <span className="text-[8px] font-black uppercase tracking-wider">Home</span>
           </Link>
           <Link to="/shop" className="flex flex-col items-center gap-1 text-slate-400 hover:text-white p-1.5 transition-colors">
-            <span className="text-[8px] font-black uppercase tracking-wider">Fonts</span>
+            <ShoppingBag size={18} />
+            <span className="text-[8px] font-black uppercase tracking-wider">Catalog</span>
           </Link>
           <Link to="/buyer" className="flex flex-col items-center gap-1 text-slate-400 hover:text-white p-1.5 transition-colors">
-            <span className="text-[8px] font-black uppercase tracking-wider">Vault</span>
+            <HardDrive size={18} />
+            <span className="text-[8px] font-black uppercase tracking-wider">Buyer</span>
           </Link>
           <Link to="/seller" className="flex flex-col items-center gap-1 text-purple-400 p-1.5">
-            <span className="text-[8px] font-black uppercase tracking-wider">Studio</span>
+            <Layers size={18} />
+            <span className="text-[8px] font-black uppercase tracking-wider">Seller</span>
           </Link>
         </div>
       </div>
-      {/* Cryptographic Font Security & DRM Inspector Modal */}
-      <FontSecurityModal
-        isOpen={showSecurityModal}
-        onClose={() => setShowSecurityModal(false)}
-        defaultKey={securityTargetKey}
-      />
+
     </div>
   );
 };

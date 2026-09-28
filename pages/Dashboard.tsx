@@ -152,7 +152,7 @@ export const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-100 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 selection:bg-purple-500/30 selection:text-purple-100 font-sans overflow-x-hidden">
       
       {/* Floating Liquid-Glass Navigation */}
       <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
@@ -194,13 +194,13 @@ export const Dashboard: React.FC = () => {
         <div className="liquid-glass p-10 md:p-14 rounded-[2.5rem] mb-12 shadow-2xl space-y-6 relative overflow-hidden">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="space-y-4 max-w-2xl">
-              <div className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full liquid-glass-sm text-[9px] font-black uppercase tracking-[0.3em] text-cyan-300">
-                <span className="flex h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(6,182,212,1)]" />
+              <div className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full liquid-glass-sm text-[9px] font-black uppercase tracking-[0.3em] text-purple-300">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_rgba(139,92,246,1)]" />
                 CENTRAL TYPOGRAPHY DASHBOARD
               </div>
               <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white font-grotesk">
                 ALPHAXEN <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-sky-400">
                   MANAGEMENT HUB.
                 </span>
               </h1>
@@ -215,7 +215,7 @@ export const Dashboard: React.FC = () => {
                 <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest mt-1">OWNED FONTS</div>
               </div>
               <div className="text-center px-4 border-r border-white/10">
-                <div className="text-3xl font-black text-cyan-400 font-mono">44</div>
+                <div className="text-3xl font-black text-purple-400 font-mono">44</div>
                 <div className="text-[9px] text-slate-400 uppercase font-bold tracking-widest mt-1">TOTAL STYLES</div>
               </div>
               <div className="text-center px-4">
@@ -268,7 +268,7 @@ export const Dashboard: React.FC = () => {
                   placeholder="SEARCH YOUR FONT LIBRARY..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full liquid-glass-inset rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-bold uppercase tracking-wider focus:outline-none focus:border-cyan-500"
+                  className="w-full liquid-glass-inset rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-bold uppercase tracking-wider focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -281,7 +281,7 @@ export const Dashboard: React.FC = () => {
                 </Link>
                 <button
                   onClick={() => handleDownloadFont('Alphaxen-Complete-Library', 'ALL_FONTS_ZIP')}
-                  className="neu-btn-cyan h-12 px-6 rounded-xl font-black text-[10px] uppercase tracking-widest text-white shadow-lg flex items-center gap-2"
+                  className="neu-btn-primary h-12 px-6 rounded-xl font-black text-[10px] uppercase tracking-widest text-white shadow-lg flex items-center gap-2"
                 >
                   <Download size={14} /> DOWNLOAD ALL (.ZIP)
                 </button>
@@ -299,14 +299,14 @@ export const Dashboard: React.FC = () => {
                     <div className="space-y-4">
                       <div className="flex items-start justify-between">
                         <div>
-                          <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-widest">
+                          <span className="text-[9px] font-mono font-bold text-purple-400 uppercase tracking-widest">
                             {license.tier} LICENSE
                           </span>
                           <h3 className="text-2xl font-black uppercase tracking-tight text-white mt-1 font-grotesk">
                             {license.fontName}
                           </h3>
                         </div>
-                        <span className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="p-2 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
                           <CheckCircle2 size={16} />
                         </span>
                       </div>
@@ -331,7 +331,7 @@ export const Dashboard: React.FC = () => {
                       <div className="space-y-1 text-[10px] font-mono text-slate-300 uppercase tracking-wider">
                         <div className="flex justify-between">
                           <span>KEY:</span>
-                          <span className="text-cyan-400 font-bold">{license.licenseKey}</span>
+                          <span className="text-purple-400 font-bold">{license.licenseKey}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>ENTITY:</span>
@@ -351,7 +351,7 @@ export const Dashboard: React.FC = () => {
                             onClick={() => handleDownloadFont(license.fontName, fmt)}
                             className="neu-btn py-2 px-2 rounded-xl text-[9px] font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center justify-center gap-1 transition-all cursor-pointer"
                           >
-                            <Download size={10} className="text-cyan-400" />
+                            <Download size={10} className="text-purple-400" />
                             <span>{fmt}</span>
                           </button>
                         ))}
@@ -374,13 +374,13 @@ export const Dashboard: React.FC = () => {
                 <div className="text-xs text-slate-400">85% creator payout rate</div>
               </div>
               <div className="liquid-glass-interactive p-8 rounded-[2rem] space-y-2">
-                <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider">ACTIVE TYPEFACES</span>
-                <div className="text-3xl font-black text-cyan-400 font-mono">{sellerFonts.length} Families</div>
+                <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider">ACTIVE TYPEFACES</span>
+                <div className="text-3xl font-black text-purple-400 font-mono">{sellerFonts.length} Families</div>
                 <div className="text-xs text-slate-400">Available on Alphaxen Marketplace</div>
               </div>
               <div className="liquid-glass-interactive p-8 rounded-[2rem] space-y-2">
-                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">TOTAL UNITS LICENSED</span>
-                <div className="text-3xl font-black text-emerald-400 font-mono">498 Units</div>
+                <span className="text-[10px] text-purple-400 font-bold uppercase tracking-wider">TOTAL UNITS LICENSED</span>
+                <div className="text-3xl font-black text-purple-400 font-mono">498 Units</div>
                 <div className="text-xs text-slate-400">Commercial & Enterprise tiers</div>
               </div>
             </div>
@@ -404,7 +404,7 @@ export const Dashboard: React.FC = () => {
                         <span className="text-[9px] font-mono text-purple-400 uppercase font-bold">{font.category}</span>
                         <h4 className="text-xl font-bold text-white font-grotesk">{font.fontName}</h4>
                       </div>
-                      <span className="text-xs font-mono font-bold text-emerald-400">${font.grossRevenue.toLocaleString()}</span>
+                      <span className="text-xs font-mono font-bold text-purple-400">${font.grossRevenue.toLocaleString()}</span>
                     </div>
                     <p className="text-xs text-slate-400">{font.description}</p>
                   </div>
@@ -429,9 +429,9 @@ export const Dashboard: React.FC = () => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-bold text-white">{lic.fontName}</span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono font-bold">{lic.tier}</span>
+                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 font-mono font-bold">{lic.tier}</span>
                     </div>
-                    <div className="text-xs text-slate-400 font-mono">KEY: <strong className="text-cyan-400">{lic.licenseKey}</strong> • REGISTERED: {lic.registeredTo}</div>
+                    <div className="text-xs text-slate-400 font-mono">KEY: <strong className="text-purple-400">{lic.licenseKey}</strong> • REGISTERED: {lic.registeredTo}</div>
                   </div>
 
                   <div className="flex items-center gap-3">
@@ -439,12 +439,12 @@ export const Dashboard: React.FC = () => {
                       onClick={() => copyText(lic.licenseKey, lic.licenseKey)}
                       className="neu-btn px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest text-slate-200 hover:text-white flex items-center gap-1.5"
                     >
-                      {copiedKey === lic.licenseKey ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                      {copiedKey === lic.licenseKey ? <Check size={12} className="text-purple-400" /> : <Copy size={12} />}
                       <span>COPY KEY</span>
                     </button>
                     <button
                       onClick={() => handleDownloadFont(lic.fontName, 'CERTIFICATE_PDF')}
-                      className="neu-btn-cyan px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest text-white flex items-center gap-1.5"
+                      className="neu-btn-primary px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest text-white flex items-center gap-1.5"
                     >
                       <FileText size={12} />
                       <span>PDF EULA</span>
@@ -474,7 +474,7 @@ export const Dashboard: React.FC = () => {
               <tbody className="divide-y divide-white/5">
                 {buyerLicenses.map((lic, i) => (
                   <tr key={lic.licenseKey} className="hover:bg-white/[0.02]">
-                    <td className="py-4 text-cyan-400 font-bold">INV-2026-00{i + 1}</td>
+                    <td className="py-4 text-purple-400 font-bold">INV-2026-00{i + 1}</td>
                     <td className="py-4 font-sans font-bold text-white">{lic.fontName}</td>
                     <td className="py-4 text-purple-300 uppercase">{lic.tier}</td>
                     <td className="py-4 text-slate-400">{lic.purchaseDate}</td>

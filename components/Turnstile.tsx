@@ -84,8 +84,8 @@ const Turnstile: React.FC<TurnstileProps> = ({ onVerify, onExpire, onError }) =>
 
     if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
         return (
-            <div className="flex justify-center my-4 p-4 bg-cyan-500/10 border border-cyan-500/20 rounded-xl">
-                <span className="text-cyan-400 text-xs font-bold uppercase tracking-wider">Turnstile Bypassed (Dev)</span>
+            <div className="flex justify-center my-4 p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl">
+                <span className="text-purple-400 text-xs font-bold uppercase tracking-wider">Turnstile Bypassed (Dev)</span>
             </div>
         );
     }

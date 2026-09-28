@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Alphaxen Font Lab | Next-Gen Typography & Font Marketplace</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-  <link rel="alternate icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="./favicon.svg" />
+  <link rel="icon" type="image/png" href="/ax.png" />
+  <link rel="alternate icon" href="/ax.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/ax.png" />
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#070a13">
+  <meta name="theme-color" content="#0b0e17">
   <meta name="description" content="Alphaxen Font Lab is a premier digital typography laboratory and font marketplace. Discover precision-engineered variable fonts, editorial serifs, neo-grotesks, and developer monospace typefaces with live type-testing and instant commercial licensing.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -38,17 +38,18 @@
             mono: ['"JetBrains Mono"', 'monospace']
           },
           colors: {
-            background: '#070a13',
-            surface: '#0d1322',
-            surfaceHighlight: '#131b2e',
+            background: '#0b0e17',
+            surface: '#111624',
+            surfaceHighlight: '#182032',
             border: 'rgba(255, 255, 255, 0.08)',
-            primary: '#6366f1',
-            accent: '#8b5cf6',
-            cyanAccent: '#06b6d4',
-            goldAccent: '#f59e0b',
-            muted: '#8f9bb3',
+            primary: '#8b5cf6',
+            accent: '#6366f1',
+            cyanAccent: '#38bdf8',
+            goldAccent: '#a855f7',
+            muted: '#a1a1aa',
             success: '#10b981',
-            danger: '#ef4444'
+            danger: '#f43f5e',
+            purpleAccent: '#8b5cf6'
           },
           animation: {
             'fade-in': 'fadeIn 0.3s ease-out forwards',
@@ -79,7 +80,7 @@
   </script>
   <style>
     body {
-      background-color: #050505;
+      background-color: #0b0e17;
       color: #fff;
       overflow-x: hidden;
     }
@@ -94,18 +95,17 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #333;
+      background: #262626;
       border-radius: 3px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #555;
+      background: #8b5cf6;
     }
 
     .glass {
-      background: rgba(10, 10, 10, 0.7);
-      backdrop-filter: blur(10px);
-      border: 1px solid #222;
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid #1f1f1f;
     }
 
     .grid-bg {
@@ -117,38 +117,12 @@
       background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px);
       background-size: 50px 50px;
     }
-
-    .blur-glow {
-      position: fixed;
-      z-index: -1;
-      border-radius: 100%;
-      filter: blur(140px);
-      opacity: 0.15;
-      animation: float 10s ease-in-out infinite;
-    }
-    
-    .aurora-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: linear-gradient(45deg, #050505, #0a0f1c, #050505, #120a1f);
-      background-size: 400% 400%;
-      animation: aurora 20s ease infinite;
-    }
   </style>
   <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
   <div id="root"></div>
-
-  <!-- Background Morphing Fluid Blobs for Liquid-Glass refraction -->
-  <div class="liquid-bg-container">
-    <div class="liquid-blob liquid-blob-1"></div>
-    <div class="liquid-blob liquid-blob-2"></div>
-    <div class="liquid-blob liquid-blob-3"></div>
-    <div class="liquid-blob liquid-blob-4"></div>
-  </div>
 
   <script type="module" src="/index.tsx"></script>
 </body>

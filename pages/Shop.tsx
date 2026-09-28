@@ -18,6 +18,7 @@ import { getCurrentUser, UserRecord } from '../services/authManager';
 import FontSecurityModal from '../components/FontSecurityModal';
 import { generateLicenseKey } from '../services/fontSecurity';
 import { soundFx } from '../services/soundFx';
+import { FOUNDRY_CONTACT, createWhatsAppDealUrl, createEmailDealUrl } from '../services/contact';
 
 const FacebookIcon = ({ size = 20, className = "" }: { size?: number; className?: string }) => (
   <svg width={size} height={size} className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -234,10 +235,10 @@ EULA COMMERCIAL RIGHTS:
   ];
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-100 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 selection:bg-purple-500/30 selection:text-purple-100 font-sans overflow-x-hidden relative">
       
-      {/* Sticky High-Definition Top Navigation Bar (Solid Background - Never Overlaps Content) */}
-      <header className="sticky top-0 z-50 w-full bg-[#070a13]/98 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+      {/* Sticky High-Definition Top Navigation Bar */}
+      <header className="sticky top-0 z-50 w-full bg-transparent max-md:border-transparent max-md:shadow-none md:bg-[#0b0e17]/85 md:backdrop-blur-xl md:border-b md:border-white/10 md:shadow-2xl">
         <div className="max-w-7xl mx-auto px-6 sm:px-12 py-3.5 flex justify-between items-center">
           <BrandMark suffix="FONT CATALOG" />
 
@@ -254,7 +255,7 @@ EULA COMMERCIAL RIGHTS:
               CREATOR STUDIO
             </Link>
 
-            <Link to="/docs" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300 hover:text-white">
+            <Link to="/docs" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-300 hover:text-white">
               DOCS
             </Link>
 
@@ -263,7 +264,7 @@ EULA COMMERCIAL RIGHTS:
                 setSecurityTargetKey('AX-COMM-8921-9482-XN');
                 setShowSecurityModal(true);
               }}
-              className="neu-btn px-3.5 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 hover:text-white flex items-center gap-1.5 cursor-pointer hover:border-emerald-500/50"
+              className="neu-btn px-3.5 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-400 hover:text-white flex items-center gap-1.5 cursor-pointer hover:border-purple-500/50"
             >
               <ShieldCheck size={13} />
               <span>DRM &amp; SECURITY</span>
@@ -346,22 +347,22 @@ EULA COMMERCIAL RIGHTS:
 
         {/* Mobile Animated Drawer */}
         {isMenuOpen && (
-          <div className="md:hidden px-6 pt-2 pb-4 border-t border-white/10 space-y-2 animate-slide-up bg-[#070a13]">
+          <div className="md:hidden px-6 pt-2 pb-4 border-t border-white/10 space-y-2 animate-slide-up bg-[#0b0e17]">
             <Link 
               to="/" 
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <Home size={16} className="text-cyan-400" />
+              <Home size={16} className="text-purple-400" />
               <span>Foundry Home</span>
             </Link>
 
             <Link 
               to="/shop" 
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-cyan-300 hover:text-white"
+              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-purple-300 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <ShoppingBag size={16} className="text-cyan-400" />
+              <ShoppingBag size={16} className="text-purple-400" />
               <span>Font Catalog &amp; Shop</span>
             </Link>
             
@@ -379,7 +380,7 @@ EULA COMMERCIAL RIGHTS:
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <LayoutDashboard size={16} className="text-indigo-400" />
+              <LayoutDashboard size={16} className="text-purple-400" />
               <span>Buyer Vault &amp; Licenses</span>
             </Link>
 
@@ -388,7 +389,7 @@ EULA COMMERCIAL RIGHTS:
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <FileText size={16} className="text-emerald-400" />
+              <FileText size={16} className="text-purple-400" />
               <span>Developer Docs &amp; CDN</span>
             </Link>
 
@@ -439,8 +440,8 @@ EULA COMMERCIAL RIGHTS:
         
         {/* Header Hero Section */}
         <div className="mb-10 space-y-4">
-          <div className="inline-flex items-center gap-2.5 py-1.5 px-4 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-[10px] font-black uppercase tracking-[0.25em] text-cyan-300 shadow-sm">
-            <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_rgba(6,182,212,1)]" />
+          <div className="inline-flex items-center gap-2.5 py-1.5 px-4 rounded-full bg-purple-500/10 border border-purple-500/30 text-[10px] font-black uppercase tracking-[0.25em] text-purple-300 shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_10px_rgba(168,85,247,1)]" />
             AUTHENTIC DIGITAL TYPE CATALOG
           </div>
 
@@ -448,7 +449,7 @@ EULA COMMERCIAL RIGHTS:
             <div className="space-y-2">
               <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white font-grotesk drop-shadow-md">
                 EXCLUSIVE <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-sky-400">
                   TYPEFACES.
                 </span>
               </h1>
@@ -458,9 +459,9 @@ EULA COMMERCIAL RIGHTS:
             </div>
 
             {/* Quick Metrics Bar */}
-            <div className="flex items-center gap-3 bg-[#0c101d] p-3 rounded-2xl border border-white/15 shadow-xl shrink-0">
+            <div className="flex items-center gap-3 bg-[#0a0a0a] p-3 rounded-2xl border border-white/15 shadow-xl shrink-0">
               <div className="px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-center">
-                <div className="text-xl font-black text-cyan-300 font-mono">6</div>
+                <div className="text-xl font-black text-purple-300 font-mono">6</div>
                 <div className="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Families</div>
               </div>
               <div className="px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-center">
@@ -468,27 +469,27 @@ EULA COMMERCIAL RIGHTS:
                 <div className="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Weights</div>
               </div>
               <div className="px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-center">
-                <div className="text-xl font-black text-indigo-300 font-mono">3,800+</div>
+                <div className="text-xl font-black text-purple-300 font-mono">3,800+</div>
                 <div className="text-[8px] uppercase tracking-widest text-slate-400 font-bold">Glyphs</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Global Live Interactive Type Bar (High-Contrast Solid Obsidian) */}
-        <div className="bg-[#0c101d] border border-white/15 p-6 sm:p-8 rounded-[2.5rem] mb-12 shadow-[0_20px_60px_rgba(0,0,0,0.85)] space-y-6">
+        {/* Global Live Interactive Type Bar */}
+        <div className="liquid-glass border border-white/20 p-6 sm:p-8 rounded-[2.5rem] mb-12 shadow-[0_20px_60px_rgba(0,0,0,0.85)] space-y-6">
           
           {/* Row 1: Search & Live Text Input */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
             {/* Search Input */}
             <div className="lg:col-span-4 relative">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400" />
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400" />
               <input
                 type="text"
                 placeholder="SEARCH 6 MASTER FAMILIES..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#050813] border border-white/15 rounded-2xl pl-11 pr-4 py-3.5 text-xs font-black uppercase tracking-wider text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all"
+                className="w-full bg-[#050813] border border-white/15 rounded-2xl pl-11 pr-4 py-3.5 text-xs font-black uppercase tracking-wider text-white placeholder-slate-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition-all"
               />
             </div>
 
@@ -516,7 +517,7 @@ EULA COMMERCIAL RIGHTS:
                   onClick={() => setGlobalSampleText(preset.text)}
                   className={`px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
                     globalSampleText === preset.text
-                      ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-md shadow-cyan-500/20'
+                      ? 'bg-purple-500/20 text-purple-300 border border-purple-500/50 shadow-md shadow-purple-500/20'
                       : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:border-white/30'
                   }`}
                 >
@@ -536,9 +537,9 @@ EULA COMMERCIAL RIGHTS:
                   max="72"
                   value={fontSize}
                   onChange={(e) => setFontSize(Number(e.target.value))}
-                  className="w-20 accent-cyan-400 cursor-pointer bg-white/20 h-1.5 rounded-lg appearance-none"
+                  className="w-20 accent-purple-400 cursor-pointer bg-white/20 h-1.5 rounded-lg appearance-none"
                 />
-                <span className="font-mono text-cyan-300 w-8 text-right font-bold">{fontSize}PX</span>
+                <span className="font-mono text-purple-300 w-8 text-right font-bold">{fontSize}PX</span>
               </div>
 
               {/* Letter Spacing Slider */}
@@ -559,21 +560,21 @@ EULA COMMERCIAL RIGHTS:
               <div className="flex items-center gap-1 p-1 bg-[#050813] border border-white/10 rounded-xl">
                 <button
                   onClick={() => setTextAlign('left')}
-                  className={`p-1.5 rounded-lg transition-colors cursor-pointer ${textAlign === 'left' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-slate-400 hover:text-white'}`}
+                  className={`p-1.5 rounded-lg transition-colors cursor-pointer ${textAlign === 'left' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'text-slate-400 hover:text-white'}`}
                   title="Left Align"
                 >
                   <AlignLeft size={13} />
                 </button>
                 <button
                   onClick={() => setTextAlign('center')}
-                  className={`p-1.5 rounded-lg transition-colors cursor-pointer ${textAlign === 'center' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-slate-400 hover:text-white'}`}
+                  className={`p-1.5 rounded-lg transition-colors cursor-pointer ${textAlign === 'center' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'text-slate-400 hover:text-white'}`}
                   title="Center Align"
                 >
                   <AlignCenter size={13} />
                 </button>
                 <button
                   onClick={() => setTextAlign('right')}
-                  className={`p-1.5 rounded-lg transition-colors cursor-pointer ${textAlign === 'right' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-slate-400 hover:text-white'}`}
+                  className={`p-1.5 rounded-lg transition-colors cursor-pointer ${textAlign === 'right' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'text-slate-400 hover:text-white'}`}
                   title="Right Align"
                 >
                   <AlignRight size={13} />
@@ -611,7 +612,7 @@ EULA COMMERCIAL RIGHTS:
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all cursor-pointer ${
                     selectedCategory === cat.id
-                      ? 'neu-btn-primary text-white shadow-lg shadow-indigo-500/30'
+                      ? 'neu-btn-primary text-white shadow-lg shadow-purple-500/30'
                       : 'neu-btn text-slate-300 hover:text-white'
                   }`}
                 >
@@ -626,7 +627,7 @@ EULA COMMERCIAL RIGHTS:
                   type="checkbox"
                   checked={variableOnly}
                   onChange={(e) => setVariableOnly(e.target.checked)}
-                  className="accent-cyan-400 rounded cursor-pointer"
+                  className="accent-purple-400 rounded cursor-pointer"
                 />
                 <span>VARIABLE ONLY</span>
               </label>
@@ -687,61 +688,61 @@ EULA COMMERCIAL RIGHTS:
               return (
                 <div
                   key={font.id}
-                  className="bg-[#0c101e] border border-white/15 hover:border-indigo-500/40 p-7 sm:p-9 rounded-[2.5rem] flex flex-col justify-between space-y-6 shadow-[0_20px_50px_rgba(0,0,0,0.85)] hover:shadow-[0_25px_60px_rgba(79,70,229,0.25)] transition-all duration-300"
+                  className="liquid-glass-interactive p-7 sm:p-9 rounded-[2.5rem] flex flex-col justify-between space-y-6"
                 >
                   <div className="space-y-4">
                     
                     {/* Header Row: Title, Foundry, and Prices */}
                     <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-[10px] font-mono font-bold text-cyan-300 uppercase tracking-widest bg-cyan-500/10 px-2.5 py-0.5 rounded-md border border-cyan-500/25">
+                          <span className="text-[10px] font-mono font-bold text-purple-300 uppercase tracking-widest bg-purple-500/15 px-2.5 py-0.5 rounded-md border border-purple-500/30 shadow-sm">
                             {font.foundry} • {font.category}
                           </span>
                           {font.badge && (
-                            <span className="text-[9px] font-black px-2.5 py-0.5 rounded-md bg-purple-500/20 text-purple-200 border border-purple-500/40 uppercase tracking-widest">
+                            <span className="text-[9px] font-black px-2.5 py-0.5 rounded-md bg-purple-500/25 text-white border border-purple-500/50 uppercase tracking-widest shadow-sm">
                               {font.badge}
                             </span>
                           )}
-                          <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-white/5 text-slate-300 border border-white/10 uppercase">
+                          <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-white/10 text-zinc-200 border border-white/15 uppercase">
                             {font.releaseYear}
                           </span>
                         </div>
 
-                        <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk pt-1 drop-shadow-sm">
+                        <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk pt-1 drop-shadow-md">
                           {font.name}
                         </h3>
                       </div>
 
                       {/* Pricing Chips */}
                       <div className="text-right flex items-center gap-2 shrink-0">
-                        <div className="text-right px-3 py-1.5 rounded-xl bg-[#060914] border border-white/10 shadow-inner">
-                          <div className="text-sm font-black text-slate-100 font-mono">
+                        <div className="text-right px-3 py-1.5 rounded-xl bg-[#000000] border border-white/15 shadow-inner">
+                          <div className="text-sm font-black text-white font-mono">
                             ${font.prices.personal}
                           </div>
-                          <span className="text-[8px] text-slate-400 uppercase font-black tracking-widest block">PERSONAL</span>
+                          <span className="text-[8px] text-zinc-400 uppercase font-black tracking-widest block">PERSONAL</span>
                         </div>
 
-                        <div className="text-right px-3.5 py-1.5 rounded-xl bg-cyan-500/15 border border-cyan-500/40 shadow-inner">
-                          <div className="text-sm font-black text-cyan-300 font-mono">
+                        <div className="text-right px-3.5 py-1.5 rounded-xl bg-purple-500/20 border border-purple-500/50 shadow-inner">
+                          <div className="text-sm font-black text-purple-300 font-mono">
                             ${font.prices.commercial}
                           </div>
-                          <span className="text-[8px] text-cyan-300 uppercase font-black tracking-widest block">COMMERCIAL</span>
+                          <span className="text-[8px] text-purple-300 uppercase font-black tracking-widest block">COMMERCIAL</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Weight Switcher Pills */}
                     <div className="flex flex-wrap items-center gap-1.5 py-1">
-                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 mr-1">STYLES:</span>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-zinc-400 mr-1">STYLES:</span>
                       {font.styles.slice(0, 5).map((st) => (
                         <button
                           key={st.name}
                           onClick={() => setCardSelectedWeights({ ...cardSelectedWeights, [font.id]: st.weight })}
                           className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
                             activeWeight === st.weight
-                              ? 'bg-purple-500/30 text-purple-200 border border-purple-500/60 shadow-md shadow-purple-500/20'
-                              : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10'
+                              ? 'bg-purple-500/35 text-white border border-purple-500/70 shadow-md shadow-purple-500/30'
+                              : 'bg-white/10 border border-white/15 text-zinc-200 hover:text-white hover:bg-white/20'
                           }`}
                         >
                           {st.name} ({st.weight})
@@ -752,29 +753,29 @@ EULA COMMERCIAL RIGHTS:
                     {/* Real Specimen Artwork & Live Interactive Canvas */}
                     <div className="space-y-3">
                       {font.specimenImage && (
-                        <div className="relative rounded-2xl overflow-hidden border border-white/15 group/img bg-[#04060d] shadow-inner">
+                        <div className="relative rounded-2xl overflow-hidden border border-white/20 group/img bg-[#000000] shadow-2xl">
                           <img
                             src={font.specimenImage}
                             alt={`${font.name} Master Specimen Artwork`}
-                            className="w-full h-44 object-cover object-center group-hover/img:scale-105 transition-transform duration-500 pointer-events-none select-none"
+                            className="w-full h-48 sm:h-52 object-cover object-center group-hover/img:scale-105 transition-transform duration-500 select-none block"
                             loading="lazy"
                           />
                           {font.watermarkImage && (
                             <img
                               src={font.watermarkImage}
                               alt="Foundry Emblem"
-                              className="absolute top-3 right-3 w-8 h-8 object-contain opacity-90 pointer-events-none drop-shadow-md"
+                              className="absolute top-3 right-3 w-9 h-9 object-contain opacity-95 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                             />
                           )}
-                          <div className="absolute bottom-2 left-3 px-3 py-0.5 rounded-full bg-black/85 backdrop-blur-md text-[9px] font-mono font-bold text-cyan-300 uppercase tracking-wider border border-white/15 flex items-center gap-1.5 shadow-md">
-                            <Sparkles size={11} className="text-cyan-400" />
+                          <div className="absolute bottom-2.5 left-3 px-3 py-1 rounded-full bg-black/90 backdrop-blur-md text-[9px] font-mono font-bold text-purple-300 uppercase tracking-wider border border-white/20 flex items-center gap-1.5 shadow-xl">
+                            <Sparkles size={11} className="text-purple-400" />
                             <span>AUTHENTIC TYPE SPECIMEN</span>
                           </div>
                         </div>
                       )}
 
-                      {/* Live Type Area with Dynamic Weight & Spacing (Solid High-Contrast Background) */}
-                      <div className="bg-[#050814] border border-cyan-500/25 p-5 rounded-2xl min-h-[110px] flex items-center justify-center overflow-hidden shadow-inner">
+                      {/* Live Type Area with Dynamic Weight & Spacing (High-Contrast Solid Background) */}
+                      <div className="bg-[#000000] border border-purple-500/35 p-5 rounded-2xl min-h-[110px] flex items-center justify-center overflow-hidden shadow-inner">
                         <div
                           style={{
                             fontFamily: font.fontFamily,
@@ -786,7 +787,7 @@ EULA COMMERCIAL RIGHTS:
                             backgroundImage: font.colorGradient,
                             filter: font.glowShadow ? `drop-shadow(${font.glowShadow})` : undefined
                           }}
-                          className={`truncate font-specimen-waterfall w-full transition-all ${
+                          className={`truncate font-specimen-waterfall w-full transition-all font-bold ${
                             font.colorGradient ? 'bg-clip-text text-transparent' : 'text-white'
                           }`}
                         >
@@ -796,35 +797,35 @@ EULA COMMERCIAL RIGHTS:
                     </div>
 
                     {/* Description & Tags */}
-                    <p className="text-slate-200 text-xs leading-relaxed font-medium line-clamp-2">
+                    <p className="text-zinc-200 text-xs leading-relaxed font-semibold line-clamp-2">
                       {font.description}
                     </p>
 
                     <div className="flex flex-wrap gap-1.5 pt-1">
                       {font.tags.map((tag, i) => (
-                        <span key={i} className="text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/10">
+                        <span key={i} className="text-[9px] font-black uppercase px-2.5 py-0.5 rounded-md bg-white/10 text-zinc-200 border border-white/15 shadow-sm">
                           {tag}
                         </span>
                       ))}
                     </div>
 
                     {/* Specs & DRM Row */}
-                    <div className="flex items-center justify-between text-[11px] font-mono text-slate-300 pt-2 border-t border-white/10">
-                      <span className="font-semibold">{font.stylesCount} STYLES ({font.isVariable ? 'VARIABLE GX' : 'STATIC MASTER'})</span>
+                    <div className="flex items-center justify-between text-[11px] font-mono text-zinc-200 pt-2 border-t border-white/15">
+                      <span className="font-bold">{font.stylesCount} STYLES ({font.isVariable ? 'VARIABLE GX' : 'STATIC MASTER'})</span>
                       
                       <button
                         onClick={() => {
                           setSecurityTargetKey(`AX-COMM-${Math.floor(1000 + Math.random() * 9000)}-${Math.floor(1000 + Math.random() * 9000)}-${font.name.replace(/[^A-Za-z]/g, '').substring(0, 4).toUpperCase()}`);
                           setShowSecurityModal(true);
                         }}
-                        className="text-[9px] font-mono font-bold text-emerald-300 hover:text-white bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-all cursor-pointer shadow-sm"
+                        className="text-[9px] font-mono font-bold text-purple-300 hover:text-white bg-purple-500/20 hover:bg-purple-500/35 border border-purple-500/40 px-2.5 py-1 rounded-lg flex items-center gap-1 transition-all cursor-pointer shadow-sm"
                         title="Inspect Cryptographic DRM & License Status"
                       >
-                        <ShieldCheck size={11} className="text-emerald-400" />
+                        <ShieldCheck size={11} className="text-purple-400" />
                         <span>SHA-256 DRM</span>
                       </button>
 
-                      <span className="text-cyan-300 font-bold">{font.glyphCount} GLYPHS</span>
+                      <span className="text-purple-400 font-black">{font.glyphCount} GLYPHS</span>
                     </div>
                   </div>
 
@@ -838,7 +839,7 @@ EULA COMMERCIAL RIGHTS:
                         }}
                         className="neu-btn px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center gap-1.5 cursor-pointer"
                       >
-                        <Eye size={13} className="text-cyan-400" /> SPECIMEN
+                        <Eye size={13} className="text-purple-400" /> SPECIMEN
                       </button>
 
                       <button
@@ -859,7 +860,7 @@ EULA COMMERCIAL RIGHTS:
 
                       <button
                         onClick={() => handleOpenPurchase(font, 'commercial')}
-                        className="neu-btn-primary px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-wider text-white shadow-lg shadow-indigo-500/30 cursor-pointer hover:scale-105 transition-all"
+                        className="neu-btn-primary px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-wider text-white shadow-lg shadow-purple-500/30 cursor-pointer hover:scale-105 transition-all"
                       >
                         COMMERCIAL (${font.prices.commercial})
                       </button>
@@ -873,7 +874,7 @@ EULA COMMERCIAL RIGHTS:
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/15 bg-[#090d1c] pt-16 pb-28 sm:pb-16 px-6 sm:px-8 relative z-10 mt-20 overflow-hidden">
+      <footer className="footer-vertex-gradient pt-16 pb-28 sm:pb-16 px-6 sm:px-12 relative z-10 mt-20 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 lg:col-span-2">
@@ -884,16 +885,16 @@ EULA COMMERCIAL RIGHTS:
                 EMPOWERING DESIGNERS & TYPE STUDIOS WITH HIGH-PRECISION DIGITAL VARIABLE TYPEFACES AND PERPETUAL COMMERCIAL LICENSING.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href="https://www.facebook.com/profile.php?id=61580779565120" target="_blank" rel="noreferrer" title="Facebook Profile" className="neu-btn-circle text-blue-400 hover:text-white">
+                <a href="https://www.facebook.com/profile.php?id=61580779565120" target="_blank" rel="noreferrer" title="Facebook Profile" className="neu-btn-circle text-purple-400 hover:text-white">
                   <FacebookIcon size={18} />
                 </a>
-                <a href="https://wa.me/8801342900364" target="_blank" rel="noreferrer" title="WhatsApp: +8801342900364" className="neu-btn-circle text-emerald-400 hover:text-white">
+                <a href="https://wa.me/8801342900364" target="_blank" rel="noreferrer" title="WhatsApp: +8801342900364" className="neu-btn-circle text-purple-400 hover:text-white">
                   <WhatsappIcon size={18} />
                 </a>
                 <a href="https://github.com/forhad2008" target="_blank" rel="noreferrer" title="GitHub: forhad2008" className="neu-btn-circle text-slate-200 hover:text-white">
                   <ExternalLink size={18} />
                 </a>
-                <a href="https://forhad2008.github.io/portfolio/" target="_blank" rel="noreferrer" title="Portfolio & Web" className="neu-btn-circle text-cyan-400 hover:text-white">
+                <a href="https://forhad2008.github.io/portfolio/" target="_blank" rel="noreferrer" title="Portfolio & Web" className="neu-btn-circle text-purple-400 hover:text-white">
                   <Home size={18} />
                 </a>
               </div>
@@ -921,15 +922,15 @@ EULA COMMERCIAL RIGHTS:
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white">COMMUNITY & CONNECT</p>
               <div className="flex flex-col gap-3">
                 <a href="https://www.facebook.com/profile.php?id=61580779565120" target="_blank" rel="noreferrer" className="text-xs font-bold text-slate-300 hover:text-white transition-colors uppercase tracking-wider w-fit flex items-center gap-2">
-                  <FacebookIcon size={14} className="text-blue-400" /> FACEBOOK FOUNDRY
+                  <FacebookIcon size={14} className="text-purple-400" /> FACEBOOK FOUNDRY
                 </a>
                 <a href="https://wa.me/8801342900364" target="_blank" rel="noreferrer" className="text-xs font-bold text-slate-300 hover:text-white transition-colors uppercase tracking-wider w-fit flex items-center gap-2">
-                  <WhatsappIcon size={14} className="text-emerald-400" /> WHATSAPP (+8801342900364)
+                  <WhatsappIcon size={14} className="text-purple-400" /> WHATSAPP (+8801342900364)
                 </a>
                 <a href="https://forhad2008.github.io/portfolio/" target="_blank" rel="noreferrer" className="text-xs font-bold text-slate-300 hover:text-white transition-colors uppercase tracking-wider w-fit flex items-center gap-2">
-                  <ExternalLink size={14} className="text-cyan-400" /> PORTFOLIO WEBSITE
+                  <ExternalLink size={14} className="text-purple-400" /> PORTFOLIO WEBSITE
                 </a>
-                <Link to="/admin" className="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-wider w-fit">
+                <Link to="/admin" className="text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors uppercase tracking-wider w-fit">
                   ADMIN CONSOLE
                 </Link>
               </div>
@@ -961,7 +962,7 @@ EULA COMMERCIAL RIGHTS:
             <div className="flex justify-between items-start gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono text-cyan-400 uppercase font-black tracking-widest">
+                  <span className="text-[10px] font-mono text-purple-400 uppercase font-black tracking-widest">
                     FOUNDRY MASTER SPECIMEN: {inspectFont.foundry}
                   </span>
                   <span className="px-2 py-0.5 rounded text-[8px] font-black uppercase bg-purple-500/20 text-purple-300 border border-purple-500/30">
@@ -1033,7 +1034,7 @@ EULA COMMERCIAL RIGHTS:
                         className="absolute top-4 right-4 w-9 h-9 object-contain opacity-90 drop-shadow-lg pointer-events-none"
                       />
                     )}
-                    <div className="absolute bottom-3 left-4 px-3 py-1 rounded-full bg-black/85 backdrop-blur-md text-[9px] font-mono font-bold text-cyan-300 uppercase tracking-widest border border-white/15">
+                    <div className="absolute bottom-3 left-4 px-3 py-1 rounded-full bg-black/85 backdrop-blur-md text-[9px] font-mono font-bold text-purple-300 uppercase tracking-widest border border-white/15">
                       🔒 AUTHENTIC MASTER SPECIMEN • DRM PROTECTED
                     </div>
                   </div>
@@ -1070,7 +1071,7 @@ EULA COMMERCIAL RIGHTS:
               <div className="bg-[#050813] border border-white/10 p-6 rounded-3xl space-y-6 max-h-[420px] overflow-y-auto custom-scrollbar animate-fade-in shadow-inner">
                 {/* Uppercase */}
                 <div>
-                  <div className="text-[10px] font-mono font-bold text-cyan-400 uppercase tracking-widest mb-2.5">
+                  <div className="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-widest mb-2.5">
                     UPPERCASE BASIC LATIN (A - Z)
                   </div>
                   <div className="grid grid-cols-6 sm:grid-cols-13 gap-2">
@@ -1078,7 +1079,7 @@ EULA COMMERCIAL RIGHTS:
                       <div
                         key={char}
                         style={{ fontFamily: inspectFont.fontFamily }}
-                        className="h-12 rounded-xl bg-[#0b0f1f] border border-white/15 flex items-center justify-center text-lg font-bold text-white hover:border-cyan-400 hover:text-cyan-300 transition-all cursor-default select-none shadow-sm"
+                        className="h-12 rounded-xl bg-[#0b0f1f] border border-white/15 flex items-center justify-center text-lg font-bold text-white hover:border-purple-400 hover:text-purple-300 transition-all cursor-default select-none shadow-sm"
                       >
                         {char}
                       </div>
@@ -1106,7 +1107,7 @@ EULA COMMERCIAL RIGHTS:
 
                 {/* Numerals & Symbols */}
                 <div>
-                  <div className="text-[10px] font-mono font-bold text-indigo-400 uppercase tracking-widest mb-2.5">
+                  <div className="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-widest mb-2.5">
                     NUMERALS &amp; PUNCTUATION (0 - 9, &amp; @ # $ % ! ?)
                   </div>
                   <div className="grid grid-cols-6 sm:grid-cols-12 gap-2">
@@ -1114,7 +1115,7 @@ EULA COMMERCIAL RIGHTS:
                       <div
                         key={i}
                         style={{ fontFamily: inspectFont.fontFamily }}
-                        className="h-12 rounded-xl bg-[#0b0f1f] border border-white/15 flex items-center justify-center text-base font-bold text-cyan-200 hover:border-indigo-400 hover:text-white transition-all cursor-default select-none shadow-sm"
+                        className="h-12 rounded-xl bg-[#0b0f1f] border border-white/15 flex items-center justify-center text-base font-bold text-purple-200 hover:border-purple-400 hover:text-white transition-all cursor-default select-none shadow-sm"
                       >
                         {char}
                       </div>
@@ -1129,7 +1130,7 @@ EULA COMMERCIAL RIGHTS:
               <div className="space-y-4 animate-fade-in">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-[#050813] border border-white/15 p-5 rounded-2xl space-y-3 shadow-inner">
-                    <div className="flex items-center gap-2 text-cyan-400 font-black text-xs uppercase tracking-widest">
+                    <div className="flex items-center gap-2 text-purple-400 font-black text-xs uppercase tracking-widest">
                       <Terminal size={16} />
                       <span>Technical Architecture</span>
                     </div>
@@ -1150,7 +1151,7 @@ EULA COMMERCIAL RIGHTS:
                     <ul className="space-y-2 text-xs text-slate-300">
                       {inspectFont.features.map((feat, i) => (
                         <li key={i} className="flex items-center gap-2">
-                          <Check size={14} className="text-cyan-400 shrink-0" />
+                          <Check size={14} className="text-purple-400 shrink-0" />
                           <span>{feat}</span>
                         </li>
                       ))}
@@ -1163,13 +1164,13 @@ EULA COMMERCIAL RIGHTS:
                     <span>CSS @font-face Embed Snippet</span>
                     <button
                       onClick={() => copyText(`@font-face {\n  font-family: '${inspectFont.name}';\n  src: url('/fonts/${encodeURIComponent(inspectFont.name)}/${encodeURIComponent(inspectFont.name)}-Regular.woff2') format('woff2');\n  font-weight: 400;\n  font-style: normal;\n}`, 'css-code')}
-                      className="neu-btn px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest text-cyan-400 flex items-center gap-1.5 cursor-pointer"
+                      className="neu-btn px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest text-purple-400 flex items-center gap-1.5 cursor-pointer"
                     >
                       {copiedKey === 'css-code' ? <Check size={12} /> : <Copy size={12} />}
                       <span>{copiedKey === 'css-code' ? 'COPIED' : 'COPY CSS'}</span>
                     </button>
                   </div>
-                  <pre className="p-3.5 rounded-xl bg-black border border-white/10 font-mono text-[11px] text-cyan-300 overflow-x-auto">
+                  <pre className="p-3.5 rounded-xl bg-black border border-white/10 font-mono text-[11px] text-purple-300 overflow-x-auto">
 {`@font-face {
   font-family: '${inspectFont.name}';
   src: url('/fonts/${encodeURIComponent(inspectFont.name)}/${encodeURIComponent(inspectFont.name)}-Regular.woff2') format('woff2');
@@ -1233,7 +1234,7 @@ EULA COMMERCIAL RIGHTS:
       {/* License Purchase Modal */}
       {selectedFontForPurchase && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-2xl flex items-center justify-center p-4">
-          <div className="bg-[#0b0f1e] border border-white/20 p-8 sm:p-12 rounded-[2.5rem] max-w-lg w-full space-y-6 shadow-2xl relative">
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 rounded-[2.5rem] max-w-lg w-full space-y-6 shadow-2xl relative">
             <button
               onClick={() => setSelectedFontForPurchase(null)}
               className="absolute top-6 right-6 p-2 rounded-xl neu-btn text-slate-400 hover:text-white cursor-pointer"
@@ -1243,19 +1244,19 @@ EULA COMMERCIAL RIGHTS:
 
             {purchaseSuccess ? (
               <div className="text-center py-8 space-y-4 animate-fade-in">
-                <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(6,182,212,0.4)]">
+                <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(168,85,247,0.4)]">
                   <CheckCircle2 size={32} />
                 </div>
                 <h3 className="text-2xl font-black uppercase tracking-tight text-white font-grotesk">LICENSE ISSUED!</h3>
                 <p className="text-xs text-slate-300">
                   PERPETUAL RIGHTS GRANTED TO <strong className="text-white">{companyName}</strong>.
                 </p>
-                <div className="text-[10px] font-mono text-cyan-400">REDIRECTING TO YOUR BUYER VAULT...</div>
+                <div className="text-[10px] font-mono text-purple-400">REDIRECTING TO YOUR BUYER VAULT...</div>
               </div>
             ) : (
               <form onSubmit={handlePurchase} className="space-y-6">
                 <div>
-                  <span className="text-[9px] font-mono text-cyan-400 uppercase font-black tracking-widest">
+                  <span className="text-[9px] font-mono text-purple-400 uppercase font-black tracking-widest">
                     CHECKOUT &amp; PERPETUAL EULA ISSUANCE
                   </span>
                   <h3 className="text-2xl font-black uppercase tracking-tight text-white mt-1 font-grotesk">
@@ -1287,7 +1288,7 @@ EULA COMMERCIAL RIGHTS:
                       >
                         <div className="flex justify-between items-center">
                           <span className="font-black text-[10px] uppercase tracking-wider text-white">{tier.name}</span>
-                          <span className="font-mono text-xs font-bold text-cyan-300">${tier.price}</span>
+                          <span className="font-mono text-xs font-bold text-purple-300">${tier.price}</span>
                         </div>
                         <div className="text-[9px] text-slate-300 mt-1 uppercase font-semibold">{tier.desc}</div>
                       </div>
@@ -1306,7 +1307,7 @@ EULA COMMERCIAL RIGHTS:
                     placeholder="STUDIO NOVA LABS"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    className="w-full bg-[#050813] border border-white/15 rounded-2xl px-4 py-3 text-xs text-white placeholder-slate-500 font-bold uppercase tracking-wider focus:outline-none focus:border-cyan-400"
+                    className="w-full bg-[#050813] border border-white/15 rounded-2xl px-4 py-3 text-xs text-white placeholder-slate-500 font-bold uppercase tracking-wider focus:outline-none focus:border-purple-400"
                   />
                 </div>
 
@@ -1314,21 +1315,53 @@ EULA COMMERCIAL RIGHTS:
                 <div className="p-4 rounded-2xl bg-[#050813] border border-white/10 flex justify-between items-center shadow-inner">
                   <div>
                     <div className="text-[9px] text-slate-400 uppercase font-black">TOTAL AMOUNT:</div>
-                    <div className="text-2xl font-black text-cyan-400 font-mono">
+                    <div className="text-2xl font-black text-purple-400 font-mono">
                       ${selectedFontForPurchase.prices[selectedTier]}.00
                     </div>
                   </div>
-                  <div className="text-right text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
+                  <div className="text-right text-[10px] text-purple-400 font-bold uppercase tracking-wider">
                     PERPETUAL EULA • NO RECURRING FEES
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full neu-btn-primary h-14 rounded-2xl text-white font-black uppercase tracking-[0.25em] text-[11px] shadow-2xl cursor-pointer hover:scale-105 transition-all"
-                >
-                  CONFIRM &amp; ISSUE TO BUYER VAULT
-                </button>
+                <div className="space-y-2.5">
+                  <button
+                    type="submit"
+                    className="w-full neu-btn-primary h-14 rounded-2xl text-white font-black uppercase tracking-[0.25em] text-[11px] shadow-2xl cursor-pointer hover:scale-105 transition-all"
+                  >
+                    CONFIRM &amp; ISSUE TO BUYER VAULT
+                  </button>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <a
+                      href={createWhatsAppDealUrl({
+                        fontName: selectedFontForPurchase.name,
+                        licenseTier: selectedTier.toUpperCase(),
+                        price: selectedFontForPurchase.prices[selectedTier],
+                        type: 'purchase'
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="neu-btn-cyan py-3 px-3 rounded-xl text-[10px] font-black uppercase tracking-wider text-white flex items-center justify-center gap-1.5 shadow-lg"
+                    >
+                      <WhatsappIcon size={14} />
+                      <span>DEAL ON WHATSAPP</span>
+                    </a>
+
+                    <a
+                      href={createEmailDealUrl({
+                        fontName: selectedFontForPurchase.name,
+                        licenseTier: selectedTier.toUpperCase(),
+                        price: selectedFontForPurchase.prices[selectedTier],
+                        type: 'purchase'
+                      })}
+                      className="neu-btn py-3 px-3 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center justify-center gap-1.5"
+                    >
+                      <FileText size={14} className="text-purple-400" />
+                      <span>ORDER VIA EMAIL</span>
+                    </a>
+                  </div>
+                </div>
               </form>
             )}
           </div>
@@ -1337,7 +1370,7 @@ EULA COMMERCIAL RIGHTS:
 
       {/* Mobile Floating Bottom Dock (Smartphones Only) */}
       <div className="md:hidden fixed bottom-4 inset-x-4 z-40">
-        <div className="bg-[#080c18]/95 backdrop-blur-2xl px-4 py-2.5 rounded-3xl border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(99,102,241,0.2)] flex items-center justify-between">
+        <div className="bg-[#0b0e17]/95 backdrop-blur-2xl px-4 py-2.5 rounded-3xl border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(139,92,246,0.2)] flex items-center justify-between">
           <Link
             to="/"
             className="flex flex-col items-center gap-1 text-slate-400 hover:text-white p-1.5 transition-colors"
@@ -1347,7 +1380,7 @@ EULA COMMERCIAL RIGHTS:
           </Link>
           <Link
             to="/shop"
-            className="flex flex-col items-center gap-1 text-cyan-400 p-1.5"
+            className="flex flex-col items-center gap-1 text-purple-400 p-1.5"
           >
             <ShoppingBag size={18} />
             <span className="text-[8px] font-black uppercase tracking-wider">Fonts</span>
@@ -1356,14 +1389,14 @@ EULA COMMERCIAL RIGHTS:
           {/* Floating Center Studio Button */}
           <button
             onClick={() => setViewMode(viewMode === 'grid' ? 'studio' : 'grid')}
-            className="neu-btn-primary w-11 h-11 -mt-6 rounded-full flex items-center justify-center text-white shadow-xl shadow-indigo-500/40 hover:scale-110 active:scale-95 transition-all cursor-pointer"
+            className="neu-btn-primary w-11 h-11 -mt-6 rounded-full flex items-center justify-center text-white shadow-xl shadow-purple-500/40 hover:scale-110 active:scale-95 transition-all cursor-pointer"
           >
             <Type size={18} />
           </button>
 
           <Link
             to="/shop"
-            className="flex flex-col items-center gap-1 text-slate-400 hover:text-cyan-300 p-1.5 transition-colors"
+            className="flex flex-col items-center gap-1 text-slate-400 hover:text-purple-300 p-1.5 transition-colors"
           >
             <Sparkles size={18} />
             <span className="text-[8px] font-black uppercase tracking-wider">Catalog</span>
@@ -1372,7 +1405,7 @@ EULA COMMERCIAL RIGHTS:
           {isLoggedIn ? (
             <Link
               to="/buyer"
-              className="flex flex-col items-center gap-1 text-indigo-300 hover:text-white p-1.5 transition-colors"
+              className="flex flex-col items-center gap-1 text-purple-300 hover:text-white p-1.5 transition-colors"
             >
               <LayoutDashboard size={18} />
               <span className="text-[8px] font-black uppercase tracking-wider">Vault</span>

@@ -60,7 +60,7 @@ const FONTS_LIST = [
     style: 'Liquid Metal Display', 
     weights: '400-800', 
     designer: 'Abdullah Foundry Lab',
-    gradient: 'linear-gradient(135deg, #ffffff 0%, #818cf8 35%, #a855f7 65%, #38bdf8 100%)',
+    gradient: 'linear-gradient(135deg, #ffffff 0%, #818cf8 35%, #8b5cf6 65%, #38bdf8 100%)',
     shadow: '0 0 20px rgba(129, 140, 248, 0.5)'
   },
   { 
@@ -69,7 +69,7 @@ const FONTS_LIST = [
     style: 'Lunar Specular Chrome', 
     weights: '400-800', 
     designer: 'Abdullah Foundry Lab',
-    gradient: 'linear-gradient(135deg, #ffffff 0%, #c084fc 30%, #38bdf8 65%, #f43f5e 100%)',
+    gradient: 'linear-gradient(135deg, #ffffff 0%, #a855f7 30%, #38bdf8 65%, #6366f1 100%)',
     shadow: '0 0 22px rgba(192, 132, 252, 0.55)'
   },
   { 
@@ -87,7 +87,7 @@ const FONTS_LIST = [
     style: 'Celestial Architectural Serif', 
     weights: '400-800', 
     designer: 'Abdullah Foundry Lab',
-    gradient: 'linear-gradient(135deg, #ffffff 0%, #c084fc 30%, #818cf8 60%, #38bdf8 100%)',
+    gradient: 'linear-gradient(135deg, #ffffff 0%, #a855f7 30%, #818cf8 60%, #38bdf8 100%)',
     shadow: '0 0 20px rgba(129, 140, 248, 0.5)'
   },
 ];
@@ -208,7 +208,7 @@ export const MobileDemoShowcase: React.FC = () => {
       {/* Dynamic Island Pill */}
       <div 
         onClick={() => setIslandExpanded(!islandExpanded)}
-        className={`cursor-pointer transition-all duration-500 ease-out flex items-center justify-between px-3.5 border border-white/20 bg-black/95 shadow-[0_0_20px_rgba(0,0,0,0.9),_0_0_15px_rgba(99,102,241,0.2)] backdrop-blur-2xl ${
+        className={`cursor-pointer transition-all duration-500 ease-out flex items-center justify-between px-3.5 border border-white/20 bg-black/95 shadow-[0_0_20px_rgba(0,0,0,0.9),_0_0_15px_rgba(139,92,246,0.25)] backdrop-blur-2xl ${
           islandExpanded 
             ? 'w-60 h-11 rounded-2xl' 
             : 'w-28 h-6 rounded-full'
@@ -217,16 +217,16 @@ export const MobileDemoShowcase: React.FC = () => {
         {islandExpanded ? (
           <div className="flex items-center justify-between w-full px-1 animate-fade-in text-[9px] text-white">
             <div className="flex items-center gap-1.5 font-bold">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
-              <span className="text-cyan-300 tracking-wider">AXEN CDN 12ms</span>
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_#8b5cf6]"></span>
+              <span className="text-purple-300 tracking-wider">AXEN CDN 12ms</span>
             </div>
-            <span className="font-mono text-emerald-400 font-bold">WOFF2 ACTIVE</span>
+            <span className="font-mono text-purple-400 font-bold">WOFF2 ACTIVE</span>
           </div>
         ) : (
           <>
-            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.9)]" />
+            <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_rgba(139,92,246,0.9)]" />
             <div className="text-[8px] font-mono font-bold text-slate-300 tracking-widest">ALPHAXEN</div>
-            <div className="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_6px_rgba(99,102,241,0.8)]" />
+            <div className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_6px_rgba(99,102,241,0.8)]" />
           </>
         )}
       </div>
@@ -255,20 +255,19 @@ export const MobileDemoShowcase: React.FC = () => {
       <button 
         onClick={() => setActiveScreen('explore')} 
         className={`neu-btn p-2 rounded-xl flex flex-col items-center gap-0.5 transition-all ${
-          currentTab === 'explore' ? 'neu-btn-cyan text-black shadow-md font-black scale-105' : 'text-slate-400 hover:text-white'
+          currentTab === 'explore' ? 'neu-btn-primary text-white shadow-md font-black scale-105' : 'text-slate-400 hover:text-white'
         }`}
       >
         <SlidersHorizontal size={15} />
         <span className="text-[7.5px] font-black uppercase">Axes</span>
       </button>
 
-      {/* Floating Center Glow AI Studio Button */}
       <button 
         onClick={() => setActiveScreen('chat')}
         className={`w-11 h-11 -mt-5 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 ${
           currentTab === 'chat' 
-            ? 'neu-btn-cyan text-black scale-110 shadow-cyan-500/50' 
-            : 'neu-btn-primary hover:scale-105 active:scale-95 shadow-indigo-500/50'
+            ? 'neu-btn-cyan text-white scale-110 shadow-purple-500/50' 
+            : 'neu-btn-primary hover:scale-105 active:scale-95 shadow-purple-500/50'
         }`}
       >
         <Sparkles size={17} className="drop-shadow animate-pulse" />
@@ -277,7 +276,7 @@ export const MobileDemoShowcase: React.FC = () => {
       <button 
         onClick={() => setActiveScreen('files')} 
         className={`neu-btn p-2 rounded-xl flex flex-col items-center gap-0.5 transition-all ${
-          currentTab === 'files' ? 'neu-btn-cyan text-black shadow-md font-black scale-105' : 'text-slate-400 hover:text-white'
+          currentTab === 'files' ? 'neu-btn-primary text-white shadow-md font-black scale-105' : 'text-slate-400 hover:text-white'
         }`}
       >
         <Folder size={15} />
@@ -287,7 +286,7 @@ export const MobileDemoShowcase: React.FC = () => {
       <button 
         onClick={() => setActiveScreen('profile')} 
         className={`neu-btn p-2 rounded-xl flex flex-col items-center gap-0.5 transition-all ${
-          currentTab === 'profile' ? 'neu-btn-cyan text-black shadow-md font-black scale-105' : 'text-slate-400 hover:text-white'
+          currentTab === 'profile' ? 'neu-btn-primary text-white shadow-md font-black scale-105' : 'text-slate-400 hover:text-white'
         }`}
       >
         <Crown size={15} />
@@ -301,8 +300,8 @@ export const MobileDemoShowcase: React.FC = () => {
       
       {/* Header Bar */}
       <div className="max-w-6xl mx-auto text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-sm text-[11px] font-black uppercase tracking-[0.25em] text-cyan-300 mb-4 border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
-          <Sparkles size={14} className="text-cyan-400" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-sm text-[11px] font-black uppercase tracking-[0.25em] text-purple-300 mb-4 border border-purple-500/30 shadow-[0_0_20px_rgba(139,92,246,0.25)]">
+          <Sparkles size={14} className="text-purple-400" />
           ALPHAXEN MOBILE FOUNDRY OS · ULTRA-SLEEK GLASSMORPHISM
         </div>
 
@@ -336,7 +335,7 @@ export const MobileDemoShowcase: React.FC = () => {
 
           <button
             onClick={() => setShowInstallModal(true)}
-            className="neu-btn-cyan px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-cyan-500/20 hover:scale-105 transition-transform"
+            className="neu-btn-primary px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-purple-500/25 hover:scale-105 transition-transform text-white"
           >
             <Download size={14} /> Install Web App
           </button>
@@ -356,7 +355,7 @@ export const MobileDemoShowcase: React.FC = () => {
                   : 'neu-btn text-slate-300 hover:text-white'
               }`}
             >
-              <span className={activeScreen === tab.id ? 'text-white' : 'text-cyan-400'}>{tab.icon}</span>
+              <span className={activeScreen === tab.id ? 'text-white' : 'text-purple-400'}>{tab.icon}</span>
               <span>{tab.title}</span>
               {tab.badge && (
                 <span className="text-[8px] font-black uppercase px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20">
@@ -375,7 +374,7 @@ export const MobileDemoShowcase: React.FC = () => {
         <div className="lg:col-span-4 space-y-4 order-2 lg:order-1">
           <div className="liquid-glass p-6 rounded-3xl space-y-4 border border-white/15 shadow-2xl">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-400">
                 ACTIVE MOBILE MODULE
               </span>
               <span className="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold bg-white/10 text-white border border-white/15">
@@ -400,8 +399,8 @@ export const MobileDemoShowcase: React.FC = () => {
 
             <div className="pt-3 border-t border-white/10 flex items-center justify-between">
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Touch Engine</span>
-              <span className="text-[10px] text-emerald-400 font-black uppercase tracking-wider flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span className="text-[10px] text-purple-400 font-black uppercase tracking-wider flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
                 Live Interactive
               </span>
             </div>
@@ -419,7 +418,7 @@ export const MobileDemoShowcase: React.FC = () => {
                   onClick={() => setActiveScreen(s.id)}
                   className={`p-2.5 rounded-xl text-left text-[11px] font-bold transition-all truncate ${
                     activeScreen === s.id
-                      ? 'neu-btn-cyan text-black font-black'
+                      ? 'neu-btn-primary text-white font-black'
                       : 'neu-btn text-slate-300 hover:text-white'
                   }`}
                 >
@@ -435,8 +434,8 @@ export const MobileDemoShowcase: React.FC = () => {
           
           <div className={`relative transition-all duration-500 mx-auto ${
             deviceChassis === 'iphone'
-              ? 'w-full max-w-[360px] sm:max-w-[390px] h-[720px] sm:h-[780px] rounded-[48px] sm:rounded-[55px] p-3 sm:p-4 bg-[#080d19] shadow-[0_30px_90px_rgba(0,0,0,0.95),_0_0_50px_rgba(99,102,241,0.25)] border-[5px] sm:border-[6px] border-slate-700/60'
-              : 'w-full max-w-[360px] sm:max-w-[390px] h-[720px] sm:h-[780px] rounded-[32px] sm:rounded-[36px] p-3 sm:p-3.5 bg-[#060a14] shadow-[0_30px_90px_rgba(0,0,0,0.95),_0_0_50px_rgba(6,182,212,0.25)] border-[4px] sm:border-[5px] border-slate-800'
+              ? 'w-full max-w-[360px] sm:max-w-[390px] h-[720px] sm:h-[780px] rounded-[48px] sm:rounded-[55px] p-3 sm:p-4 bg-[#080d19] shadow-[0_30px_90px_rgba(0,0,0,0.95),_0_0_50px_rgba(139,92,246,0.25)] border-[5px] sm:border-[6px] border-slate-700/60'
+              : 'w-full max-w-[360px] sm:max-w-[390px] h-[720px] sm:h-[780px] rounded-[32px] sm:rounded-[36px] p-3 sm:p-3.5 bg-[#060a14] shadow-[0_30px_90px_rgba(0,0,0,0.95),_0_0_50px_rgba(139,92,246,0.25)] border-[4px] sm:border-[5px] border-slate-800'
           }`}>
 
             {/* Glossy Metallic Glass Edge Reflection */}
@@ -446,9 +445,6 @@ export const MobileDemoShowcase: React.FC = () => {
             <div className="w-full h-full bg-[#050811] rounded-[42px] overflow-hidden flex flex-col relative border border-white/10 shadow-2xl">
               
               {/* Background Fluid Aura inside Phone */}
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-indigo-600/25 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-cyan-500/25 rounded-full blur-3xl pointer-events-none" />
-
               {/* Status Bar */}
               {renderStatusBar()}
 
@@ -456,24 +452,24 @@ export const MobileDemoShowcase: React.FC = () => {
               {activeScreen === 'welcome' && (
                 <div className="flex-1 p-6 flex flex-col items-center justify-between text-center animate-fade-in relative z-20">
                   <div className="pt-6">
-                    <div className="w-20 h-20 mx-auto neu-btn-primary rounded-3xl flex items-center justify-center mb-6 shadow-2xl shadow-indigo-500/40 relative">
-                      <span className="text-2xl font-black tracking-tighter text-white">AX</span>
-                      <div className="absolute -inset-1 rounded-3xl border border-white/40 animate-ping opacity-30" />
+                    <div className="w-20 h-20 mx-auto neu-btn-primary rounded-3xl flex items-center justify-center mb-6 shadow-2xl shadow-purple-500/40 relative overflow-hidden p-2">
+                      <img src="/ax.png" alt="Alphaxen" className="w-full h-full object-contain" />
+                      <div className="absolute -inset-1 rounded-3xl border border-white/40 animate-ping opacity-30 pointer-events-none" />
                     </div>
                     <h1 className="text-2xl font-black text-white tracking-tight uppercase font-grotesk">ALPHAXEN PRIME</h1>
-                    <p className="text-cyan-300 text-xs font-bold uppercase tracking-[0.2em] mt-1">Digital Type Foundry OS</p>
+                    <p className="text-purple-300 text-xs font-bold uppercase tracking-[0.2em] mt-1">Digital Type Foundry OS</p>
                   </div>
 
                   <div className="liquid-glass p-5 rounded-3xl w-full space-y-3 border border-white/15">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-400 font-semibold">Engine Boot Status</span>
-                      <span className="text-emerald-400 font-black flex items-center gap-1">
+                      <span className="text-purple-400 font-black flex items-center gap-1">
                         <Check size={14} /> Ready (v2.4)
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-400 font-semibold">Variable Axis Core</span>
-                      <span className="text-cyan-300 font-mono font-bold">WASM-COMPILED</span>
+                      <span className="text-purple-300 font-mono font-bold">WASM-COMPILED</span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-400 font-semibold">Edge CDN Response</span>
@@ -510,7 +506,7 @@ export const MobileDemoShowcase: React.FC = () => {
                         onClick={() => setSelectedFontIndex(idx)}
                         className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${
                           selectedFontIndex === idx 
-                            ? 'neu-btn-cyan text-black shadow-md' 
+                            ? 'neu-btn-primary text-white shadow-md' 
                             : 'neu-btn text-slate-300 hover:text-white'
                         }`}
                       >
@@ -522,7 +518,7 @@ export const MobileDemoShowcase: React.FC = () => {
                   {/* Live Interactive Specimen Canvas */}
                   <div className="liquid-glass p-4 rounded-3xl space-y-3 border border-white/15 relative overflow-hidden">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-bold text-cyan-300 uppercase tracking-wider">{currentFont.name}</span>
+                      <span className="font-bold text-purple-300 uppercase tracking-wider">{currentFont.name}</span>
                       <span className="font-mono text-slate-400">{fontWeight}wt · {fontSize}px</span>
                     </div>
 
@@ -554,7 +550,7 @@ export const MobileDemoShowcase: React.FC = () => {
                       value={sampleText}
                       onChange={(e) => setSampleText(e.target.value)}
                       placeholder="Type custom preview text..."
-                      className="w-full liquid-glass-inset px-3 py-2 rounded-xl text-[10px] text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400/50"
+                      className="w-full liquid-glass-inset px-3 py-2 rounded-xl text-[10px] text-white placeholder-slate-500 focus:outline-none focus:border-purple-400/50"
                     />
                   </div>
 
@@ -563,7 +559,7 @@ export const MobileDemoShowcase: React.FC = () => {
                     <div className="space-y-1">
                       <div className="flex justify-between text-[9px] font-bold text-slate-400 uppercase">
                         <span>Weight (wght)</span>
-                        <span className="text-cyan-300 font-mono">{fontWeight}</span>
+                        <span className="text-purple-300 font-mono">{fontWeight}</span>
                       </div>
                       <input 
                         type="range" 
@@ -572,14 +568,14 @@ export const MobileDemoShowcase: React.FC = () => {
                         step="50"
                         value={fontWeight} 
                         onChange={(e) => setFontWeight(Number(e.target.value))}
-                        className="w-full accent-cyan-400 h-1.5 bg-black/40 rounded-lg cursor-pointer" 
+                        className="w-full accent-purple-400 h-1.5 bg-black/40 rounded-lg cursor-pointer" 
                       />
                     </div>
 
                     <div className="space-y-1">
                       <div className="flex justify-between text-[9px] font-bold text-slate-400 uppercase">
                         <span>Size</span>
-                        <span className="text-indigo-300 font-mono">{fontSize}px</span>
+                        <span className="text-purple-300 font-mono">{fontSize}px</span>
                       </div>
                       <input 
                         type="range" 
@@ -587,7 +583,7 @@ export const MobileDemoShowcase: React.FC = () => {
                         max="48" 
                         value={fontSize} 
                         onChange={(e) => setFontSize(Number(e.target.value))}
-                        className="w-full accent-indigo-400 h-1.5 bg-black/40 rounded-lg cursor-pointer" 
+                        className="w-full accent-purple-400 h-1.5 bg-black/40 rounded-lg cursor-pointer" 
                       />
                     </div>
                   </div>
@@ -602,7 +598,7 @@ export const MobileDemoShowcase: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setActiveScreen('files')}
-                      className="neu-btn-cyan p-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-1.5 text-black"
+                      className="neu-btn-primary p-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider flex items-center justify-center gap-1.5 text-white"
                     >
                       <Download size={13} /> Get Kit
                     </button>
@@ -615,13 +611,13 @@ export const MobileDemoShowcase: React.FC = () => {
               {activeScreen === 'chat' && (
                 <div className="flex-1 p-4 flex flex-col justify-between animate-fade-in relative z-20">
                   <div className="flex-1 overflow-y-auto custom-scrollbar space-y-3 pr-1">
-                    <div className="liquid-glass p-3 rounded-2xl flex items-center gap-2.5 border border-indigo-500/30 mb-2">
+                    <div className="liquid-glass p-3 rounded-2xl flex items-center gap-2.5 border border-purple-500/30 mb-2">
                       <div className="w-7 h-7 neu-btn-primary rounded-xl flex items-center justify-center">
                         <Sparkles size={14} className="text-white" />
                       </div>
                       <div>
                         <div className="text-[11px] font-black text-white">Alphaxen AI Type Copilot</div>
-                        <p className="text-[9px] text-cyan-300">Intelligent Pairing &amp; CSS Generator</p>
+                        <p className="text-[9px] text-purple-300">Intelligent Pairing &amp; CSS Generator</p>
                       </div>
                     </div>
 
@@ -639,7 +635,7 @@ export const MobileDemoShowcase: React.FC = () => {
                                 <button 
                                   key={ci} 
                                   onClick={() => copyToClipboard(chip, `chip-${ci}`)}
-                                  className="text-[8px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-cyan-300 border border-cyan-400/30 hover:bg-cyan-500/20"
+                                  className="text-[8px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-purple-300 border border-purple-400/30 hover:bg-purple-500/20"
                                 >
                                   {copiedText === `chip-${ci}` ? '✓ Copied' : chip}
                                 </button>
@@ -659,9 +655,9 @@ export const MobileDemoShowcase: React.FC = () => {
                       placeholder="Ask AI for font pairings..."
                       value={chatInput}
                       onChange={(e) => setChatInput(e.target.value)}
-                      className="flex-1 liquid-glass-inset px-3.5 py-2.5 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400/50"
+                      className="flex-1 liquid-glass-inset px-3.5 py-2.5 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-400/50"
                     />
-                    <button type="submit" className="neu-btn-cyan p-2.5 rounded-xl text-black">
+                    <button type="submit" className="neu-btn-primary p-2.5 rounded-xl text-white">
                       <Send size={14} />
                     </button>
                   </form>
@@ -676,7 +672,7 @@ export const MobileDemoShowcase: React.FC = () => {
                       <h3 className="text-sm font-black text-white uppercase tracking-wider">Commercial EULA</h3>
                       <p className="text-[9px] text-slate-400">{licenses.filter(l => l.done).length} of {licenses.length} rights verified</p>
                     </div>
-                    <span className="px-2.5 py-1 rounded-xl neu-btn text-[10px] font-mono font-bold text-emerald-400">
+                    <span className="px-2.5 py-1 rounded-xl neu-btn text-[10px] font-mono font-bold text-purple-400">
                       {complianceScore}% Valid
                     </span>
                   </div>
@@ -687,18 +683,18 @@ export const MobileDemoShowcase: React.FC = () => {
                         key={lic.id}
                         onClick={() => toggleLicense(lic.id)}
                         className={`p-3 rounded-2xl cursor-pointer transition-all flex items-start gap-2.5 select-none ${
-                          lic.done ? 'liquid-glass border-emerald-500/30' : 'liquid-glass-inset opacity-70'
+                          lic.done ? 'liquid-glass border-purple-500/30' : 'liquid-glass-inset opacity-70'
                         }`}
                       >
                         <div className={`w-4 h-4 rounded-lg flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                          lic.done ? 'bg-emerald-400 text-black shadow-[0_0_8px_#34d399]' : 'border border-white/30'
+                          lic.done ? 'bg-purple-400 text-white shadow-[0_0_8px_#8b5cf6]' : 'border border-white/30'
                         }`}>
                           {lic.done && <Check size={10} strokeWidth={3} />}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
                             <span className="text-[8px] font-black uppercase tracking-wider text-slate-400">{lic.category}</span>
-                            <span className="text-[8px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-cyan-300">{lic.tier}</span>
+                            <span className="text-[8px] font-bold px-1.5 py-0.5 rounded bg-white/10 text-purple-300">{lic.tier}</span>
                           </div>
                           <p className={`text-xs mt-0.5 leading-snug font-semibold ${lic.done ? 'text-slate-200' : 'text-slate-400'}`}>
                             {lic.title}
@@ -709,7 +705,7 @@ export const MobileDemoShowcase: React.FC = () => {
                   </div>
 
                   <div className="liquid-glass-sm p-3 rounded-2xl text-[9px] text-slate-300 space-y-1">
-                    <span className="font-black text-cyan-300 block uppercase">Perpetual License ID</span>
+                    <span className="font-black text-purple-300 block uppercase">Perpetual License ID</span>
                     <p className="font-mono text-[9px] text-slate-400">AXN-EULA-2026-UNLIMITED-SEAT</p>
                   </div>
                 </div>
@@ -721,7 +717,7 @@ export const MobileDemoShowcase: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-sm font-black text-white uppercase tracking-wider">Edge Telemetry</h3>
-                      <p className="text-[9px] text-cyan-300 font-mono">Global CDN Glyph Stream</p>
+                      <p className="text-[9px] text-purple-300 font-mono">Global CDN Glyph Stream</p>
                     </div>
                     {/* Timeframe switch */}
                     <div className="flex items-center gap-1 liquid-glass-inset p-1 rounded-xl text-[8px] font-bold">
@@ -729,7 +725,7 @@ export const MobileDemoShowcase: React.FC = () => {
                         <button
                           key={tf}
                           onClick={() => setSelectedTimeframe(tf)}
-                          className={`px-1.5 py-0.5 rounded ${selectedTimeframe === tf ? 'bg-cyan-500 text-black font-black' : 'text-slate-400'}`}
+                          className={`px-1.5 py-0.5 rounded ${selectedTimeframe === tf ? 'neu-btn-primary text-white font-black' : 'text-slate-400'}`}
                         >
                           {tf}
                         </button>
@@ -741,14 +737,14 @@ export const MobileDemoShowcase: React.FC = () => {
                   <div className="liquid-glass p-3.5 rounded-3xl space-y-2.5 border border-white/10">
                     <div className="flex items-center justify-between text-[10px]">
                       <span className="text-slate-400 font-semibold">Glyphs Served Today</span>
-                      <span className="text-emerald-400 font-mono font-bold">{glyphRenders.toLocaleString()}</span>
+                      <span className="text-purple-400 font-mono font-bold">{glyphRenders.toLocaleString()}</span>
                     </div>
 
                     <div className="h-24 w-full flex items-end gap-1 pt-2">
                       {[35, 55, 40, 80, 95, 65, 75, 48, 88, 100, 70, 82, 90, 94].map((val, idx) => (
                         <div key={idx} className="flex-1 bg-white/5 rounded-t-sm h-full flex items-end overflow-hidden">
                           <div 
-                            className="w-full bg-gradient-to-t from-indigo-500 via-purple-500 to-cyan-400 rounded-t-sm transition-all duration-500" 
+                            className="w-full bg-gradient-to-t from-indigo-600 via-purple-600 to-sky-400 rounded-t-sm transition-all duration-500" 
                             style={{ height: `${val}%` }} 
                           />
                         </div>
@@ -767,7 +763,7 @@ export const MobileDemoShowcase: React.FC = () => {
                   <div className="grid grid-cols-2 gap-2">
                     <div className="liquid-glass-inset p-2.5 rounded-2xl">
                       <span className="text-[8px] text-slate-400 uppercase font-black tracking-wider">Avg CDN Latency</span>
-                      <div className="text-base font-black text-cyan-300 font-mono mt-0.5">11.4 ms</div>
+                      <div className="text-base font-black text-purple-300 font-mono mt-0.5">11.4 ms</div>
                     </div>
                     <div className="liquid-glass-inset p-2.5 rounded-2xl">
                       <span className="text-[8px] text-slate-400 uppercase font-black tracking-wider">Active Domains</span>
@@ -789,7 +785,7 @@ export const MobileDemoShowcase: React.FC = () => {
                     <div className="space-y-1">
                       <div className="flex justify-between text-[9px] font-bold text-slate-300 uppercase">
                         <span>Weight [wght]</span>
-                        <span className="text-cyan-300 font-mono">{axisWght}</span>
+                        <span className="text-purple-300 font-mono">{axisWght}</span>
                       </div>
                       <input 
                         type="range" 
@@ -797,7 +793,7 @@ export const MobileDemoShowcase: React.FC = () => {
                         max="900" 
                         value={axisWght} 
                         onChange={(e) => setAxisWght(Number(e.target.value))}
-                        className="w-full accent-cyan-400 h-1 bg-black/40 rounded" 
+                        className="w-full accent-purple-400 h-1 bg-black/40 rounded" 
                       />
                     </div>
 
@@ -819,7 +815,7 @@ export const MobileDemoShowcase: React.FC = () => {
                     <div className="space-y-1">
                       <div className="flex justify-between text-[9px] font-bold text-slate-300 uppercase">
                         <span>Optical Size [opsz]</span>
-                        <span className="text-indigo-300 font-mono">{axisOpsz}pt</span>
+                        <span className="text-purple-300 font-mono">{axisOpsz}pt</span>
                       </div>
                       <input 
                         type="range" 
@@ -827,7 +823,7 @@ export const MobileDemoShowcase: React.FC = () => {
                         max="72" 
                         value={axisOpsz} 
                         onChange={(e) => setAxisOpsz(Number(e.target.value))}
-                        className="w-full accent-indigo-400 h-1 bg-black/40 rounded" 
+                        className="w-full accent-purple-400 h-1 bg-black/40 rounded" 
                       />
                     </div>
                   </div>
@@ -845,7 +841,7 @@ export const MobileDemoShowcase: React.FC = () => {
                         filter: `drop-shadow(${currentFont.shadow})`
                       }}
                     >
-                      A B C G Q R 0 8 &
+                      A B C G Q R 0 8 &amp;
                     </div>
                   </div>
                 </div>
@@ -861,7 +857,7 @@ export const MobileDemoShowcase: React.FC = () => {
                     </div>
                     <button 
                       onClick={() => alert('All licensed font assets synchronized with Edge CDN.')}
-                      className="neu-btn p-1.5 rounded-xl text-cyan-300"
+                      className="neu-btn p-1.5 rounded-xl text-purple-300"
                     >
                       <RefreshCw size={13} />
                     </button>
@@ -871,7 +867,7 @@ export const MobileDemoShowcase: React.FC = () => {
                     {fontAssets.map((asset, i) => (
                       <div key={i} className="liquid-glass p-2.5 rounded-2xl space-y-1 border border-white/10">
                         <div className="flex items-center justify-between text-[10px]">
-                          <span className="font-mono font-bold text-cyan-300 truncate max-w-[170px]">{asset.name}</span>
+                          <span className="font-mono font-bold text-purple-300 truncate max-w-[170px]">{asset.name}</span>
                           <span className="text-[8px] font-black uppercase text-slate-400">{asset.format}</span>
                         </div>
                         <div className="liquid-glass-inset p-1.5 rounded-xl flex items-center justify-between text-[9px]">
@@ -880,7 +876,7 @@ export const MobileDemoShowcase: React.FC = () => {
                             onClick={() => copyToClipboard(asset.hash, `hash-${i}`)}
                             className="text-slate-300 hover:text-white flex items-center gap-1 font-mono text-[8px]"
                           >
-                            {copiedText === `hash-${i}` ? <Check size={10} className="text-emerald-400" /> : <Copy size={10} />}
+                            {copiedText === `hash-${i}` ? <Check size={10} className="text-purple-400" /> : <Copy size={10} />}
                             <span>{asset.hash.substring(0, 14)}...</span>
                           </button>
                         </div>
@@ -895,23 +891,23 @@ export const MobileDemoShowcase: React.FC = () => {
                 <div className="flex-1 p-4 overflow-y-auto custom-scrollbar space-y-3.5 animate-fade-in relative z-20">
                   <div className="text-center pt-1">
                     <div className="w-14 h-14 mx-auto neu-btn-primary rounded-2xl flex items-center justify-center font-black text-lg text-white shadow-xl mb-2">
-                      <Crown size={22} className="text-cyan-400" />
+                      <Crown size={22} className="text-purple-400" />
                     </div>
                     <h3 className="text-sm font-black text-white">Foundry Creator Studio</h3>
-                    <p className="text-[9px] text-cyan-300 font-mono">Verified Studio: Forhad Type Labs</p>
+                    <p className="text-[9px] text-purple-300 font-mono">Verified Studio: Forhad Type Labs</p>
                   </div>
 
                   <div className="liquid-glass p-3.5 rounded-3xl space-y-2.5 border border-white/15">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-400 font-semibold">Royalty Split</span>
-                      <span className="neu-btn-cyan px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase text-black">
+                      <span className="neu-btn-primary px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase text-white">
                         85% CREATOR SHARE
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-400 font-semibold">Current Month Payout</span>
-                      <span className="font-mono text-xs text-emerald-400 font-black">$14,890.00</span>
+                      <span className="font-mono text-xs text-purple-400 font-black">$14,890.00</span>
                     </div>
 
                     <div className="flex items-center justify-between text-xs">
@@ -922,7 +918,7 @@ export const MobileDemoShowcase: React.FC = () => {
 
                   <button
                     onClick={() => setShowInstallModal(true)}
-                    className="w-full neu-btn-cyan py-3 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:scale-105 transition-transform"
+                    className="w-full neu-btn-primary py-3 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:scale-105 transition-transform text-white"
                   >
                     <Download size={14} /> Install Web App (Desktop &amp; Android)
                   </button>

@@ -5,7 +5,8 @@ import {
   Check, RefreshCw, Layers, ArrowUpRight, Search,
   Sliders, Star, Sparkles, ExternalLink, HardDrive, CheckCircle2,
   Trash2, AlertCircle, ShoppingBag, Eye, Lock, ArrowLeft, LogOut,
-  Menu, X, Home, Code, ShieldCheck, UserCheck, LayoutDashboard
+  Menu, X, Home, Code, ShieldCheck, MessageSquare, Send, Mail,
+  Phone, HelpCircle, Laptop, CheckCheck, Compass
 } from 'lucide-react';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
 import { auth } from '../services/firebase';
@@ -15,10 +16,11 @@ import { getCurrentUser, UserRecord } from '../services/authManager';
 import PendingApprovalView from '../components/PendingApprovalView';
 import FontSecurityModal from '../components/FontSecurityModal';
 import { soundFx } from '../services/soundFx';
+import { FOUNDRY_CONTACT, createWhatsAppDealUrl, createEmailDealUrl } from '../services/contact';
 
 export const BuyerPortal: React.FC = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'library' | 'licenses' | 'webfonts' | 'domains' | 'invoices' | 'wishlist'>('library');
+  const [activeTab, setActiveTab] = useState<'deals' | 'vault' | 'custom' | 'cdn' | 'eula'>('deals');
   const [searchTerm, setSearchTerm] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [newDomain, setNewDomain] = useState('');
@@ -26,11 +28,33 @@ export const BuyerPortal: React.FC = () => {
   const [downloadSuccessModal, setDownloadSuccessModal] = useState<{ fontName: string, format: string } | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Selected License Tier for quick deals
+  const [selectedTiers, setSelectedTiers] = useState<Record<string, 'personal' | 'commercial' | 'extended' | 'enterprise'>>({
+    'abdullah-martel': 'commercial',
+    'abdullah-metallic-chrome': 'commercial',
+    'abdullah-molten-chrome': 'commercial',
+    'abdullah-moon-chrome': 'commercial',
+    'abdullah-stone-chrome': 'commercial',
+    'abdullah-stone-moon': 'commercial'
+  });
+
+  // Custom Bespoke Commission Form
+  const [commissionForm, setCommissionForm] = useState({
+    name: '',
+    email: '',
+    company: '',
+    projectType: 'Bespoke Brand Typeface',
+    weightsCount: '4 Weights',
+    budget: '$500 - $1,500',
+    details: ''
+  });
+  const [commissionSent, setCommissionSent] = useState(false);
+
   // Font Security & DRM Modal State
   const [showSecurityModal, setShowSecurityModal] = useState(false);
   const [securityTargetKey, setSecurityTargetKey] = useState('AX-COMM-8921-9482-XN');
 
-  // Auth & Admin Approval State
+  // Auth State
   const [authUser, setAuthUser] = useState<FirebaseUser | null>(null);
   const [currentUser, setCurrentUser] = useState<UserRecord | null>(() => getCurrentUser());
   const [localUserEmail, setLocalUserEmail] = useState<string | null>(null);
@@ -57,63 +81,36 @@ export const BuyerPortal: React.FC = () => {
     navigate('/');
   };
 
+  // Real Purchased Licenses from LocalStorage (no fake records)
   const [purchasedLicenses, setPurchasedLicenses] = useState<PurchasedFontLicense[]>(() => {
     const saved = localStorage.getItem('alphaxen_buyer_licenses');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed)) return parsed;
       } catch (e) {}
     }
-    return [
-      {
-        licenseKey: 'AX-COMM-8921-9482-XN',
-        fontId: 'abdullah-martel',
-        fontName: 'Abdullah Martel (6 Styles + Color OTF)',
-        tier: 'Commercial',
-        purchaseDate: '2026-03-15',
-        registeredTo: 'Studio Nova Labs Inc.',
-        allowedDomains: ['novalabs.design', 'app.novalabs.design', 'localhost'],
-        maxPageviews: '500,000 / month',
-        pricePaid: 99,
-        status: 'active',
-        downloadFormats: ['OTF', 'TTF', 'WOFF', 'WOFF2', 'Color OTF']
-      },
-      {
-        licenseKey: 'AX-COMM-4412-1088-XN',
-        fontId: 'abdullah-metallic-chrome',
-        fontName: 'Abdullah Metallic Chrome (5 Styles)',
-        tier: 'Commercial',
-        purchaseDate: '2026-03-20',
-        registeredTo: 'Studio Nova Labs Inc.',
-        allowedDomains: ['novalabs.design'],
-        maxPageviews: '500,000 / month',
-        pricePaid: 89,
-        status: 'active',
-        downloadFormats: ['OTF', 'TTF', 'WOFF2', 'Vector Mesh']
-      },
-      {
-        licenseKey: 'AX-EXTD-1029-7734-XN',
-        fontId: 'abdullah-moon-chrome',
-        fontName: 'Abdullah Moon Chrome (5 Styles)',
-        tier: 'Extended',
-        purchaseDate: '2026-03-24',
-        registeredTo: 'Studio Nova Labs Inc.',
-        allowedDomains: ['*'],
-        maxPageviews: 'Unlimited',
-        pricePaid: 220,
-        status: 'active',
-        downloadFormats: ['OTF', 'TTF', 'WOFF', 'WOFF2', 'Color Edition']
-      }
-    ];
+    return [];
   });
 
-  const [domains, setDomains] = useState<string[]>(['novalabs.design', 'app.novalabs.design', 'staging.novalabs.design', 'localhost']);
-  const [wishlist, setWishlist] = useState<string[]>(['abdullah-molten-chrome', 'abdullah-stone-chrome']);
+  const [domains, setDomains] = useState<string[]>(() => {
+    const saved = localStorage.getItem('alphaxen_buyer_domains');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {}
+    }
+    return ['localhost'];
+  });
 
   useEffect(() => {
     localStorage.setItem('alphaxen_buyer_licenses', JSON.stringify(purchasedLicenses));
   }, [purchasedLicenses]);
+
+  useEffect(() => {
+    localStorage.setItem('alphaxen_buyer_domains', JSON.stringify(domains));
+  }, [domains]);
 
   const copyText = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -164,9 +161,17 @@ export const BuyerPortal: React.FC = () => {
     document.body.removeChild(a);
   };
 
-  const filteredLicenses = purchasedLicenses.filter(lic =>
-    lic.fontName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lic.licenseKey.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleCommissionSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const customMessage = `Hello Alphaxen Foundry! 👋\n\nI want to commission a *${commissionForm.projectType}*.\n\n👤 Name: ${commissionForm.name}\n📧 Email: ${commissionForm.email}\n🏢 Company: ${commissionForm.company || 'N/A'}\n📐 Scope: ${commissionForm.weightsCount}\n💵 Estimated Budget: ${commissionForm.budget}\n📝 Project Details: ${commissionForm.details || 'None provided'}`;
+    
+    window.open(createWhatsAppDealUrl({ customMessage }), '_blank');
+    setCommissionSent(true);
+  };
+
+  const filteredCatalog = FONT_CATALOG.filter(f =>
+    f.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    f.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // If user is logged in and status is pending approval by admin
@@ -175,12 +180,12 @@ export const BuyerPortal: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-100 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 selection:bg-purple-500/30 selection:text-purple-100 font-sans overflow-x-hidden">
       
       {/* Top Sticky High-Definition Header */}
-      <header className="sticky top-0 z-50 w-full bg-[#070a13]/98 backdrop-blur-xl border-b border-white/10 shadow-2xl">
+      <header className="sticky top-0 z-50 w-full bg-transparent max-md:border-transparent max-md:shadow-none md:bg-[#0b0e17]/98 md:backdrop-blur-xl md:border-b md:border-white/10 md:shadow-2xl">
         <div className="max-w-7xl mx-auto px-6 sm:px-12 py-3.5 flex justify-between items-center">
-          <BrandMark suffix="BUYER VAULT" />
+          <BrandMark suffix="BUYER VAULT & DEALS" />
 
           <div className="hidden md:flex items-center gap-3">
             <Link to="/" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white">
@@ -192,42 +197,39 @@ export const BuyerPortal: React.FC = () => {
             <Link to="/seller" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-300 hover:text-white">
               CREATOR STUDIO
             </Link>
-            <Link to="/docs" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300 hover:text-white">
+            <Link to="/docs" className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-purple-300 hover:text-white">
               DOCS
             </Link>
-            <button
-              onClick={() => {
-                setSecurityTargetKey('AX-COMM-8921-9482-XN');
-                setShowSecurityModal(true);
-              }}
-              className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-emerald-300 hover:text-white flex items-center gap-1.5 cursor-pointer"
+
+            {/* Direct WhatsApp Contact Button */}
+            <a
+              href={createWhatsAppDealUrl({ type: 'general' })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neu-btn-primary px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white flex items-center gap-1.5 shadow-md hover:scale-105 transition-all"
             >
-              <ShieldCheck size={12} className="text-emerald-400" />
-              DRM &amp; SECURITY
-            </button>
-            <Link
-              to="/install"
-              className="neu-btn-cyan px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white flex items-center gap-1.5 shadow-md hover:scale-105 transition-all"
-            >
-              <Download size={13} />
-              INSTALL APP
-            </Link>
+              <MessageSquare size={13} />
+              WHATSAPP DEAL
+            </a>
 
             <div className="h-4 w-px bg-white/15 mx-1" />
 
             <div className="flex items-center gap-2">
               <Link
                 to="/shop"
-                className="neu-btn-primary px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg flex items-center gap-1.5"
+                className="neu-btn-primary px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg flex items-center gap-1.5"
               >
                 <ShoppingBag size={13} /> BROWSE STORE
               </Link>
-              <button
-                onClick={handleSignOut}
-                className="neu-btn px-3 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-rose-400 cursor-pointer"
-              >
-                <LogOut size={13} />
-              </button>
+              {currentUser && (
+                <button
+                  onClick={handleSignOut}
+                  className="neu-btn px-3 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-rose-400 cursor-pointer"
+                  title="Sign Out"
+                >
+                  <LogOut size={13} />
+                </button>
+              )}
             </div>
           </div>
 
@@ -238,13 +240,13 @@ export const BuyerPortal: React.FC = () => {
 
         {/* Mobile Animated Drawer */}
         {isMenuOpen && (
-          <div className="md:hidden px-6 pt-2 pb-4 border-t border-white/10 space-y-2 animate-slide-up bg-[#070a13]">
+          <div className="md:hidden px-6 pt-2 pb-4 border-t border-white/10 space-y-2 animate-slide-up bg-[#0b0e17]">
             <Link 
               to="/" 
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <Home size={16} className="text-cyan-400" />
+              <Home size={16} className="text-purple-400" />
               <span>Foundry Home</span>
             </Link>
 
@@ -253,7 +255,7 @@ export const BuyerPortal: React.FC = () => {
               className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
               onClick={() => setIsMenuOpen(false)}
             >
-              <ShoppingBag size={16} className="text-cyan-400" />
+              <ShoppingBag size={16} className="text-purple-400" />
               <span>Font Catalog &amp; Shop</span>
             </Link>
             
@@ -266,41 +268,27 @@ export const BuyerPortal: React.FC = () => {
               <span>Creator Studio (85% Royalty)</span>
             </Link>
 
-            <Link 
-              to="/buyer" 
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-cyan-300 hover:text-white"
+            <a 
+              href={createWhatsAppDealUrl({ type: 'general' })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-3 rounded-2xl neu-btn-primary text-xs font-black uppercase tracking-wider text-white shadow-lg"
               onClick={() => setIsMenuOpen(false)}
             >
-              <LayoutDashboard size={16} className="text-indigo-400" />
-              <span>Buyer Vault &amp; Licenses</span>
-            </Link>
-
-            <Link 
-              to="/docs" 
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <Code size={16} className="text-emerald-400" />
-              <span>Developer Docs &amp; CDN</span>
-            </Link>
-
-            <Link 
-              to="/tos" 
-              className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-black/60 border border-white/10 text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <ShieldCheck size={16} className="text-purple-400" />
-              <span>Commercial EULA Agreement</span>
-            </Link>
+              <MessageSquare size={16} />
+              <span>WhatsApp Direct Line</span>
+            </a>
 
             <div className="h-px bg-white/10 my-2" />
             
-            <button 
-              onClick={() => { setIsMenuOpen(false); handleSignOut(); }} 
-              className="neu-btn text-xs font-bold uppercase tracking-widest text-rose-400 py-3 rounded-2xl w-full flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <LogOut size={16} /> Sign Out
-            </button>
+            {currentUser && (
+              <button 
+                onClick={() => { setIsMenuOpen(false); handleSignOut(); }} 
+                className="neu-btn text-xs font-bold uppercase tracking-widest text-rose-400 py-3 rounded-2xl w-full flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <LogOut size={16} /> Sign Out
+              </button>
+            )}
           </div>
         )}
       </header>
@@ -308,51 +296,63 @@ export const BuyerPortal: React.FC = () => {
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-6 sm:px-12 pt-8 pb-24">
         
-        {/* Header Hero Banner in Solid High-Contrast Obsidian */}
-        <div className="bg-[#0b101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] mb-12 shadow-2xl space-y-6 relative overflow-hidden">
+        {/* Header Hero Banner */}
+        <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] mb-12 shadow-2xl space-y-6 relative overflow-hidden">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="space-y-4 max-w-2xl">
-              <div className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full bg-[#131b2e] border border-cyan-500/40 text-[10px] font-black uppercase tracking-[0.25em] text-cyan-300 shadow-md">
-                <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_10px_rgba(6,182,212,1)]" />
-                LICENSED BUYER VAULT
+              <div className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full bg-[#141414] border border-purple-500/40 text-[10px] font-black uppercase tracking-[0.25em] text-purple-300 shadow-md">
+                <span className="flex h-2 w-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_10px_rgba(139,92,246,1)]" />
+                BUYER &amp; AGENCY PORTAL
               </div>
               <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white font-grotesk leading-tight">
-                YOUR TYPEFACE <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-indigo-300 to-purple-400">
-                  LIBRARY.
+                TYPEFACE DEALS &amp; <br />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-sky-400">
+                  BUYER VAULT.
                 </span>
               </h1>
               <p className="text-slate-200 text-sm sm:text-base font-semibold leading-relaxed">
-                DOWNLOAD COMPILED WOFF2/OTF ASSET PACKAGES, COPY PRODUCTION CDN SNIPPETS, AND MANAGE PERPETUAL COMMERCIAL CERTIFICATES.
+                DEAL DIRECTLY FOR COMMERCIAL LICENSES VIA WHATSAPP OR EMAIL, DOWNLOAD REAL TTF/OTF ASSET PACKAGES, AND MANAGE PERPETUAL EULA CERTIFICATES.
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 bg-[#050814] border border-white/20 p-3.5 sm:p-6 rounded-3xl shadow-inner w-full lg:w-auto">
-              <div className="text-center px-1 sm:px-5 border-r border-white/15">
-                <div className="text-2xl sm:text-4xl font-black text-white font-mono">{purchasedLicenses.length}</div>
-                <div className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 truncate">FAMILIES</div>
+            {/* Real Stats Box */}
+            <div className="flex flex-wrap sm:flex-nowrap items-stretch gap-2 sm:gap-4 bg-[#0b0e17] border border-white/20 p-3.5 sm:p-5 rounded-3xl shadow-inner w-full lg:w-auto shrink-0">
+              <div className="flex-1 min-w-[90px] text-center px-3 sm:px-5 border-r border-white/15 flex flex-col justify-center">
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-white font-mono tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
+                  {purchasedLicenses.length.toLocaleString()}
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 whitespace-nowrap">
+                  VAULT FONTS
+                </div>
               </div>
-              <div className="text-center px-1 sm:px-5 border-r border-white/15">
-                <div className="text-2xl sm:text-4xl font-black text-cyan-300 font-mono">44</div>
-                <div className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 truncate">STYLES</div>
+              <div className="flex-1 min-w-[80px] text-center px-3 sm:px-5 border-r border-white/15 flex flex-col justify-center">
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-purple-300 font-mono tracking-tight whitespace-nowrap">
+                  {FONT_CATALOG.length}
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 whitespace-nowrap">
+                  CATALOG
+                </div>
               </div>
-              <div className="text-center px-1 sm:px-5">
-                <div className="text-2xl sm:text-4xl font-black text-emerald-400 font-mono">100%</div>
-                <div className="text-[8px] min-[360px]:text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 truncate">PERPETUAL</div>
+              <div className="flex-1 min-w-[90px] text-center px-3 sm:px-5 flex flex-col justify-center">
+                <div className="text-xl sm:text-2xl md:text-3xl lg:text-3xl font-black text-purple-400 font-mono tracking-tight whitespace-nowrap">
+                  DIRECT
+                </div>
+                <div className="text-[9px] sm:text-[10px] text-slate-300 uppercase font-black tracking-wider sm:tracking-widest mt-1 whitespace-nowrap">
+                  WHATSAPP DEAL
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Tab Navigation */}
+        {/* Tab Navigation (Buyer Exclusive Sections) */}
         <div className="flex items-center gap-3 border-b border-white/15 pb-6 mb-12 overflow-x-auto custom-scrollbar">
           {[
-            { id: 'library', label: 'PURCHASED LIBRARY', icon: <HardDrive size={16} className="text-cyan-400" />, count: purchasedLicenses.length },
-            { id: 'licenses', label: 'COMMERCIAL KEYS', icon: <Key size={16} className="text-purple-400" /> },
-            { id: 'webfonts', label: 'WEBFONT CDN', icon: <Globe size={16} className="text-indigo-400" /> },
-            { id: 'domains', label: 'ALLOWED DOMAINS', icon: <Shield size={16} className="text-emerald-400" />, count: domains.length },
-            { id: 'invoices', label: 'INVOICES', icon: <FileText size={16} className="text-pink-400" /> },
-            { id: 'wishlist', label: 'WISHLIST', icon: <Star size={16} className="text-cyan-300" />, count: wishlist.length }
+            { id: 'deals', label: 'DIRECT WHATSAPP & EMAIL DEALS', icon: <MessageSquare size={16} className="text-purple-400" /> },
+            { id: 'vault', label: 'MY LICENSED VAULT', icon: <HardDrive size={16} className="text-purple-400" />, count: purchasedLicenses.length },
+            { id: 'custom', label: 'COMMISSION CUSTOM FONT', icon: <Sparkles size={16} className="text-purple-400" /> },
+            { id: 'cdn', label: 'WEBFONT CDN SNIPPETS', icon: <Code size={16} className="text-purple-400" /> },
+            { id: 'eula', label: 'ALLOWED DOMAINS & EULA', icon: <Shield size={16} className="text-purple-400" /> }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -360,7 +360,7 @@ export const BuyerPortal: React.FC = () => {
               className={`px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center gap-2.5 whitespace-nowrap cursor-pointer ${
                 activeTab === tab.id
                   ? 'neu-btn-primary text-white shadow-xl scale-105 border-white/40'
-                  : 'bg-[#0e1424] border border-white/20 text-slate-100 hover:text-white hover:bg-[#162038] hover:border-cyan-400/40 shadow-md'
+                  : 'bg-[#0e1424] border border-white/20 text-slate-100 hover:text-white hover:bg-[#162038] hover:border-purple-400/40 shadow-md'
               }`}
             >
               {tab.icon}
@@ -376,97 +376,147 @@ export const BuyerPortal: React.FC = () => {
           ))}
         </div>
 
-        {/* TAB 1: PURCHASED LIBRARY */}
-        {activeTab === 'library' && (
+        {/* TAB 1: DIRECT WHATSAPP & EMAIL DEALS */}
+        {activeTab === 'deals' && (
           <div className="space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="relative flex-1 max-w-md">
-                <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="SEARCH YOUR FONT LIBRARY..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-[#050814] border border-white/20 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-400 font-bold uppercase tracking-wider focus:outline-none focus:border-cyan-500"
-                />
+            <div className="liquid-glass border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-purple-400 uppercase">
+                  <MessageSquare size={14} /> DIRECT FOUNDRY DESK
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-grotesk">
+                  1-Click Direct Deal &amp; Immediate Font Delivery
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300">
+                  Select your desired license tier below and click to deal instantly via WhatsApp or Email. We provide invoice and instant OTF/TTF delivery.
+                </p>
               </div>
 
-              <button
-                onClick={() => handleDownloadFont('Alphaxen-Complete-Vault', 'ALL_FONTS_ZIP')}
-                className="neu-btn-cyan h-12 px-6 rounded-xl font-black text-[10px] uppercase tracking-widest text-white shadow-lg flex items-center gap-2 cursor-pointer hover:scale-105 transition-all"
-              >
-                <Download size={14} /> DOWNLOAD COMPLETE VAULT (.ZIP)
-              </button>
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={`https://wa.me/${FOUNDRY_CONTACT.whatsappNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="neu-btn-primary px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center gap-2 shadow-xl hover:scale-105 transition-all"
+                >
+                  <MessageSquare size={15} /> WhatsApp: {FOUNDRY_CONTACT.phone}
+                </a>
+                <a
+                  href={`mailto:${FOUNDRY_CONTACT.email}`}
+                  className="neu-btn px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center gap-2"
+                >
+                  <Mail size={15} className="text-purple-400" /> {FOUNDRY_CONTACT.email}
+                </a>
+              </div>
             </div>
 
+            {/* Font Catalog Deal Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredLicenses.map((license) => {
-                const fontDetails = FONT_CATALOG.find(f => f.id === license.fontId);
+              {filteredCatalog.map((font) => {
+                const activeTier = selectedTiers[font.id] || 'commercial';
+                const activePrice = font.prices[activeTier];
+
+                const whatsappUrl = createWhatsAppDealUrl({
+                  fontName: font.name,
+                  licenseTier: activeTier.toUpperCase(),
+                  price: activePrice,
+                  type: 'purchase'
+                });
+
+                const emailUrl = createEmailDealUrl({
+                  fontName: font.name,
+                  licenseTier: activeTier.toUpperCase(),
+                  price: activePrice,
+                  type: 'purchase'
+                });
+
                 return (
                   <div
-                    key={license.licenseKey}
-                    className="bg-[#0c101d] border border-white/20 hover:border-cyan-500/50 p-8 rounded-[2.5rem] flex flex-col justify-between space-y-6 shadow-2xl transition-all"
+                    key={font.id}
+                    className="bg-[#0e0e0e]/95 backdrop-blur-xl border border-white/20 hover:border-purple-500/60 p-7 sm:p-8 rounded-[2.5rem] flex flex-col justify-between space-y-6 shadow-[0_20px_50px_rgba(0,0,0,0.95)] hover:shadow-[0_25px_60px_rgba(139,92,246,0.25)] transition-all duration-300"
                   >
                     <div className="space-y-4">
-                      <div className="flex items-start justify-between">
+                      {/* Specimen Artwork */}
+                      {font.specimenImage && (
+                        <div className="relative rounded-2xl overflow-hidden border border-white/20 bg-[#000000] shadow-xl group/img">
+                          <img
+                            src={font.specimenImage}
+                            alt={font.name}
+                            className="w-full h-40 object-cover object-center group-hover/img:scale-105 transition-transform duration-500 select-none block"
+                          />
+                          <div className="absolute bottom-2 left-2.5 px-2.5 py-0.5 rounded-full bg-black/90 text-[8.5px] font-mono font-bold text-purple-300 uppercase tracking-wider border border-white/20 flex items-center gap-1 shadow-lg">
+                            <Sparkles size={10} className="text-purple-400" />
+                            <span>{font.stylesCount} STYLES INCLUDED</span>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="flex items-start justify-between gap-3">
                         <div>
-                          <span className="text-[10px] font-mono font-bold text-cyan-300 uppercase tracking-widest">
-                            {license.tier} LICENSE
+                          <span className="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-widest bg-purple-500/15 px-2.5 py-0.5 rounded-md border border-purple-500/30">
+                            {font.category}
                           </span>
                           <h3 className="text-2xl font-black uppercase tracking-tight text-white mt-1 font-grotesk">
-                            {license.fontName}
+                            {font.name}
                           </h3>
                         </div>
-                        <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                          <CheckCircle2 size={16} />
-                        </span>
-                      </div>
-
-                      <div className="bg-[#050814] border border-white/15 p-5 rounded-2xl space-y-2">
-                        <div
-                          style={{
-                            fontFamily: fontDetails?.fontFamily || 'sans-serif',
-                            fontSize: '24px',
-                            lineHeight: 1.2
-                          }}
-                          className="text-white truncate font-bold"
-                        >
-                          {fontDetails?.name || license.fontName}
-                        </div>
-                        <div className="text-[10px] font-mono text-slate-300 uppercase tracking-wider flex items-center justify-between">
-                          <span>PURCHASED: {license.purchaseDate}</span>
-                          <span className="text-cyan-300 font-bold">{license.downloadFormats.join(' • ')}</span>
+                        <div className="text-right">
+                          <div className="text-2xl font-black text-purple-400 font-mono">${activePrice}</div>
+                          <div className="text-[8px] font-bold text-slate-400 uppercase tracking-wider">PERPETUAL</div>
                         </div>
                       </div>
 
-                      <div className="space-y-1.5 text-xs font-mono text-slate-200 uppercase tracking-wider">
-                        <div className="flex justify-between">
-                          <span>KEY:</span>
-                          <span className="text-cyan-300 font-bold">{license.licenseKey}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>ENTITY:</span>
-                          <span className="text-white font-bold">{license.registeredTo}</span>
+                      <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed font-medium">
+                        {font.description}
+                      </p>
+
+                      {/* License Tier Selector */}
+                      <div className="space-y-1.5 pt-2">
+                        <label className="text-[9px] font-black uppercase tracking-widest text-slate-400">Select License Tier:</label>
+                        <div className="grid grid-cols-4 gap-1.5 p-1 bg-black rounded-xl border border-white/10 text-[9px] font-mono font-bold text-center">
+                          {(['personal', 'commercial', 'extended', 'enterprise'] as const).map(tier => (
+                            <button
+                              key={tier}
+                              onClick={() => setSelectedTiers({ ...selectedTiers, [font.id]: tier })}
+                              className={`py-1.5 rounded-lg uppercase transition-all cursor-pointer ${
+                                activeTier === tier
+                                  ? 'neu-btn-primary text-white font-black shadow-md'
+                                  : 'text-slate-400 hover:text-white'
+                              }`}
+                            >
+                              {tier.slice(0, 4)}
+                            </button>
+                          ))}
                         </div>
                       </div>
+
+                      {/* Quick Download TTF Binary (Included Free Specimen) */}
+                      <button
+                        onClick={() => handleDownloadFont(font.name, 'TTF')}
+                        className="w-full neu-btn py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-300 hover:text-white flex items-center justify-center gap-1.5"
+                      >
+                        <Download size={12} className="text-purple-400" />
+                        <span>TEST REAL TTF BINARY</span>
+                      </button>
                     </div>
 
-                    <div className="pt-4 border-t border-white/10 space-y-2">
-                      <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest">
-                        DOWNLOAD FORMATS:
-                      </div>
-                      <div className="grid grid-cols-3 gap-2">
-                        {license.downloadFormats.map((fmt) => (
-                          <button
-                            key={fmt}
-                            onClick={() => handleDownloadFont(license.fontName, fmt)}
-                            className="neu-btn py-2.5 px-2 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-100 hover:text-white flex items-center justify-center gap-1 transition-all cursor-pointer"
-                          >
-                            <Download size={11} className="text-cyan-400" />
-                            <span>{fmt}</span>
-                          </button>
-                        ))}
-                      </div>
+                    {/* Direct Contact Action Buttons */}
+                    <div className="space-y-2 pt-4 border-t border-white/15">
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full neu-btn-primary py-3.5 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all"
+                      >
+                        <MessageSquare size={15} /> DEAL ON WHATSAPP (${activePrice})
+                      </a>
+
+                      <a
+                        href={emailUrl}
+                        className="w-full neu-btn py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-300 hover:text-white flex items-center justify-center gap-1.5"
+                      >
+                        <Mail size={13} className="text-purple-400" /> ORDER VIA EMAIL
+                      </a>
                     </div>
                   </div>
                 );
@@ -475,261 +525,276 @@ export const BuyerPortal: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: COMMERCIAL KEYS */}
-        {activeTab === 'licenses' && (
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
+        {/* TAB 2: MY LICENSED VAULT */}
+        {activeTab === 'vault' && (
+          <div className="space-y-8">
+            {purchasedLicenses.length === 0 ? (
+              <div className="liquid-glass border border-white/20 p-12 sm:p-16 rounded-[2.5rem] text-center space-y-6 shadow-2xl">
+                <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/40 flex items-center justify-center mx-auto shadow-lg">
+                  <HardDrive size={32} />
+                </div>
+                <div className="max-w-md mx-auto space-y-2">
+                  <h3 className="text-2xl font-black uppercase text-white font-grotesk">YOUR VAULT IS READY</h3>
+                  <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                    You do not have any purchased licenses saved yet. Browse our catalog below to acquire fonts directly via WhatsApp or Email.
+                  </p>
+                </div>
+                <div className="flex justify-center gap-4">
+                  <button
+                    onClick={() => setActiveTab('deals')}
+                    className="neu-btn-primary px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest text-white shadow-xl hover:scale-105 transition-all cursor-pointer"
+                  >
+                    EXPLORE DIRECT DEALS
+                  </button>
+                  <Link
+                    to="/shop"
+                    className="neu-btn px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest text-slate-200 hover:text-white transition-all"
+                  >
+                    FULL FONT SHOP
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {purchasedLicenses.map((lic) => (
+                  <div
+                    key={lic.licenseKey}
+                    className="bg-[#0e0e0e] border border-white/20 p-6 rounded-3xl space-y-4"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase">
+                          {lic.tier}
+                        </span>
+                        <h4 className="text-lg font-black uppercase text-white mt-1">{lic.fontName}</h4>
+                      </div>
+                      <span className="text-xs font-mono font-bold text-purple-400">${lic.pricePaid}</span>
+                    </div>
+
+                    <div className="bg-black p-3 rounded-xl border border-white/10 text-xs font-mono text-slate-300 space-y-1">
+                      <div>KEY: <span className="text-purple-300 font-bold">{lic.licenseKey}</span></div>
+                      <div>DATE: {lic.purchaseDate}</div>
+                    </div>
+
+                    <button
+                      onClick={() => handleDownloadFont(lic.fontName, 'TTF')}
+                      className="w-full neu-btn-primary py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center justify-center gap-2"
+                    >
+                      <Download size={14} /> DOWNLOAD OTF/TTF ASSETS
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 3: COMMISSION CUSTOM FONT */}
+        {activeTab === 'custom' && (
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] max-w-3xl mx-auto space-y-8 shadow-2xl">
             <div>
-              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">COMMERCIAL LICENSE KEYS</h3>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#141414] border border-purple-500/40 text-purple-300 text-[10px] font-black uppercase tracking-widest mb-3">
+                <Sparkles size={13} /> BESPOKE TYPE DESIGN
+              </div>
+              <h3 className="text-3xl font-black uppercase tracking-tight text-white font-grotesk">COMMISSION A CUSTOM TYPEFACE</h3>
               <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
-                KEEP THESE KEYS ON FILE FOR APP STORE VALIDATION, CLIENT DEPLOYS, AND ENTERPRISE TRANSFERS.
+                Need a proprietary bespoke brand typeface, logotype vectorization, or custom stylistic ligatures? Submit your request directly to our lead foundry masters.
               </p>
             </div>
 
-            <div className="space-y-4">
-              {purchasedLicenses.map((lic) => (
-                <div
-                  key={lic.licenseKey}
-                  className="bg-[#050814] border border-white/15 p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4"
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-base font-bold text-white">{lic.fontName}</span>
-                      <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold">
-                        {lic.tier}
-                      </span>
-                    </div>
-                    <div className="text-xs text-slate-300 font-mono">
-                      KEY: <strong className="text-cyan-300 font-bold">{lic.licenseKey}</strong> • REGISTERED: <span className="text-white">{lic.registeredTo}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3">
-                    <button
-                      onClick={() => {
-                        setSecurityTargetKey(lic.licenseKey);
-                        setShowSecurityModal(true);
-                      }}
-                      className="neu-btn px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-300 hover:text-white flex items-center gap-1.5 cursor-pointer border border-emerald-500/40"
-                    >
-                      <ShieldCheck size={14} className="text-emerald-400" />
-                      <span>VERIFY DRM</span>
-                    </button>
-
-                    <button
-                      onClick={() => copyText(lic.licenseKey, lic.licenseKey)}
-                      className="neu-btn px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-100 hover:text-white flex items-center gap-1.5 cursor-pointer"
-                    >
-                      {copiedKey === lic.licenseKey ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
-                      <span>{copiedKey === lic.licenseKey ? 'COPIED' : 'COPY KEY'}</span>
-                    </button>
-
-                    <button
-                      onClick={() => handleDownloadFont(lic.fontName, 'CERTIFICATE_PDF')}
-                      className="neu-btn-cyan px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <FileText size={14} />
-                      <span>PDF EULA</span>
-                    </button>
-                  </div>
+            <form onSubmit={handleCommissionSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Your Full Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={commissionForm.name}
+                    onChange={e => setCommissionForm({ ...commissionForm, name: e.target.value })}
+                    placeholder="e.g. Abdullah Forhad"
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
+                  />
                 </div>
-              ))}
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Email Address *</label>
+                  <input
+                    type="email"
+                    required
+                    value={commissionForm.email}
+                    onChange={e => setCommissionForm({ ...commissionForm, email: e.target.value })}
+                    placeholder="name@company.com"
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Company / Studio</label>
+                  <input
+                    type="text"
+                    value={commissionForm.company}
+                    onChange={e => setCommissionForm({ ...commissionForm, company: e.target.value })}
+                    placeholder="e.g. Apex Interactive"
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Project Type</label>
+                  <select
+                    value={commissionForm.projectType}
+                    onChange={e => setCommissionForm({ ...commissionForm, projectType: e.target.value })}
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
+                  >
+                    <option value="Bespoke Brand Typeface">Bespoke Brand Typeface</option>
+                    <option value="Luxury Haute Serif">Luxury Haute Serif</option>
+                    <option value="Specular Metallic Chrome Display">Specular Metallic Chrome Display</option>
+                    <option value="Custom Wordmark / Logotype">Custom Wordmark / Logotype</option>
+                    <option value="Variable Font Axis Engineering">Variable Font Axis Engineering</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Project Scope &amp; Brief</label>
+                <textarea
+                  rows={4}
+                  value={commissionForm.details}
+                  onChange={e => setCommissionForm({ ...commissionForm, details: e.target.value })}
+                  placeholder="Describe your brand aesthetic, required weights, Latin/Arabic language requirements, and desired timeline..."
+                  className="w-full bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-500"
+                />
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                <button
+                  type="submit"
+                  className="flex-1 neu-btn-primary py-4 rounded-xl text-xs font-black uppercase tracking-widest text-white flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer"
+                >
+                  <MessageSquare size={16} /> SUBMIT &amp; CHAT ON WHATSAPP
+                </button>
+
+                <a
+                  href={createEmailDealUrl({ type: 'custom_font' })}
+                  className="neu-btn px-6 py-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-200 hover:text-white flex items-center justify-center gap-2"
+                >
+                  <Mail size={16} className="text-purple-400" /> SUBMIT VIA EMAIL
+                </a>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* TAB 4: WEBFONT CDN SNIPPETS */}
+        {activeTab === 'cdn' && (
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#141414] border border-purple-500/40 text-purple-300 text-[10px] font-black uppercase tracking-widest mb-3">
+                <Code size={13} /> PRODUCTION ASSETS
+              </div>
+              <h3 className="text-3xl font-black uppercase tracking-tight text-white font-grotesk">WEBFONT @FONT-FACE EMBED CODES</h3>
+              <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
+                Embed authentic Alphaxen fonts in your modern web applications, Next.js setups, or Tailwind stylesheets.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {FONT_CATALOG.map((font) => {
+                const codeSnippet = `@font-face {
+  font-family: '${font.name}';
+  src: url('/fonts/${encodeURIComponent(font.name)}/${encodeURIComponent(font.name)}-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}`;
+                return (
+                  <div key={font.id} className="bg-[#0b0e17] border border-white/15 p-6 rounded-2xl space-y-3">
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-base font-black uppercase text-white font-mono">{font.name}</h4>
+                      <button
+                        onClick={() => copyText(codeSnippet, font.id)}
+                        className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-200 hover:text-white flex items-center gap-1.5 cursor-pointer"
+                      >
+                        {copiedKey === font.id ? <Check size={12} className="text-purple-400" /> : <Copy size={12} />}
+                        <span>{copiedKey === font.id ? 'COPIED' : 'COPY @FONT-FACE'}</span>
+                      </button>
+                    </div>
+
+                    <pre className="p-4 rounded-xl bg-black border border-white/10 text-xs font-mono text-purple-300 overflow-x-auto custom-scrollbar">
+                      <code>{codeSnippet}</code>
+                    </pre>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* TAB 3: WEBFONT CDN */}
-        {activeTab === 'webfonts' && (
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
+        {/* TAB 5: ALLOWED DOMAINS & EULA */}
+        {activeTab === 'eula' && (
+          <div className="liquid-glass border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">WEBFONT CDN INTEGRATION</h3>
+                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">COMMERCIAL EULA &amp; DOMAIN WHITELIST</h3>
                 <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
-                  GLOBAL LOW-LATENCY EDGE CDN WITH AUTOMATED HTTP/3 CACHING AND UNICODE SUBSETTING.
+                  Perpetual commercial licenses include unlimited web app embedding on your registered production domains.
                 </p>
               </div>
 
-              <div className="flex items-center p-1.5 bg-[#050814] rounded-2xl border border-white/20">
-                {(['html', 'css', 'tailwind'] as const).map((fmt) => (
-                  <button
-                    key={fmt}
-                    onClick={() => setEmbedFormat(fmt)}
-                    className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all cursor-pointer ${
-                      embedFormat === fmt
-                        ? 'neu-btn-primary text-white shadow-md'
-                        : 'text-slate-300 hover:text-white'
-                    }`}
-                  >
-                    {fmt.toUpperCase()}
-                  </button>
-                ))}
-              </div>
+              <a
+                href={createWhatsAppDealUrl({ customMessage: "Hello Alphaxen! I need assistance with domain whitelist or enterprise commercial license extension." })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="neu-btn-primary px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center gap-2"
+              >
+                <MessageSquare size={14} /> EULA SUPPORT DESK
+              </a>
             </div>
 
-            <div className="bg-[#050814] border border-white/15 p-6 rounded-2xl font-mono text-xs text-cyan-300 overflow-x-auto shadow-inner">
-              {embedFormat === 'html' && (
-                <code>
-                  &lt;link rel="preconnect" href="https://cdn.alphaxen.com" crossorigin&gt;<br />
-                  &lt;link rel="stylesheet" href="https://cdn.alphaxen.com/v1/fonts.css?family=Alphaxen+Grotesk:wght@400;600;700&display=swap"&gt;
-                </code>
-              )}
-              {embedFormat === 'css' && (
-                <code>
-                  @import url('https://cdn.alphaxen.com/v1/fonts.css?family=Alphaxen+Grotesk:wght@400;600;700&display=swap');<br /><br />
-                  body &#123;<br />
-                  &nbsp;&nbsp;font-family: 'Alphaxen Grotesk', sans-serif;<br />
-                  &#125;
-                </code>
-              )}
-              {embedFormat === 'tailwind' && (
-                <code>
-                  // tailwind.config.js<br />
-                  export default &#123;<br />
-                  &nbsp;&nbsp;theme: &#123;<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;extend: &#123;<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fontFamily: &#123;<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grotesk: ['"Alphaxen Grotesk"', 'sans-serif'],<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#125;<br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&#125;<br />
-                  &nbsp;&nbsp;&#125;<br />
-                  &#125;
-                </code>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* TAB 4: ALLOWED DOMAINS */}
-        {activeTab === 'domains' && (
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">PRODUCTION DOMAIN WHITELIST</h3>
-              <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
-                ADD PRODUCTION DOMAINS PERMITTED TO SERVE ALPHAXEN WEBFONTS.
-              </p>
-            </div>
-
-            <form onSubmit={handleAddDomain} className="flex gap-4 max-w-lg">
+            {/* Whitelist Management Form */}
+            <form onSubmit={handleAddDomain} className="flex gap-3">
               <input
                 type="text"
-                placeholder="YOURCLIENTWEBSITE.COM"
+                placeholder="Enter domain (e.g. mysite.com)..."
                 value={newDomain}
-                onChange={(e) => setNewDomain(e.target.value)}
-                className="flex-1 bg-[#050814] border border-white/20 rounded-2xl px-4 py-3 text-xs text-white placeholder-slate-400 font-bold uppercase tracking-wider focus:outline-none focus:border-cyan-500"
+                onChange={e => setNewDomain(e.target.value)}
+                className="flex-1 bg-[#0b0e17] border border-white/20 rounded-xl px-4 py-3 text-xs text-white uppercase font-mono focus:outline-none focus:border-purple-500"
               />
               <button
                 type="submit"
-                className="neu-btn-primary px-6 rounded-2xl font-black text-[10px] uppercase tracking-widest text-white shadow-md cursor-pointer hover:scale-102"
+                className="neu-btn-primary px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-white flex items-center gap-2 cursor-pointer"
               >
-                ADD DOMAIN
+                <Plus size={14} /> ADD DOMAIN
               </button>
             </form>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {domains.map((dom) => (
-                <div
-                  key={dom}
-                  className="bg-[#050814] border border-white/15 p-4 rounded-2xl flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(6,182,212,1)]" />
-                    <span className="text-xs font-mono font-bold text-white uppercase">{dom}</span>
+            <div className="space-y-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">REGISTERED PRODUCTION DOMAINS</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {domains.map(domain => (
+                  <div key={domain} className="bg-[#0b0e17] border border-white/15 p-4 rounded-xl flex items-center justify-between">
+                    <span className="text-xs font-mono text-white font-bold">{domain}</span>
+                    {domain !== 'localhost' && (
+                      <button
+                        onClick={() => handleRemoveDomain(domain)}
+                        className="text-slate-500 hover:text-purple-400 p-1 cursor-pointer"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    )}
                   </div>
-                  {dom !== 'localhost' && (
-                    <button
-                      onClick={() => handleRemoveDomain(dom)}
-                      className="p-1 text-slate-400 hover:text-rose-400 transition-colors cursor-pointer"
-                    >
-                      <Trash2 size={15} />
-                    </button>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* TAB 5: INVOICES */}
-        {activeTab === 'invoices' && (
-          <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-12 md:p-14 rounded-[2.5rem] shadow-2xl space-y-8">
-            <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">ORDER INVOICES</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead>
-                  <tr className="border-b border-white/15 text-slate-300 uppercase tracking-widest text-[10px] font-black">
-                    <th className="pb-4">INVOICE #</th>
-                    <th className="pb-4">TYPEFACE</th>
-                    <th className="pb-4">TIER</th>
-                    <th className="pb-4">DATE</th>
-                    <th className="pb-4">AMOUNT</th>
-                    <th className="pb-4 text-right">RECEIPT</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/10 font-mono">
-                  {purchasedLicenses.map((lic, i) => (
-                    <tr key={lic.licenseKey} className="hover:bg-white/[0.04]">
-                      <td className="py-4 text-cyan-300 font-bold">INV-2026-00{i + 1}</td>
-                      <td className="py-4 font-sans font-bold text-white">{lic.fontName}</td>
-                      <td className="py-4 text-purple-300 uppercase font-bold">{lic.tier}</td>
-                      <td className="py-4 text-slate-300">{lic.purchaseDate}</td>
-                      <td className="py-4 font-bold text-white text-sm">${lic.pricePaid}.00</td>
-                      <td className="py-4 text-right font-sans">
-                        <button
-                          onClick={() => handleDownloadFont(lic.fontName, `RECEIPT_INV_00${i + 1}`)}
-                          className="neu-btn px-4 py-2 rounded-xl text-slate-100 hover:text-white text-[10px] font-black uppercase cursor-pointer"
-                        >
-                          PDF
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 6: WISHLIST */}
-        {activeTab === 'wishlist' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {wishlist.map((fontId) => {
-              const font = FONT_CATALOG.find(f => f.id === fontId);
-              if (!font) return null;
-              return (
-                <div key={font.id} className="bg-[#0c101d] border border-white/20 hover:border-cyan-500/50 p-8 rounded-[2.5rem] flex flex-col justify-between space-y-6 shadow-2xl transition-all">
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <span className="text-[10px] font-mono text-cyan-300 uppercase font-bold">{font.foundry}</span>
-                        <h3 className="text-2xl font-black uppercase tracking-tight text-white mt-1 font-grotesk">{font.name}</h3>
-                      </div>
-                      <span className="text-xl font-black font-mono text-cyan-300">${font.prices.commercial}</span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed">{font.description}</p>
-                  </div>
-
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                    <Link
-                      to="/shop"
-                      className="neu-btn-primary px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white shadow-lg cursor-pointer hover:scale-105 transition-all"
-                    >
-                      LICENSE TYPEFACE
-                    </Link>
-                    <button
-                      onClick={() => setWishlist(wishlist.filter(id => id !== fontId))}
-                      className="text-xs text-slate-400 hover:text-rose-400 font-bold cursor-pointer transition-colors"
-                    >
-                      REMOVE
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/[0.08] liquid-glass pt-16 pb-28 sm:pb-16 px-6 sm:px-8 relative z-10 overflow-hidden mt-20">
+      <footer className="footer-vertex-gradient pt-16 pb-28 sm:pb-16 px-6 sm:px-12 relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 lg:col-span-2">
@@ -737,8 +802,24 @@ export const BuyerPortal: React.FC = () => {
                 <BrandMark mode="default" />
               </Link>
               <p className="text-slate-400 text-xs font-semibold tracking-wider uppercase mb-8 max-w-md leading-relaxed">
-                EMPOWERING DESIGNERS & TYPE STUDIOS WITH HIGH-PRECISION DIGITAL VARIABLE TYPEFACES AND PERPETUAL COMMERCIAL LICENSING.
+                HIGH-PRECISION DIGITAL VARIABLE TYPEFACES &amp; PERPETUAL COMMERCIAL LICENSING DEALT DIRECTLY VIA WHATSAPP &amp; EMAIL.
               </p>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={`https://wa.me/${FOUNDRY_CONTACT.whatsappNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="neu-btn-primary px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider text-white flex items-center gap-1.5"
+                >
+                  <MessageSquare size={13} /> WhatsApp: {FOUNDRY_CONTACT.phone}
+                </a>
+                <a
+                  href={`mailto:${FOUNDRY_CONTACT.email}`}
+                  className="neu-btn px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-300 hover:text-white flex items-center gap-1.5"
+                >
+                  <Mail size={13} className="text-purple-400" /> {FOUNDRY_CONTACT.email}
+                </a>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -747,11 +828,11 @@ export const BuyerPortal: React.FC = () => {
                 <Link to="/shop" className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider w-fit">
                   FONT CATALOG
                 </Link>
-                <Link to="/buyer" className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-wider w-fit">
+                <Link to="/buyer" className="text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors uppercase tracking-wider w-fit">
                   BUYER VAULT
                 </Link>
                 <Link to="/seller" className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider w-fit">
-                  SELLER STUDIO
+                  CREATOR STUDIO
                 </Link>
               </div>
             </div>
@@ -763,9 +844,9 @@ export const BuyerPortal: React.FC = () => {
                   DOCUMENTATION
                 </Link>
                 <Link to="/tos" className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider w-fit">
-                  TERMS OF SERVICE & EULA
+                  TERMS OF SERVICE &amp; EULA
                 </Link>
-                <Link to="/admin" className="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-wider w-fit">
+                <Link to="/admin" className="text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider w-fit">
                   ADMIN CONSOLE
                 </Link>
               </div>
@@ -782,49 +863,47 @@ export const BuyerPortal: React.FC = () => {
 
       {/* Mobile Floating Bottom Dock */}
       <div className="md:hidden fixed bottom-4 inset-x-4 z-40">
-        <div className="liquid-glass px-4 py-2.5 rounded-3xl border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(99,102,241,0.2)] backdrop-blur-2xl flex items-center justify-between">
+        <div className="liquid-glass px-4 py-2.5 rounded-3xl border border-white/20 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(139,92,246,0.25)] backdrop-blur-2xl flex items-center justify-between">
           <Link to="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-white p-1.5 transition-colors">
+            <Home size={18} />
             <span className="text-[8px] font-black uppercase tracking-wider">Home</span>
           </Link>
           <Link to="/shop" className="flex flex-col items-center gap-1 text-slate-400 hover:text-white p-1.5 transition-colors">
-            <span className="text-[8px] font-black uppercase tracking-wider">Fonts</span>
+            <ShoppingBag size={18} />
+            <span className="text-[8px] font-black uppercase tracking-wider">Catalog</span>
           </Link>
-          <Link to="/buyer" className="flex flex-col items-center gap-1 text-cyan-400 p-1.5">
-            <span className="text-[8px] font-black uppercase tracking-wider">Vault</span>
+          <Link to="/buyer" className="flex flex-col items-center gap-1 text-purple-400 p-1.5">
+            <HardDrive size={18} />
+            <span className="text-[8px] font-black uppercase tracking-wider">Buyer</span>
           </Link>
           <Link to="/seller" className="flex flex-col items-center gap-1 text-slate-400 hover:text-white p-1.5 transition-colors">
-            <span className="text-[8px] font-black uppercase tracking-wider">Studio</span>
+            <Layers size={18} />
+            <span className="text-[8px] font-black uppercase tracking-wider">Seller</span>
           </Link>
         </div>
       </div>
 
-      {/* Download Success Modal in Liquid Glass */}
+      {/* Download Toast Modal */}
       {downloadSuccessModal && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-2xl flex items-center justify-center p-4">
-          <div className="liquid-glass p-8 sm:p-12 max-w-md w-full text-center space-y-6 shadow-2xl">
-            <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(6,182,212,0.4)]">
-              <Check size={32} />
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#0c0c0c] border border-purple-500/50 p-8 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl animate-scale-up">
+            <div className="w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center mx-auto">
+              <CheckCircle2 size={24} />
             </div>
-            <h3 className="text-2xl font-black uppercase tracking-tight text-white font-grotesk">DOWNLOAD INITIALIZED</h3>
-            <p className="text-xs text-slate-300 leading-relaxed font-medium">
-              PACKAGE FOR <strong className="text-white">{downloadSuccessModal.fontName}</strong> ({downloadSuccessModal.format}) HAS BEEN BUNDLED.
+            <h4 className="text-lg font-black uppercase text-white">ASSET DOWNLOADED</h4>
+            <p className="text-xs text-slate-300">
+              {downloadSuccessModal.fontName} ({downloadSuccessModal.format}) has been delivered to your downloads folder.
             </p>
             <button
               onClick={() => setDownloadSuccessModal(null)}
-              className="w-full neu-btn-primary h-14 rounded-2xl text-white font-black uppercase tracking-[0.25em] text-[11px]"
+              className="neu-btn-primary w-full py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white"
             >
-              CONTINUE TO VAULT
+              CLOSE
             </button>
           </div>
         </div>
       )}
 
-      {/* Cryptographic Font Security & DRM Inspector Modal */}
-      <FontSecurityModal
-        isOpen={showSecurityModal}
-        onClose={() => setShowSecurityModal(false)}
-        defaultKey={securityTargetKey}
-      />
     </div>
   );
 };

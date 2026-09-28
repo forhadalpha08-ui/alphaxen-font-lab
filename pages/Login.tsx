@@ -91,11 +91,8 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden selection:bg-indigo-500/30 font-sans">
+    <div className="min-h-screen bg-[#0b0e17] text-slate-100 flex flex-col justify-center items-center px-4 sm:px-6 py-16 relative overflow-hidden selection:bg-purple-500/30 font-sans">
       
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[520px] bg-gradient-to-tr from-indigo-600/15 via-purple-600/15 to-cyan-500/10 blur-[150px] -z-10 pointer-events-none" />
-
       <div className="w-full max-w-lg space-y-8 animate-slide-up relative z-10">
         
         {/* Header Branding */}
@@ -112,7 +109,7 @@ export const Login: React.FC = () => {
         </div>
 
         {/* Account Role Neomorphic Switcher */}
-        <div className="bg-[#050814] p-1.5 rounded-2xl grid grid-cols-2 gap-2 border border-white/20 shadow-inner">
+        <div className="bg-[#0b0e17] p-1.5 rounded-2xl grid grid-cols-2 gap-2 border border-white/20 shadow-inner">
           <button
             type="button"
             onClick={() => setAccountType('buyer')}
@@ -122,7 +119,7 @@ export const Login: React.FC = () => {
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
-            <ShoppingBag size={15} className={accountType === 'buyer' ? 'text-cyan-300' : 'text-slate-400'} />
+            <ShoppingBag size={15} className={accountType === 'buyer' ? 'text-purple-300' : 'text-slate-400'} />
             <span>Buyer &amp; Studio</span>
           </button>
 
@@ -141,16 +138,16 @@ export const Login: React.FC = () => {
         </div>
 
         {/* Main Obsidian Glass Card */}
-        <div className="bg-[#0c101d] border border-white/20 p-8 sm:p-10 rounded-[2.5rem] shadow-2xl space-y-6 relative overflow-hidden">
+        <div className="bg-[#0a0a0a] border border-white/20 p-8 sm:p-10 rounded-[2.5rem] shadow-2xl space-y-6 relative overflow-hidden">
           
           {/* Auth Method Selector (Password vs 6-Digit PIN) */}
-          <div className="flex items-center justify-between p-1 bg-[#050814] border border-white/15 rounded-xl">
+          <div className="flex items-center justify-between p-1 bg-[#0b0e17] border border-white/15 rounded-xl">
             <button
               type="button"
               onClick={() => setAuthMethod('password')}
               className={`flex-1 py-2 px-3 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 authMethod === 'password'
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                  ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -186,7 +183,7 @@ export const Login: React.FC = () => {
                 <span className="text-[11px] font-normal text-slate-400">Account identifier</span>
               </label>
               <div className="relative group">
-                <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors" />
+                <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-400 transition-colors" />
                 <input
                   type="email"
                   required
@@ -196,7 +193,7 @@ export const Login: React.FC = () => {
                   placeholder="designer@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                  className="w-full bg-[#050814] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-cyan-500/80 focus:ring-2 focus:ring-cyan-500/20 transition-all lowercase"
+                  className="w-full bg-[#0b0e17] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all lowercase"
                 />
               </div>
             </div>
@@ -210,20 +207,20 @@ export const Login: React.FC = () => {
                   </label>
                   <Link
                     to="/forgot-password"
-                    className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+                    className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                   >
                     Forgot?
                   </Link>
                 </div>
                 <div className="relative group">
-                  <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors" />
+                  <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-400 transition-colors" />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     required
                     placeholder="Enter your secure password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-[#050814] border border-white/20 rounded-2xl pl-12 pr-12 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-cyan-500/80 focus:ring-2 focus:ring-cyan-500/20 transition-all font-mono"
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-2xl pl-12 pr-12 py-4 text-sm text-white placeholder-slate-500 font-semibold focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all font-mono"
                   />
                   <button
                     type="button"
@@ -255,7 +252,7 @@ export const Login: React.FC = () => {
                     placeholder="6-Digit Auth Code (e.g. 892!Xn)"
                     value={pinCode}
                     onChange={(e) => setPinCode(e.target.value)}
-                    className="w-full bg-[#050814] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-mono font-bold tracking-widest uppercase focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                    className="w-full bg-[#0b0e17] border border-white/20 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-slate-500 font-mono font-bold tracking-widest uppercase focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all"
                   />
                 </div>
               </div>
@@ -268,7 +265,7 @@ export const Login: React.FC = () => {
                   type="checkbox"
                   checked={trustedDevice}
                   onChange={(e) => setTrustedDevice(e.target.checked)}
-                  className="rounded bg-[#050814] border-white/20 text-cyan-500 focus:ring-0 focus:ring-offset-0 w-4 h-4"
+                  className="rounded bg-[#0b0e17] border-white/20 text-purple-500 focus:ring-0 focus:ring-offset-0 w-4 h-4 accent-purple-500"
                 />
                 <span>Trust this device (30-day SHA-256 session)</span>
               </label>
@@ -304,9 +301,9 @@ export const Login: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleDemoSignIn('buyer')}
-                className="neu-btn py-3 px-3 rounded-xl text-[11px] font-black uppercase tracking-wider text-cyan-300 hover:text-white flex items-center justify-center gap-1.5 transition-all hover:scale-102 cursor-pointer border border-cyan-500/30"
+                className="neu-btn py-3 px-3 rounded-xl text-[11px] font-black uppercase tracking-wider text-purple-300 hover:text-white flex items-center justify-center gap-1.5 transition-all hover:scale-102 cursor-pointer border border-purple-500/30"
               >
-                <ShoppingBag size={13} className="text-cyan-400" />
+                <ShoppingBag size={13} className="text-purple-400" />
                 <span>Demo Buyer</span>
               </button>
 
@@ -322,8 +319,8 @@ export const Login: React.FC = () => {
           </div>
 
           {/* Security Telemetry Badge */}
-          <div className="p-3.5 rounded-xl bg-[#050814] border border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-400">
-            <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+          <div className="p-3.5 rounded-xl bg-[#0b0e17] border border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-400">
+            <span className="flex items-center gap-1.5 text-purple-400 font-bold">
               <ShieldCheck size={13} />
               256-BIT CRYPTOGRAPHIC VAULT
             </span>
@@ -335,7 +332,7 @@ export const Login: React.FC = () => {
             Don't have an Alphaxen account?{' '}
             <Link
               to="/signup"
-              className="text-cyan-400 hover:text-cyan-300 font-bold transition-colors underline underline-offset-4"
+              className="text-purple-400 hover:text-purple-300 font-bold transition-colors underline underline-offset-4"
             >
               Create Account
             </Link>

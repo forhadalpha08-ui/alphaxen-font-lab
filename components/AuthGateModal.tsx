@@ -68,14 +68,14 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ isOpen, onClose, f
         </button>
 
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full liquid-glass-sm text-[9px] font-black uppercase tracking-[0.3em] text-cyan-300">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(6,182,212,1)]" />
+          <div className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full liquid-glass-sm text-[9px] font-black uppercase tracking-[0.3em] text-purple-300">
+            <span className="flex h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_rgba(168,85,247,1)]" />
             AUTHENTICATION REQUIRED
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-grotesk">
             SIGN IN TO ACCESS <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-sky-400">
               {fontName ? fontName.toUpperCase() : 'ALPHAXEN FONTS'}
             </span>
           </h3>
@@ -107,7 +107,7 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ isOpen, onClose, f
                 placeholder="designer@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                className="w-full liquid-glass-inset rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-medium tracking-normal focus:outline-none focus:border-cyan-500 lowercase"
+                className="w-full liquid-glass-inset rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-medium tracking-normal focus:outline-none focus:border-purple-500 lowercase"
               />
             </div>
           </div>
@@ -124,7 +124,7 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ isOpen, onClose, f
                 placeholder="••••••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full liquid-glass-inset rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-bold tracking-wider focus:outline-none focus:border-cyan-500"
+                className="w-full liquid-glass-inset rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-500 font-bold tracking-wider focus:outline-none focus:border-purple-500"
               />
             </div>
           </div>
@@ -143,9 +143,9 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ isOpen, onClose, f
           <button
             type="button"
             onClick={handleDemoSignIn}
-            className="w-full py-3 rounded-2xl neu-btn text-cyan-300 font-black text-[9px] uppercase tracking-[0.25em] transition-all hover:scale-102 flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-2xl neu-btn text-purple-300 font-black text-[9px] uppercase tracking-[0.25em] transition-all hover:scale-102 flex items-center justify-center gap-2"
           >
-            <Sparkles size={12} className="text-cyan-400" />
+            <Sparkles size={12} className="text-purple-400" />
             <span>INSTANT DEMO SIGN-IN (1-CLICK ACCESS)</span>
           </button>
 
@@ -153,14 +153,14 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ isOpen, onClose, f
             <Link
               to="/signup"
               onClick={onClose}
-              className="hover:text-cyan-300 transition-colors"
+              className="hover:text-purple-300 transition-colors"
             >
               CREATE ACCOUNT
             </Link>
             <Link
               to="/forgot-password"
               onClick={onClose}
-              className="hover:text-cyan-300 transition-colors"
+              className="hover:text-purple-300 transition-colors"
             >
               FORGOT PASSWORD?
             </Link>

@@ -12,49 +12,27 @@ const BrandMark: React.FC<BrandMarkProps> = ({ mode = 'default', suffix, classNa
   const compact = mode === 'compact';
   const large = mode === 'large';
 
+  const normalizedSuffix = suffix?.trim().toUpperCase();
+  const showCustomBadge = Boolean(normalizedSuffix && normalizedSuffix !== 'FONT LAB' && normalizedSuffix !== 'DEFAULT');
+
   const content = (
-    <div className={`flex items-center gap-3 select-none group ${className}`.trim()}>
-      <div className={`relative overflow-hidden flex items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 via-purple-500 to-cyan-600 p-[1.5px] shadow-[0_0_20px_rgba(6,182,212,0.35)] group-hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transition-all duration-500 ${
-        compact ? 'w-8 h-8 rounded-lg' : large ? 'w-12 h-12 rounded-2xl' : 'w-10 h-10 rounded-xl'
-      }`}>
-        <div className="w-full h-full bg-[#0a0a0a] rounded-[inherit] flex items-center justify-center">
-          <svg
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className={`${compact ? 'w-4 h-4' : large ? 'w-7 h-7' : 'w-5 h-5'} text-white group-hover:scale-110 transition-transform duration-300`}
-          >
-            <path
-              d="M6 24L12 8L18 24"
-              stroke="#22d3ee"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M8.5 18H15.5"
-              stroke="#22d3ee"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M17 12L26 24M26 12L17 24"
-              stroke="#c084fc"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-      </div>
-      <div className="flex flex-col leading-none">
-        <span className={`${compact ? 'text-[9px]' : large ? 'text-sm' : 'text-[11px]'} font-black tracking-[0.3em] uppercase text-white group-hover:text-cyan-300 transition-colors`}>
-          ALPHAXEN
+    <div className={`inline-flex items-center gap-3 sm:gap-4 select-none group ${className}`.trim()}>
+      <img
+        src="/ax.png"
+        alt="Alphaxen Font Lab"
+        className={`w-auto object-contain transition-all duration-300 group-hover:brightness-110 group-hover:scale-[1.03] ${
+          compact
+            ? 'h-[34px] sm:h-[40px]'
+            : large
+            ? 'h-[62px] sm:h-[78px]'
+            : 'h-[45px] sm:h-[50px]'
+        }`}
+      />
+      {showCustomBadge && (
+        <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-md text-[9.5px] font-mono font-black tracking-widest bg-white/[0.06] border border-white/10 text-cyan-300 uppercase shadow-sm">
+          {suffix}
         </span>
-        <span className={`${compact ? 'text-[7px]' : 'text-[8px]'} uppercase tracking-[0.35em] font-black text-white/40 mt-1`}>
-          {suffix || 'FONT LAB'}
-        </span>
-      </div>
+      )}
     </div>
   );
 

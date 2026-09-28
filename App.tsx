@@ -47,10 +47,7 @@ class GlobalErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySta
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#070a13] text-slate-100 flex flex-col justify-center items-center px-6 py-16 relative overflow-hidden font-sans">
-          {/* Ambient Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-tr from-purple-600/20 via-indigo-600/20 to-cyan-500/20 blur-[130px] -z-10 pointer-events-none" />
-
+        <div className="min-h-screen bg-[#0b0e17] text-slate-100 flex flex-col justify-center items-center px-6 py-16 relative overflow-hidden font-sans">
           <div className="liquid-glass p-10 sm:p-12 rounded-[2.5rem] max-w-lg w-full text-center space-y-6 shadow-2xl border-purple-500/40 animate-slide-up">
             <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/40 flex items-center justify-center mx-auto shadow-lg">
               <AlertTriangle size={32} />
