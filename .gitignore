@@ -13,12 +13,24 @@ dist
 dist-ssr
 *.local
 
-# Large zip archives exceeding GitHub limits
+# Protected Raw Font Binaries & Archives (Anti-Theft DRM)
+*.otf
+*.ttf
+*.woff
+*.woff2
+*.eot
 *.zip
 *.tar.gz
 *.tgz
 *.rar
 *.7z
+*.tmp
+public/fonts/**/*.otf
+public/fonts/**/*.ttf
+public/fonts/**/*.woff
+public/fonts/**/*.woff2
+public/fonts/**/*.zip
+public/fonts/**/*.tmp
 VERTEX AUTH*
 
 # Editor directories and files
